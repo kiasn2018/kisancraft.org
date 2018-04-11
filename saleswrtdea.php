@@ -206,11 +206,12 @@ if($_POST["go"]=="Submit"){
             $post_at_to_date = $_POST["search"]["post_at_to_date"];
             list($tid,$tim,$tiy) = explode("-",$_POST["search"]["post_at_to_date"]);
             $post_at_todate = "$tiy-$tim-$tid";
-            $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '" . $post_at_todate . "'";
+            $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
         }}
+		//echo 
     
    { 
-        $sqld = "SELECT * from Excutivemst where Exexutive='$state' ";
+        $sqld = "SELECT D_state,D_name from Dealermst  ";
         // echo $sqld;
         $resultd = mysqli_query($conn,$sqld);
         
@@ -220,42 +221,39 @@ if($_POST["go"]=="Submit"){
                 <table class="sortable" style="with:40%">
                 <tr>
                 <th>State</th>
-                <th>District</th>
-                <th>Executive</th>
-                <th>ASM</th>
-                <th>SM</th>
-                <th>ZM</th>
-                <th>Amount</th>
+                <th>Dealer</th>
+                <th>Q1</th>
+				<th>Q2</th>
+                
                 </tr>
     <?php 
   while($rowd = mysqli_fetch_array($resultd)) {
         
-        $state=$rowd['State'];
-        $dis=$rowd["District"];
-        $sqls1 = "SELECT * from Dealermst where D_state='$state' AND D_distict= '$dis'";
-        $results1 = mysqli_query($conn,$sqls1);
+        $state=$rowd['D_state'];
+        $di=$rowd["D_name"];
         $amount="";
-        while($rows1 = mysqli_fetch_array($results1)){
         //print_r($rows1);
-            $name=($rows1['D_name']);
-        $sql = "SELECT SUM(Amount) from Salesmst where Dealer_name='$name' ".$queryCondition; 
+        $sql1 = "SELECT SUM(amount) from Credit_td where party_name='$di' ".$queryCondition; 
+		//echo $sql;	
+        $result1 = mysqli_query($conn,$sql1);
+        ($row1 = mysqli_fetch_array($result1));
+		$amo=$row1['SUM(amount)'];
+        $sql = "SELECT SUM(Amount) from Salesmst where Vorture_type!='Stock Transfer Issues' AND Dealer_name='$di' ".$queryCondition; 
+		//echo $sql;	
         $result = mysqli_query($conn,$sql);
     while($row = mysqli_fetch_array($result)) {
-        
-        $amount=$amount+($row['SUM(Amount)']);
+        //print_r($row);
+        $amount=$row['SUM(Amount)'];
         
         
       
-    }}
+    }
         ?>
                 <tr>
-                <td><?php echo $rowd['State']; ?></td>
-                <td><?php echo $dis; ?></td>
-                <td><?php echo $rowd['Exexutive']; ?></td>
-                <td><?php echo $rowd['ASM']; ?></td>
-                <td><?php echo $rowd['SM']; ?></td>
-                <td><?php echo $rowd['ZM']; ?></td>
-                <td><?php echo $amount; ?></td>
+                <td><?php echo $state; ?></td>
+                <td><?php echo $di; ?></td>
+				<td><?php echo $amount; ?></td>
+                <td><?php echo $amount-$amo; ?></td>
                 </tr> 
                 <?php }?> 
 				</table>

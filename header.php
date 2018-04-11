@@ -19,7 +19,7 @@ if($_SESSION["log"]!="en"){
   <head>
     <meta charset="utf-8">
    
-    <link rel="stylesheet" href="/kisankraft.org/src/css/megafish.css" media="screen">
+    <link rel="stylesheet" href="/kisancraft.org/src/css/megafish.css" media="screen">
     
     <style>
       html, body, .wrap {
@@ -55,9 +55,9 @@ if($_SESSION["log"]!="en"){
         text-decoration: none;
       }
     </style>
-    <script src="/kisankraft.org/src/js/jquery.js"></script>
-    <script src="/kisankraft.org/src/js/hoverIntent.js"></script>
-    <script src="/kisankraft.org/src/js/superfish.js"></script>
+    <script src="/kisancraft.org/src/js/jquery.js"></script>
+    <script src="/kisancraft.org/src/js/hoverIntent.js"></script>
+    <script src="/kisancraft.org/src/js/superfish.js"></script>
     <script>
 
     (function($){ //create closure so we can safely use $ as alias for jQuery
@@ -95,7 +95,7 @@ if($_SESSION["log"]!="en"){
   </head>
   <body>
     <div class="wrap">
-    <img src="/kisankraft.org/images/KK-LOGO.JPG" alt="Smiley face" height="60" width="30%">
+    <img src="/kisancraft.org/images/KK-LOGO.JPG" alt="Smiley face" height="60" width="30%">
      <h1 style="text-align:center; background-color: lightblue; "> Kisankraft Reports</h1>
       <ul class="sf-menu" id="example">
         <li class="current">
@@ -106,8 +106,8 @@ if($_SESSION["log"]!="en"){
               <ul>
                 <li class="current">
                 <a href="#">Item Wise</a></li><br>
-                <li><a href="/kisankraft.org/supplier.php">Supplier Wise</a></li><br>
-                <li><a href="/kisankraft.org/preportforall.php">Both</a></li><br>
+                <li><a href="/kisancraft.org/supplier.php">Supplier Wise</a></li><br>
+                <li><a href="/kisancraft.org/preportforall.php">Both</a></li><br>
                 
               </ul>
             </div>
@@ -183,7 +183,7 @@ if($_SESSION["log"]!="en"){
           </div>
         </li>
         <li>
-          <a href="/kisankraft.org/incentives.php">Incentives</a>
+          <a href="/kisancraft.org/incentives.php">Incentives</a>
         </li> 
         <li>
           <a href="#">Quaterly Meeting</a>
@@ -195,18 +195,18 @@ if($_SESSION["log"]!="en"){
               <h2></h2>
               <ul>
                 <li class="current">
-                <a href="/kisankraft.org/branchmst.php">Branch Master</a></li><br>
-                <li><a href="/kisankraft.org/suppliermaster.php">Supplier Master</a></li><br>
+                <a href="/kisancraft.org/branchmst.php">Branch Master</a></li><br>
+                <li><a href="/kisancraft.org/suppliermaster.php">Supplier Master</a></li><br>
                 <li><a href="#">Bank Master</a></li><br>
                 <li><a href="#">Accounts Head</a></li><br>
-                <li><a href="/kisankraft.org/executive.php">Executive Master</a></li><br>
-                <li><a href="/kisankraft.org/zonemaster.php">Zone Master</a></li><br>
-                <li><a href="/kisankraft.org/employee.php">Employee Master</a></li><br>
-                <li><a href="/kisankraft.org/statemst.php">State Master</a></li><br>
+                <li><a href="/kisancraft.org/executive.php">Executive Master</a></li><br>
+                <li><a href="/kisancraft.org/zonemaster.php">Zone Master</a></li><br>
+                <li><a href="/kisancraft.org/employee.php">Employee Master</a></li><br>
+                <li><a href="/kisancraft.org/statemst.php">State Master</a></li><br>
                 <li><a href="#">State Employee Mapping</a></li><br>
                 <li><a href="#">Distict Master</a></li><br>
-                <li><a href="/kisankraft.org/itemid.php">Item Master</a></li><br>
-                <li><a href="/kisankraft.org/dealermst.php">Dealer Master</a></li><br>
+                <li><a href="/kisancraft.org/itemid.php">Item Master</a></li><br>
+                <li><a href="/kisancraft.org/dealermst.php">Dealer Master</a></li><br>
                 <li><a href="#">Trial Balance Master</a></li><br>
               </ul>
             </div>
@@ -219,13 +219,13 @@ if($_SESSION["log"]!="en"){
               <h2></h2>
               <ul>
                 <li class="current">
-                <a href="/kisankraft.org/salesupload.php">Upload sales</li><br>
-                <li><a href="/kisankraft.org/discountupload.php">Credit Note</li><br>
-                <li><a href="/kisankraft.org/salesdailyreport.php">Sales Daily Report</a></li><br>
-                <li><a href="/kisankraft.org/salesemp.php">Sales WRT Employees</a></li><br>
-                <li><a href="/kisankraft.org/saleswrtstate.php">Sales WRT State And Distict wise</a></li><br>
+                <a href="/kisancraft.org/salesupload.php">Upload sales</li><br>
+                <li><a href="/kisancraft.org/discountupload.php">Credit Note</li><br>
+                <li><a href="/kisancraft.org/salesdailyreport.php">Sales Daily Report</a></li><br>
+                <li><a href="/kisancraft.org/salesemp.php">Sales WRT Employees</a></li><br>
+                <li><a href="/kisancraft.org/saleswrtstate.php">Sales WRT State And Distict wise</a></li><br>
                 <li><a href="#">Sales WRT SKU Wise</a></li><br>
-                <li><a href="/kisankraft.org/saleswrtdea.php">Sales WRT Dealer Wise</a></li><br>
+                <li><a href="/kisancraft.org/saleswrtdea.php">Sales WRT Dealer Wise</a></li><br>
                 <li><a href="#">Target V/s Actual</a></li><br>
               </ul>
             </div>
