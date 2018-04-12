@@ -2,9 +2,9 @@
 ini_set('max_execution_time', 0);
 // date base connection
 $servername = "localhost";
-$username = "kisan";
+$username = "mayurj";
 $password = "yes";
-$dbname = "Branch_mst";
+$dbname = "branch_mst";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -34,23 +34,23 @@ if(isset($_POST["Import"])){
             $keyvc = array_search ('Voucher Type', $emapData);
             $keyqty = array_search ('Quantity', $emapData);
             $keygt = array_search ('Gross Total', $emapData);
-            $keyvl = array_search ('Value', $emapData);
+            $keyvl = array_search ('Debit', $emapData);
             while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
             {            
                 if($emapData[0]!=""){
                 
-                $vt="Credit Note";
+                $vt="Trade Discount";
                 
             
             $orderdate = explode('/', $emapData[0]);
             $month = $orderdate[1];
             $day   = $orderdate[0];
             $year  = $orderdate[2];
-            echo $year."-".$day."-".$month."-".$emapData[1]."-".$emapData[$keyvl]."-".$vt."<br>";
+            echo $year."-".$day."-".$month."-".$emapData[$keypt]."-".$emapData[$keyvl]."-".$vt."<br>";
             
             //print_r($emapData);exit();
             $sql = "INSERT into Credit_td (Date,party_name,vourture_type, amount)
-                 values('$year-$day-$month','$emapData[1]','$vt','$emapData[$keyvl]')";
+                 values('$year-$day-$month','$emapData[$keypt]','$vt','$emapData[$keyvl]')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {

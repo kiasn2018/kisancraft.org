@@ -63,7 +63,7 @@ $result = mysqli_query($conn,$sql);
          	
           <th width="50%"><span> Dealer Name</span></th>
           <th width="20%"><span>State</span></th>          
-          <th width="25%"><span>Distict</span></th>
+          <th width="25%"><span>District</span></th>
           <th width="25%"><span>Action</span></th>	  
         </tr>
       </thead>

@@ -253,7 +253,7 @@ if($_POST["go"]=="Submit"){
                 <td><?php echo $state; ?></td>
                 <td><?php echo $di; ?></td>
 				<td><?php echo $amount; ?></td>
-                <td><?php echo $amount-$amo; ?></td>
+                <td><?php echo ($amount-$amo); ?></td>
                 </tr> 
                 <?php }?> 
 				</table>

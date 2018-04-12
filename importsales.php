@@ -2,9 +2,9 @@
 ini_set('max_execution_time', 0);
 // date base connection
 $servername = "localhost";
-$username = "kisan";
+$username = "mayurj";
 $password = "yes";
-$dbname = "Branch_mst";
+$dbname = "branch_mst";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
