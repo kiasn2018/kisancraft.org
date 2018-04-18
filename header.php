@@ -206,6 +206,7 @@ if($_SESSION["log"]!="en"){
                 <li><a href="#">State Employee Mapping</a></li><br>
                 <li><a href="#">Distict Master</a></li><br>
                 <li><a href="/kisancraft.org/itemid.php">Item Master</a></li><br>
+				<li><a href="/kisancraft.org/SKU.php">SKU Master</a></li><br>
                 <li><a href="/kisancraft.org/dealermst.php">Dealer Master</a></li><br>
                 <li><a href="#">Trial Balance Master</a></li><br>
               </ul>
@@ -219,9 +220,11 @@ if($_SESSION["log"]!="en"){
               <h2></h2>
               <ul>
                 <li class="current">
-                <a href="/kisancraft.org/salesupload.php">Upload sales</li><br>
+				<a href="/kisancraft.org/master.php">Sales master</li><br>
+                <li><a href="/kisancraft.org/salesupload.php">Upload sales</li><br>
                 <li><a href="/kisancraft.org/discountupload.php">Credit Note</li><br>
                 <li><a href="/kisancraft.org/salesdailyreport.php">Sales Daily Report</a></li><br>
+				 <li><a href="/kisancraft.org/monthlyreport.php">Monthly Report</a></li><br>
                 <li><a href="/kisancraft.org/salesemp.php">Sales WRT Employees</a></li><br>
                 <li><a href="/kisancraft.org/saleswrtstate.php">Sales WRT State And Distict wise</a></li><br>
                 <li><a href="#">Sales WRT SKU Wise</a></li><br>

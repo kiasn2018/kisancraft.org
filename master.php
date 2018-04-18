@@ -2,7 +2,7 @@
 <html>
 <head>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="/kisancraft.org/src/js/sorttable.js"></script>
+	<script src="/kisankraft.org/src/js/sorttable.js"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 	<style>
@@ -19,11 +19,12 @@
 include 'header.php';
 include '/config/db.php';
 ?>
+<h1 style="text-align:center;">Upload sales </h1>
 <div class="container" style="margin-left:30%; width:60%; background-color:lightblue">
 <div class="row">
 <div class="span3 hidden-phone"></div>
 <div class="span6" id="form-login">
-<form class="form-horizontal well" action="importdiscount.php" method="post" name="upload_excel" enctype="multipart/form-data">
+<form class="form-horizontal well" action="importmaster.php" method="post" name="upload_excel" enctype="multipart/form-data">
 <fieldset>
 <legend>Import CSV/Excel file</legend>
 <div class="control-group">
@@ -38,10 +39,16 @@ include '/config/db.php';
 
 <div class="control-group">
 <div class="controls">
-<a href="/kisancraft.org/sample/sample1.csv"> Download Sample File</a>
+<a href="/kisankraft.org/sample/sample1.csv"> Download Sample File</a>
 </div>
 </div>
 </fieldset>
+</form>
+<form class="form-horizontal well" action="" method="post" name="upload_excel" enctype="multipart/form-data">
+<input type="submit" name="go" value="Validate SKU" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px;float:left" >
+</form>
+<form class="form-horizontal well" action="" method="post" name="upload_excel" enctype="multipart/form-data">
+<input type="submit" name="go" value="Validate user" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px;float:right" >
 </form>
 </div>
 <div class="span3 hidden-phone"></div>
@@ -55,7 +62,7 @@ include '/config/db.php';
 $results_per_page = 100;
 if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
 $start_from = ($page-1) * $results_per_page;
-$sql = "SELECT * from Credit_td LIMIT ".$start_from.",".$results_per_page;
+$sql = "SELECT * from Salesmst LIMIT ".$start_from.",".$results_per_page;
 $result = mysqli_query($conn,$sql);
 //include '/test/index.php';
 //include '/search.php';
@@ -64,34 +71,30 @@ if(!isset($_POST["go"]) ){
 <table class="sortable">
           <thead>
         <tr class="d0">
-          <th width="20%"><span>Date</span></th>  
+          <th width="10%"><span>ID</span></th>	
           <th width="50%"><span> Dealer Name</span></th>
-                
+          <th width="20%"><span>Date</span></th>  
+          <th width="20%"><span>Voucher Type</span></th>          
           <th width="25%"><span>Item Name</span></th>
-          <th width="20%"><span>Voucher_type</span></th>  
-           <th width="25%"><span>QTY</span></th>
-           <th width="25%"><span>Amount</span></th>	  
-          <th width="25%"><span>State</span></th>
           <th width="25%"><span>District</span></th>
+          <th width="25%"><span>State</span></th>
           <th width="25%"><span>Executive</span></th>
           <th width="25%"><span>ASM</span></th>
+          <th width="25%"><span>QTY</span></th>
+          <th width="25%"><span>Amount</span></th>	  
         </tr>
       </thead>
     <tbody>
 	<?php
 		while($row = mysqli_fetch_array($result)) {
-		    //print_r($row);
 	?>
         <tr class="d1">
-            
-			
+            <td><?php echo $row["ID"]; ?></td>
+			<td><?php echo  $data= str_replace("_", "'", $row["Dealer_name"]); ?></td>
 			<td><?php echo  $row["Date"]; ?></td>
-			<td><?php echo  $data= str_replace("_", "'", $row["party_name"]); ?></td>
-			<td><?php echo $data1= str_replace("_", "'", $row["item_name"]); ?></td>
-			<td><?php echo $row["vourture_type"];  ?></td>
-			<td><?php echo $row["quantity"];  ?></td>
-			<td><?php echo $row["amount"]; ?></a> </td>
-			<td><?php $d=$row["party_name"];
+			<td><?php echo $row["Vorture_type"];  ?></td>
+			<td><?php echo $data1= str_replace("_", "'", $row["Item_name"]);$row["Item_name"]; ?></td>
+			<td><?php $d=$row["Dealer_name"];
 			$sqls = "SELECT * from Dealermst where D_name='$d' ";
 			//echo $sqls;
             $results = mysqli_query($conn,$sqls);
@@ -106,12 +109,13 @@ if(!isset($_POST["go"]) ){
                 $exec=$rows1["Exexutive"];
                 $ASM=$rows1["ASM"];
             }
-            echo $state;
+            echo $district;
             ?></td>
-            <td><?php echo $district;?></td>
+            <td><?php echo $state;?></td>
             <td><?php echo $exec;?></td>
             <td><?php echo $ASM;?></td>
-			
+			<td><?php echo $row["Quantity"]; ?></a> </td>
+			<td><?php echo $row["Amount"]; ?></a> </td>
 
 		</tr>
    <?php
@@ -126,13 +130,13 @@ if(!isset($_POST["go"]) ){
 </html>
 <hr>
 <?php
-$sql = "SELECT COUNT(Date) AS total FROM Credit_td";
+$sql = "SELECT COUNT(ID) AS total FROM Salesmst";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 $total_pages = ceil($row["total"] / $results_per_page);
 
 for ($i=1; $i<=$total_pages; $i++) {
-    ?>  <a href="/kisancraft.org/discountupload.php?page=<?php echo $i;?>"><?php echo $i;?></a><?php 
+    ?>  <a href="/kisankraft.org/master.php?page=<?php echo $i;?>"><?php echo $i;?></a><?php 
     
     //echo "<a href=''?page=".$i."'>".$i."</a> ";
 };

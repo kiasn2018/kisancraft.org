@@ -41,14 +41,20 @@ if(isset($_POST["Import"])){
             //remove ' from string
             $data1= str_replace("'", "_", $emapData[$pname]);
             $data2= str_replace("'", "_", $emapData[$iname]);
-            $orderdate = explode('/', $emapData[$date]);
+            $orderdate = explode('/', $emapData[0]);
             $month = $orderdate[1];
             $day   = $orderdate[0];
             $year  = $orderdate[2];
+			$state=$emapData[6];
+			$dis=$emapData[5];
+			$zone=$emapData[7];
+			$sku=$emapData[8];
+			$seg=$emapData[9];
+			$exe=$emapData[10];
             echo $year."-".$month."-".$day.$emapData[$vtype].$emapData[$pname].$emapData[$iname].$emapData[$qty].$emapData[$amount]."<br>";
             
-            $sql = "INSERT into Salesmst (Date, Dealer_name,Vorture_type,Item_name, Quantity , Amount)
-                 values('$year-$day-$month','$data1','$emapData[$vtype]','$data2','$emapData[$qty]','$emapData[$amount]')";
+            $sql = "INSERT into Salesmaster (Date,Dealer,Product, QTY, Amount,State,District,SKU,Seqment,Executive,Zone)
+                 values('$year-$day-$month','$data1','$data2','$emapData[$qty]','$emapData[$amount]','$state','$dis','$sku','$seg','$exe','$zone')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {

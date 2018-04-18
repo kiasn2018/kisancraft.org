@@ -27,28 +27,13 @@ if(isset($_POST["Import"])){
         $file = fopen($filename, "r");
         
         $I=0;
-        ($emapData = fgetcsv($file, 10000, ",")) !== FALSE;
-        $date = array_search ('Date', $emapData);
-        $vtype = array_search ('Voucher Type', $emapData);
-        $pname = array_search ('Party Name', $emapData);
-        $iname = array_search ('Item Name', $emapData);
-        $qty = array_search ('Billed Quantity', $emapData);
-        $amount = array_search ('Amount', $emapData);
-       
         while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
         {     //print_r($emapData);
             //It wiil insert a row to our subject table from our csv file`
             //remove ' from string
-            $data1= str_replace("'", "_", $emapData[$pname]);
-            $data2= str_replace("'", "_", $emapData[$iname]);
-            $orderdate = explode('/', $emapData[$date]);
-            $month = $orderdate[1];
-            $day   = $orderdate[0];
-            $year  = $orderdate[2];
-            echo $year."-".$month."-".$day.$emapData[$vtype].$emapData[$pname].$emapData[$iname].$emapData[$qty].$emapData[$amount]."<br>";
-            
-            $sql = "INSERT into Salesmst (Date, Dealer_name,Vorture_type,Item_name, Quantity , Amount)
-                 values('$year-$day-$month','$data1','$emapData[$vtype]','$data2','$emapData[$qty]','$emapData[$amount]')";
+            $data= str_replace("'", "_", $emapData[0]);
+            $sql = "INSERT into SKU (SKU, Segment)
+                 values('$emapData[0]','$emapData[1]')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {

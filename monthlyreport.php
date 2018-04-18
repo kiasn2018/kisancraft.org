@@ -210,10 +210,14 @@ if($_POST["go"]=="Submit"){
         }}
 		//echo 
     
-   { 
-        $sqld = "SELECT DISTINCT D_name from Dealermst  ";
+   {   $seg=array();
+        $sqld = "SELECT DISTINCT (District) District, State FROM Salesmaster";
         // echo $sqld;
         $resultd = mysqli_query($conn,$sqld);
+		$sqldq = "SELECT DISTINCT Segment from SKU";
+        // echo $sqld;
+        $resultdq = mysqli_query($conn,$sqldq);
+		$resultdqq = mysqli_query($conn,$sqldq);
         
         ?>
      <div style="width:60%; float :left ; margin-left: 15%">
@@ -221,45 +225,49 @@ if($_POST["go"]=="Submit"){
                 <table class="sortable" style="with:40%">
                 <tr>
                 <th>State</th>
-                <th>Dealer</th>
-                <th>Q1</th>
-				<th>Q2</th>
-                
+                <th>District</th>
+				<?php
+				while($rowdq = mysqli_fetch_array($resultdq)){?>
+                <th colspan="2"><?php echo $rowdq['Segment']; $seg[]=$rowdq['Segment'];?></th>
+				<?php } ?>
+				<th>Trade Discount</th>
                 </tr>
-    <?php 
+				<tr>
+				<td></td>
+				<td></td>
+				<?php
+				
+				while($rowdqq = mysqli_fetch_array($resultdqq)){
+					?>
+				<td><?php echo 'QTY'; ?></td>
+                <td><?php echo 'Amount'; ?></td>
+   <?php } ?> </tr> <?php 
   while($rowd = mysqli_fetch_array($resultd)) {
-	     $di=$rowd["D_name"];
-         $sqld1 = "SELECT * from Dealermst WHERE D_name='$di' ";
-        // echo $sqld;
-        $resultd1 = mysqli_query($conn,$sqld1);     
-        $rowd1= mysqli_fetch_array($resultd1);		
-        $state=$rowd1['D_state'];
-       // $di=$rowd1["D_name"];
-        $amount="";
-        //print_r($rows1);
-        $sql1 = "SELECT SUM(amount) from Credit_td where party_name='$di' ".$queryCondition; 
-		//echo $sql;	
-        $result1 = mysqli_query($conn,$sql1);
-        ($row1 = mysqli_fetch_array($result1));
-		$amo=$row1['SUM(amount)'];
-        $sql = "SELECT SUM(Amount) from Salesmst where Vorture_type!='Stock Transfer Issues' AND Dealer_name='$di' ".$queryCondition; 
-		//echo $sql;	
-        $result = mysqli_query($conn,$sql);
-    while($row = mysqli_fetch_array($result)) {
-        //print_r($row);
-        $amount=$row['SUM(Amount)'];
+	    $state=$rowd['State'];
+        $di=$rowd["District"];
+			
         
         
-      
-    }
         ?>
                 <tr>
                 <td><?php echo $state; ?></td>
                 <td><?php echo $di; ?></td>
-				<td><?php echo $amount; ?></td>
-                <td><?php echo ($amount-$amo); ?></td>
-                </tr> 
-                <?php }?> 
+				<?php 
+				for($j=0;$j<(count($seg));$j++){
+         $sqld1 = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='$seg[$j]' ";
+        // echo $sqld;
+        $resultd1 = mysqli_query($conn,$sqld1);     
+        $rowd1= mysqli_fetch_array($resultd1);	?>
+				<td><?php echo $rowd1['sum(QTY)']; ?></td>
+                <td><?php echo $rowd1['sum(Amount)']; ?></td>
+               
+		<?php }
+		$sqld11 = "SELECT sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='#N/A' ";
+        // echo $sqld;
+        $resultd11 = mysqli_query($conn,$sqld11);     
+        $rowd11= mysqli_fetch_array($resultd11);
+		?><td><?php echo $rowd11['sum(Amount)'];?></td></tr><?php
+		}?> 
 				</table>
                 </div>
                 <?php 
