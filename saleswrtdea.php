@@ -224,6 +224,8 @@ if($_POST["go"]=="Submit"){
                 <th>Dealer</th>
                 <th>Q1</th>
 				<th>Q2</th>
+				<th>Q3</th>
+				<th>Q4</th>
                 
                 </tr>
     <?php 
@@ -237,27 +239,64 @@ if($_POST["go"]=="Submit"){
        // $di=$rowd1["D_name"];
         $amount="";
         //print_r($rows1);
-        $sql1 = "SELECT SUM(amount) from Credit_td where party_name='$di' ".$queryCondition; 
+        $sqlq1 = "SELECT SUM(amount) from Credit_td where party_name='$di' and Date Between '2017-04-01' and '2017-06-30'"; 
+		//echo $sql;	
+        $resultq1 = mysqli_query($conn,$sqlq1);
+        ($rowq1 = mysqli_fetch_array($resultq1));
+		$amoq1=$rowq1['SUM(amount)'];
+        $sql1 = "SELECT SUM(Amount) from Salesmst where Vorture_type!='Stock Transfer Issues' AND Dealer_name='$di' and Date between '2017-04-01' and '2017-06-30'"; 
 		//echo $sql;	
         $result1 = mysqli_query($conn,$sql1);
-        ($row1 = mysqli_fetch_array($result1));
-		$amo=$row1['SUM(amount)'];
-        $sql = "SELECT SUM(Amount) from Salesmst where Vorture_type!='Stock Transfer Issues' AND Dealer_name='$di' ".$queryCondition; 
-		//echo $sql;	
-        $result = mysqli_query($conn,$sql);
-    while($row = mysqli_fetch_array($result)) {
+    while($row1 = mysqli_fetch_array($result1)) {
         //print_r($row);
-        $amount=$row['SUM(Amount)'];
+        $amount1=$row1['SUM(Amount)'];
+	}
+        $sqlq2 = "SELECT SUM(amount) from Credit_td where party_name='$di' and Date Between '2017-07-01' and '2017-09-30'"; 
+		//echo $sql;	
+        $resultq2 = mysqli_query($conn,$sqlq2);
+        ($rowq2 = mysqli_fetch_array($resultq2));
+		$amoq2=$rowq2['SUM(amount)'];
+        $sql2 = "SELECT SUM(Amount) from Salesmst where Vorture_type!='Stock Transfer Issues' AND Dealer_name='$di' and Date Between '2017-07-01' and '2017-09-30'"; 
+		//echo $sql;	
+        $result2 = mysqli_query($conn,$sql2);
+    while($row2 = mysqli_fetch_array($result2)) {
+        //print_r($row);
+        $amount2=$row2['SUM(Amount)'];
+    }
+	$sqlq3 = "SELECT SUM(amount) from Credit_td where party_name='$di' and Date between'2017-10-01' and '2017-12-31'"; 
+		//echo $sql;	
+        $resultq3 = mysqli_query($conn,$sqlq3);
+        ($rowq3 = mysqli_fetch_array($resultq3));
+		$amoq3=$rowq3['SUM(amount)'];
+        $sql3 = "SELECT SUM(Amount) from Salesmst where Vorture_type!='Stock Transfer Issues' AND Dealer_name='$di' and Date between'2017-10-01' and '2017-12-31'"; 
+		//echo $sql;	
+        $result3 = mysqli_query($conn,$sql3);
+    while($row3 = mysqli_fetch_array($result3)) {
+        //print_r($row);
+        $amount3=$row3['SUM(Amount)'];
         
+    }
+	$sqlq4 = "SELECT SUM(amount) from Credit_td where party_name='$di' and Date Between '2018-01-01' and '2018-03-31'"; 
+		//echo $sql;	
+        $resultq4 = mysqli_query($conn,$sqlq4);
+        ($rowq4 = mysqli_fetch_array($resultq4));
+		$amoq4=$rowq4['SUM(amount)'];
+        $sql4 = "SELECT SUM(Amount) from Salesmst where Vorture_type!='Stock Transfer Issues' AND Dealer_name='$di' and Date Between '2018-01-01' and '2018-03-31'"; 
+		//echo $sql;	
+        $result4 = mysqli_query($conn,$sql4);
+    while($row4 = mysqli_fetch_array($result4)) {
+        //print_r($row);
+        $amount4=$row4['SUM(Amount)'];
         
-      
     }
         ?>
                 <tr>
                 <td><?php echo $state; ?></td>
                 <td><?php echo $di; ?></td>
-				<td><?php echo $amount; ?></td>
-                <td><?php echo ($amount-$amo); ?></td>
+                <td><?php echo ($amount1-$amoq1); ?></td>
+				<td><?php echo ($amount2-$amoq2); ?></td>
+				<td><?php echo ($amount3-$amoq3); ?></td>
+				<td><?php echo ($amount4-$amoq4); ?></td>
                 </tr> 
                 <?php }?> 
 				</table>
