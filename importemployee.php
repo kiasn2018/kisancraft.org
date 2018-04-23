@@ -2,9 +2,9 @@
 ini_set('max_execution_time', 0);
 // date base connection
 $servername = "localhost";
-$username = "kisan";
+$username = "mayurj";
 $password = "yes";
-$dbname = "Branch_mst";
+$dbname = "branch_mst";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -18,14 +18,37 @@ if ($conn->connect_error) {
 if(isset($_POST["Import"])){
     
     
-    echo $filename=$_FILES["file"]["tmp_name"];
+    echo $filename=$_FILES["file"]["tmp_name"]; 
     
     
     if($_FILES["file"]["size"] > 0)
     {
         //logic to save in db format
         $file = fopen($filename, "r");
+        ($emapData = fgetcsv($file, 10000, ",")) !== FALSE;
+        $eid = array_search ('Emp ID', $emapData);
+        $ename = array_search ('Employee Name', $emapData);
         
+        $jdate = array_search ('Date of Joining', $emapData);
+        $ldate = array_search ('Date of Leaving', $emapData);
+        
+		$des = array_search ('Designation', $emapData);
+		$dep = array_search ('Department', $emapData);
+		$basic = array_search ('BASIC+DA', $emapData);
+		$hra = array_search ('HRA', $emapData);
+		$other = array_search ('Arr.Earn', $emapData);
+		$convey = array_search ('Conveyance', $emapData);
+		$med= array_search ('Medi Reimb', $emapData);
+		$spi = array_search ('SPl Allow', $emapData);
+		$lta = array_search ('LTA', $emapData);
+		$bm = array_search ('Bonus M', $emapData);
+		$branch = array_search ('Branch', $emapData);
+		$el= array_search ('EL ENCASHM', $emapData);
+		
+		$be= array_search ('Bonus.Exgr', $emapData);
+		$month = $_POST["month"];
+		$year = $_POST["year"];
+		$emapData[$basic]=$emapData[$hra]=$emapData[$convey]=$emapData[$med]=$emapData[$spi]=$emapData[$lta]=$emapData[$bm]=$emapData[$other]=$emapData[$EL]=$emapData[$be]='0';
         $I=0;
         while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
         {     //print_r($emapData);
@@ -35,15 +58,20 @@ if(isset($_POST["Import"])){
             }
             $data= str_replace("'", "_", $emapData[2]);
             if($emapData[2]!=""){
-                $pdate1=date("Y-d-m", strtotime($emapData[4]) );
+                $pdate1=date("Y-d-m", strtotime($emapData[$jdate]) );
                 if($emapData[5]!=""){
-                $pdate2=date("Y-d-m", strtotime($emapData[5]) );
+                $pdate2=date("Y-d-m", strtotime($emapData[$ldate]) );
                 }else{$pdate2="0000-00-00";}
+				$totalearnings='';
+				//echo $emapData[$basic]."=".$emapData[$hra]."=".$emapData[$convey]."=".$emapData[$med]."=".$emapData[$spi]."=".$emapData[$lta]."=".$emapData[$bm]."=".$emapData[$other]."=".$emapData[$be]."=";
                 //It wiil insert a row to our subject table from our csv file`
-                $sql = "INSERT into Employeemst (E_id, E_name, Father_name,E_D_O_J,D_o_l,PF_no,ESI_no,PAN_no,Bank_name,Bank_ac_no,Designation,Department,Division,Grade,Branch,Calender_days,UAN,Adhar_no,Pay_days,Prasent_days,Basic_DA,HRA,Conveyance,Medi_Reimb,SPl_Allow,LTA,Bonus_M,gift_Amoun,Bonus_Exgr,Arr_Earn,Total_Earning,PF,ESI,PT,TDS,Total_Dedn,Net_Amount,month,year)
-                 values('$emapData[1]','$emapData[2]','$emapData[3]','$pdate1','$pdate2','$emapData[6]','$emapData[7]','$emapData[8]','$emapData[9]','$emapData[10]','$emapData[12]','$emapData[14]','$emapData[15]','$emapData[16]','$emapData[17]','$emapData[18]','$emapData[19]','$emapData[20]','$emapData[21]','$emapData[22]','$emapData[23]','$emapData[24]','$emapData[25]','$emapData[26]','$emapData[27]','$emapData[28]','$emapData[29]','$emapData[30]','$emapData[31]','$emapData[32]','$emapData[33]','$emapData[34]','$emapData[35]','$emapData[36]','$emapData[37]','$emapData[38]','$emapData[39]','$emapData[40]','$emapData[41]')";
+				$totalearnings=$emapData[$basic]+$emapData[$hra]+$emapData[$convey]+$emapData[$med]+$emapData[$spi]+$emapData[$lta]+$emapData[$bm]+$emapData[$other]+$emapData[$el];
+                $sql = "INSERT into Employeemst (E_id, E_name,E_D_O_J,D_o_l,Designation,Department,Branch,Basic_DA,HRA,Conveyance,Medi_Reimb,SPl_Allow,LTA,Bonus_M,other,Total_Earning,month,year,BE,EL_encash)
+                 values('$emapData[$eid]','$emapData[$ename]','$pdate1','$pdate2','$emapData[$des]','$emapData[$dep]','$emapData[$branch]','$emapData[$basic]','$emapData[$hra]',
+				 '$emapData[$convey]','$emapData[$med]','$emapData[$spi]','$emapData[$lta]','$emapData[$bm]','$emapData[$other]','$totalearnings','$month','$year','$emapData[$be]','$emapData[$el]')";
                 //we are using mysql_query function. it returns a resource on true else False on error
-                //echo "Error: " . $sql . "<br>" . $conn->error;
+                //echo "Error: " . $sql . "<br>" . $conn->error; 
+				
                 if ($conn->query($sql) === TRUE) {
                     echo "New record created successfully";
                 } else {

@@ -183,7 +183,18 @@ if($_SESSION["log"]!="en"){
           </div>
         </li>
         <li>
-          <a href="/kisancraft.org/incentives.php">Incentives</a>
+          <a href="#">Incentives</a>
+		  <div class="sf-mega">
+            <div class="sf-mega-section" style="background-color: #f2f2f2">
+              <h2></h2>
+              <ul>
+                <li class="current">
+                <a href="/kisancraft.org/incentives.php">Incentives For Non-sales</a></li><br>
+				<li><a href="/kisancraft.org/incentivessales.php">Incentives for Sales</a></li><br>
+				<li><a href="/kisancraft.org/incentivescal.php">Incentives Calculation</a></li><br>
+              </ul>
+            </div>
+           </div>
         </li> 
         <li>
           <a href="#">Quaterly Meeting</a>

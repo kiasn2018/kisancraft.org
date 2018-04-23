@@ -49,9 +49,9 @@ div {
     </head>
 <?php
 
-$sub='570667';
-$Total=$sales-$sales1-$sub;
-$sql = "SELECT * from incentive  ";
+$sub='0';
+
+$sql = "SELECT sum(Amount) from Salesmaster where Date between '2018-01-01' and '2018-03-31' ";
 $result = mysqli_query($conn,$sql);
 $row = mysqli_fetch_array($result); {   
  ?>
@@ -65,26 +65,24 @@ $row = mysqli_fetch_array($result); {
     <option value="">Select Month</option>
     </select>
     <lable> Total Sales</lable><br>
-    <input type="text" placeholder="Total sales" style="margin-left:2%;" id="post_at" name="tsales"  value="<?php echo  $a=$row['sales']; ?>" class="input-control" /><br><br>
-    <lable> Credit or Trade Discount</lable><br>
-    <input type="text" placeholder="credit note" style="margin-left:2%;" id="post_at" name="credit"  value="<?php echo  $b=$row['credit']; ?>" class="input-control" /><br><br>
+    <input type="text" placeholder="Total sales" style="margin-left:2%;" id="post_at" name="tsales"  value="<?php echo  $a=$row['sum(Amount)']; ?>" class="input-control" /><br><br>
+    
     <lable> Subsidy</lable><br>
     <input type="text" placeholder="Subsidy" style="margin-left:2%;" id="post_at" name="sub"  value="<?php echo $sub; ?>" class="input-control" /><br><br>
     <lable> Net Sales</lable><br>
-    <input type="text" placeholder="Net Sales" style="margin-left:2%;" id="post_at" name="nsales"  value="<?php echo $Total=$a-$b-$sub; ?>" class="input-control" /><br><br>
+    <input type="text" placeholder="Net Sales" style="margin-left:2%;" id="post_at" name="nsales"  value="<?php echo ($Total=$a-$sub); ?>" class="input-control" /><br><br>
     <input type="hidden" placeholder="target" style="margin-left:2%;" id="post_at" name="pince"  value="<?php echo "0.3"; ?>" class="input-control" /><br><br>
     <lable>Incetives for Non sales </lable><br>
     <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="inc"  value="<?php echo round($amm=($Total * ( 0.003))); ?>" class="input-control" /><br><br>
     <lable>Incetives EXECUTIVES </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="exe"  value="<?php echo round($amm=($Total * ( 0.00228))); ?>" class="input-control" /><br><br>
-    <lable>Incetives E-Commerce </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="ecom"  value="<?php echo round($amm=($Total * ( 0.000065))); ?>" class="input-control" /><br><br>
+    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="exe"  value="<?php echo round($amm1=($Total * ( 0.0025))); ?>" class="input-control" /><br><br>
+   
     <lable>Incetives ASM </lable><br>
     <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="asm"  value="<?php echo round($amm=($Total * ( 0.00052))); ?>" class="input-control" /><br><br>
     <lable>Incetives SM </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="sm"  value="<?php echo round($amm=($Total * ( 0.00007))); ?>" class="input-control" /><br><br>
+    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="sm"  value="<?php echo round($amm=($Total * ( 0.000018))); ?>" class="input-control" /><br><br>
     <lable>Incetives ZM </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="zm"  value="<?php echo round($amm=($Total * ( 0.00010))); ?>" class="input-control" /><br><br>
+    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="zm"  value="<?php echo round($amm=($Total * ( 0.00026))); ?>" class="input-control" /><br><br>
    
     <input type="submit" name="go" value="Update" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px" ><br>
     </form>

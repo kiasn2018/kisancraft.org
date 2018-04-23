@@ -33,7 +33,7 @@ if(isset($_POST["Import"])){
         $pname = array_search ('Party Name', $emapData);
         $iname = array_search ('Item Name', $emapData);
         $qty = array_search ('Billed Quantity', $emapData);
-        $amount = array_search ('Amount', $emapData);
+        $amount1 = array_search ('Commission', $emapData);
        
         while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
         {     //print_r($emapData);
@@ -41,20 +41,35 @@ if(isset($_POST["Import"])){
             //remove ' from string
             $data1= str_replace("'", "_", $emapData[$pname]);
             $data2= str_replace("'", "_", $emapData[$iname]);
-            $orderdate = explode('/', $emapData[0]);
+            $orderdate = explode('/', $emapData[$date]);
             $month = $orderdate[1];
             $day   = $orderdate[0];
             $year  = $orderdate[2];
-			$state=$emapData[6];
-			$dis=$emapData[5];
-			$zone=$emapData[7];
-			$sku=$emapData[8];
-			$seg=$emapData[9];
-			$exe=$emapData[10];
-            echo $year."-".$month."-".$day.$emapData[$vtype].$emapData[$pname].$emapData[$iname].$emapData[$qty].$emapData[$amount]."<br>";
+			 
+			$sql = "SELECT * from Dealermst where D_name='$data1'";
+             //echo $sql;
+             $result = mysqli_query($conn,$sql);
+			$row = mysqli_fetch_array($result);
+			
+			$state=$row["D_state"];
+			$dis=$row["D_distict"];
+			$sqle = "SELECT * from Excutivemst where District='$dis' AND State='$state'";
+             //echo $sql;
+             $resulte = mysqli_query($conn,$sqle);
+			$rowe = mysqli_fetch_array($resulte);
+			$exe=$rowe["Exexutive"];
+			$eid=$rowe["EID"];
+			$asm=$rowe["ASM"];
+			$aid=$rowe["AID"];
+			$sm=$rowe["SM"];
+			$sid=$rowe["SID"];
+			$zm=$rowe["ZM"];
+			$zid=$rowe["ZID"];
+			$amount=0-$emapData[$amount1];
+            echo $year."-".$month."-".$day."-".$data1."-".$state."-".$dis."-".$exe."-".$asm."-".$sm."-".$zm."-".$amount."<br>";
             
-            $sql = "INSERT into Salesmaster (Date,Dealer,Product, QTY, Amount,State,District,SKU,Seqment,Executive,Zone)
-                 values('$year-$day-$month','$data1','$data2','$emapData[$qty]','$emapData[$amount]','$state','$dis','$sku','$seg','$exe','$zone')";
+            $sql = "INSERT into Salesmaster (Date,Dealer, Amount,State,District,Executive,EID,ASM,AID,SM,SID,ZM,ZID)
+                 values('$year-$day-$month','$data1','$amount','$state','$dis','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {

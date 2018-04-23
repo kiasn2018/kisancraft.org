@@ -254,7 +254,7 @@ if($_POST["go"]=="Submit"){
 		//echo 
     
    {   $seg=array();
-        $sqld = "SELECT DISTINCT (District) District, State FROM Salesmaster";
+        $sqld = "SELECT DISTINCT Dealer ,State from Salesmaster  ";
         // echo $sqld;
         $resultd = mysqli_query($conn,$sqld);
 		$sqldq = "SELECT DISTINCT Segment from SKU";
@@ -268,16 +268,11 @@ if($_POST["go"]=="Submit"){
                 <table class="sortable" style="with:40%">
                 <tr>
                 <th>State</th>
-                <th>District</th>
-				<?php
-				while($rowdq = mysqli_fetch_array($resultdq)){?>
-                <th colspan="2"><?php echo $rowdq['Segment']; $seg[]=$rowdq['Segment'];?></th>
-				<?php } ?>
-				<th>Trade Discount</th>
+                <th>Dealer</th>
+				
                 </tr>
 				<tr>
-				<td></td>
-				<td></td>
+				
 				<?php
 				
 				while($rowdqq = mysqli_fetch_array($resultdqq)){
@@ -287,30 +282,20 @@ if($_POST["go"]=="Submit"){
    <?php } ?> </tr> <?php 
   while($rowd = mysqli_fetch_array($resultd)) {
 	    $state=$rowd['State'];
-        $di=$rowd["District"];
-			
-        
+        $di=$rowd["Dealer"];
+			 $sqld1 = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE Dealer='$di' AND SKU='KK-GE-200' ";
+        // echo $sqld;
+        $resultd1 = mysqli_query($conn,$sqld1);     
+        $rowd1= mysqli_fetch_array($resultd1);
+        if($rowd1["sum(QTY)"]!=''){
         
         ?>
                 <tr>
                 <td><?php echo $state; ?></td>
                 <td><?php echo $di; ?></td>
-				<?php 
-				for($j=0;$j<(count($seg));$j++){
-         $sqld1 = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE District='$di' AND SKU='KK-GE-100' ";
-        // echo $sqld;
-        $resultd1 = mysqli_query($conn,$sqld1);     
-        $rowd1= mysqli_fetch_array($resultd1);	?>
-				<td><?php echo $rowd1['sum(QTY)']; ?></td>
-                <td><?php echo $rowd1['sum(Amount)']; ?></td>
-               
-		<?php }
-		$sqld11 = "SELECT sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='#N/A' ";
-        // echo $sqld;
-        $resultd11 = mysqli_query($conn,$sqld11);     
-        $rowd11= mysqli_fetch_array($resultd11);
-		?><td><?php echo $rowd11['sum(Amount)'];?></td></tr><?php
-		}?> 
+				<td><?php echo "KK-GE-200"; ?></td>
+				<td><?php echo $rowd1["sum(QTY)"]; ?></td>
+   </tr><?php }}?>
 				</table>
                 </div>
 				<script>
