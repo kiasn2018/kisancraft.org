@@ -22,7 +22,7 @@ include '/config/db.php';
 <div class="row">
 <div class="span3 hidden-phone"></div>
 <div class="span6" id="form-login">
-<form class="form-horizontal well" action="importitem.php" method="post" name="upload_excel" enctype="multipart/form-data">
+<form class="form-horizontal well" action="importstock.php" method="post" name="upload_excel" enctype="multipart/form-data">
 <fieldset>
 <legend>Import CSV/Excel file</legend>
 <div class="control-group">
@@ -30,8 +30,20 @@ include '/config/db.php';
 <label>CSV/Excel File:</label>
 </div>
 <div class="controls">
+<label>Please Enter the month and year of uploading data</label><br/>
+<input type="Number" placeholder="Enter Month" name="month" id="month" class="input-large" required >
+<input type="Number" placeholder="Enter Year" name="year" id="year" class="input-large" required>
 <input type="file" name="file" id="file" class="input-large">
 <button type="submit" id="submit" name="Import" class="btn btn-primary button-loading" data-loading-text="Loading...">Upload</button>
+<?php 
+$sql1 = "SELECT month,year from Stockmst ORDER BY month DESC ";
+$result1 = mysqli_query($conn,$sql1);
+$row1 = mysqli_fetch_array($result1);
+//print_r($row1[[month]]);
+?>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label ><font color="mahogany"><b>Last Uploaded Stock sheet : Month = <?php echo $row1["month"]?> and Year = <?php echo $row1["year"] ?></b></font></label>
+
 </div>
 </div>
 
@@ -51,13 +63,7 @@ include '/config/db.php';
 <hr>
 <div style="margin-left:22%; width:75%;">
 <?php 
-$results_per_page = 100;
-if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
-$start_from = ($page-1) * $results_per_page;
-$sql = "SELECT * from Itemmst LIMIT ".$start_from.",".$results_per_page;
-
-
-//$sql = "SELECT * from Itemmst ";
+$sql = "SELECT distinct Product from Stockmst where SKU='' ";
 $result = mysqli_query($conn,$sql);
 //include '/test/index.php';
 //include '/search.php';
@@ -66,10 +72,13 @@ $result = mysqli_query($conn,$sql);
 <table class="sortable">
           <thead>
         <tr class="d0">
-          <th width="10%"><span>ID</span></th>	
-          <th width="50%"><span> Item Name</span></th>
-          <th width="20%"><span>SKU</span></th>          
-          
+          <th width="10%"><span>Emp ID</span></th>	
+        <th width="10%"><span>Month</span></th>	
+        <th width="10%"><span>Year</span></th>	
+          <th width="50%"><span> Employee Name</span></th>
+          <th width="20%"><span>Branch</span></th>          
+          <th width="25%"><span>Category</span></th>
+          <th width="25%"><span>Total Earning</span></th>	 
         </tr>
       </thead>
     <tbody>
@@ -77,10 +86,15 @@ $result = mysqli_query($conn,$sql);
 		while($row = mysqli_fetch_array($result)) {
 	?>
         <tr class="d1">
-            <td><?php echo $row["Itemid"]; ?></td>
-			<td><?php echo $data= str_replace("_", "'",$row["Item_name"]); ?></td>
-			<td><?php echo $row["SKU"]; ?></td>
+            <td><?php echo $row["Product"]; ?></td>
+            <td><?php echo $row["month"]; ?></td>
+            <td><?php echo $row["year"]; ?></td>
+			<td><?php echo $row["E_name"]; ?></td>
+			<td><?php echo $row["Branch"]; ?></td>
+			<td><?php $str = strtolower($row["Department"]);if($str=="sales") { echo "sales";}else{echo "Non sales";} ?></td>
+			<td><?php echo $row["Total_Earning"]; ?></td>
 			
+
 		</tr>
    <?php
 		}
@@ -91,16 +105,4 @@ $result = mysqli_query($conn,$sql);
 </div>
 </body>
 </head>
-<?php 
-$sql = "SELECT COUNT(Itemid) AS total FROM Itemmst";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-
-$total_pages = ceil($row["total"] / $results_per_page);
-for ($i=1; $i<=$total_pages; $i++) {
-    ?>  <a href="/kisankraft.org/itemid.php?page=<?php echo $i;?>"><?php echo $i;?></a><?php
-    
-    //echo "<a href=''?page=".$i."'>".$i."</a> ";
-};
-?>
 </html>

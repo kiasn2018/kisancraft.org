@@ -54,10 +54,10 @@ include '/config/db.php';
 $results_per_page = 100;
 if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
 $start_from = ($page-1) * $results_per_page;
-$sql = "SELECT * from Itemmst LIMIT ".$start_from.",".$results_per_page;
+$sql = "SELECT * from SKU LIMIT ".$start_from.",".$results_per_page;
 
 
-//$sql = "SELECT * from Itemmst ";
+//$sql = "SELECT * from SKU ";
 $result = mysqli_query($conn,$sql);
 //include '/test/index.php';
 //include '/search.php';
@@ -66,11 +66,8 @@ $result = mysqli_query($conn,$sql);
 <table class="sortable">
           <thead>
         <tr class="d0">
-          <th width="10%"><span>ID</span></th>	
-          <th width="50%"><span> Item Name</span></th>
-          <th width="20%"><span>SKU</span></th>          
-          <th width="25%"><span>Item Group</span></th>
-          <th width="25%"><span>Action</span></th>	  
+          <th width="50%"><span> SKU</span></th>
+          <th width="20%"><span>Segment</span></th>      
         </tr>
       </thead>
     <tbody>
@@ -78,12 +75,10 @@ $result = mysqli_query($conn,$sql);
 		while($row = mysqli_fetch_array($result)) {
 	?>
         <tr class="d1">
-            <td><?php echo $row["Itemid"]; ?></td>
-			<td><?php echo $data= str_replace("_", "'",$row["Item_name"]); ?></td>
-			<td><?php echo $row["SKU"]; ?></td>
-			<td><?php echo $row["Item_group"]; ?></td>
-			<td><a href="/kisankraft.org/editbranch.php?&rowid=<?php echo $row["Itemid"]?>" target="blank">Edit</a> | <a href="/kisankraft.org/editbranch.php?&rowid=<?php echo $row["Itemid"]?>" target="">Delete</a> </td>
-
+            <td><?php echo $row["SKU"]; ?></td>
+			<td><?php echo $data= $row["Segment"]; ?></td>
+			
+			
 		</tr>
    <?php
 		}
@@ -95,13 +90,13 @@ $result = mysqli_query($conn,$sql);
 </body>
 </head>
 <?php 
-$sql = "SELECT COUNT(Itemid) AS total FROM Itemmst";
+$sql = "SELECT COUNT(SKU) AS total FROM SKU";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
 $total_pages = ceil($row["total"] / $results_per_page);
 for ($i=1; $i<=$total_pages; $i++) {
-    ?>  <a href="/kisankraft.org/itemid.php?page=<?php echo $i;?>"><?php echo $i;?></a><?php
+    ?>  <a href="/kisancraft.org/SKU.php?page=<?php echo $i;?>"><?php echo $i;?></a><?php
     
     //echo "<a href=''?page=".$i."'>".$i."</a> ";
 };

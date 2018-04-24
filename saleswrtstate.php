@@ -225,7 +225,7 @@ if($_POST["go"]=="Submit"){
 		//echo 
     
    {   $seg=array();
-        $sqld = "SELECT DISTINCT (District) District, State,Executive FROM Salesmaster";
+        $sqld = "SELECT DISTINCT (District) District, State FROM Salesmaster";
         // echo $sqld;
         $resultd = mysqli_query($conn,$sqld);
 		$sqldq = "SELECT DISTINCT Segment from SKU";
@@ -243,56 +243,27 @@ if($_POST["go"]=="Submit"){
                 <tr>
                 <th>State</th>
                 <th>District</th>
-				<th>Executive</th>
-				<?php
-				while($rowdq = mysqli_fetch_array($resultdq)){ if($rowdq['Segment']!=''){?>
-                <th colspan="2"><?php echo $rowdq['Segment']; $seg[]=$rowdq['Segment'];?></th>
-				<?php }} ?>
-				<th>Trade Discount</th>
+				<th>Amount</th>
                 </tr>
 				<tr>
 				<td></td>
 				<td></td>
-				<td></td>
-				<?php
-				
-				while($rowdqq = mysqli_fetch_array($resultdqq)){if($rowdqq['Segment']!=''){
-					?>
-				<td><?php echo 'QTY'; ?></td>
-                <td><?php echo 'Amount'; ?></td>
-				<?php }} ?> </tr> <?php 
+                <tr>
+				<?php 
   while($rowd = mysqli_fetch_array($resultd)) {
 	    $state=$rowd['State'];
         $di=$rowd["District"];
-			
-        
-        
         ?>
-                <tr>
                 <td><?php echo $state; ?></td>
                 <td><?php echo $di; ?></td>
-				<td><?php echo $rowd["Executive"]; ?></td>
 				<?php 
-				for($j=0;$j<(count($seg));$j++){
-         $sqld1 = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='$seg[$j]' ".$queryCondition;
+				
+         $sqld1 = "SELECT sum(Amount) from Salesmaster WHERE District='$di'  ".$queryCondition;
         // echo $sqld;
         $resultd1 = mysqli_query($conn,$sqld1);     
-        $rowd1= mysqli_fetch_array($resultd1);
-         $sqld111 = "SELECT sum(QTY) from Salesmaster WHERE District='$di' AND Segment1='$seg[$j]' ".$queryCondition;
-        // echo $sqld;
-        $resultd111 = mysqli_query($conn,$sqld111);     
-        $rowd111= mysqli_fetch_array($resultd111);
-		?>
-				<td><?php echo ($rowd1['sum(QTY)']+$rowd111['sum(QTY)']); ?></td>
-                <td><?php echo $rowd1['sum(Amount)']; ?></td>
-               
-		<?php }
-		$sqld11 = "SELECT sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='#N/A' ".$queryCondition;
-        // echo $sqld;
-        $resultd11 = mysqli_query($conn,$sqld11);     
-        $rowd11= mysqli_fetch_array($resultd11);
-		
-		?><td><?php echo $rowd11['sum(Amount)'];?></td></tr><?php
+        $rowd1= mysqli_fetch_array($resultd1);	?>
+				
+                <td><?php echo $rowd1['sum(Amount)']; ?></td></tr><?php
 		}?> 
 				</table>
                 </div>
@@ -341,4 +312,4 @@ function exportTableToCSV(filename) {
   </script>
 				<button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
                 <?php 
-   }}
+}}

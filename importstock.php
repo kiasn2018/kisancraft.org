@@ -19,7 +19,8 @@ if(isset($_POST["Import"])){
     
     
     echo $filename=$_FILES["file"]["tmp_name"];
-    
+    $month = $_POST["month"];
+		$year = $_POST["year"];
     
     if($_FILES["file"]["size"] > 0)
     {
@@ -27,13 +28,31 @@ if(isset($_POST["Import"])){
         $file = fopen($filename, "r");
         
         $I=0;
+        ($emapData = fgetcsv($file, 10000, ",")) !== FALSE;
+        //$date = array_search ('Date', $emapData);
+        $vtype = array_search ('Rate', $emapData);
+        
+        $iname = array_search ('Particulars', $emapData);
+        $qty = array_search ('Quantity', $emapData);
+        $amount1 = array_search ('Value', $emapData);
+       
         while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
         {     //print_r($emapData);
             //It wiil insert a row to our subject table from our csv file`
             //remove ' from string
-            $data= str_replace("'", "_", $emapData[0]);
-            $sql = "INSERT into Itemmst (Item_name, SKU,SKU1)
-                 values('$data','$emapData[1]','$emapData[2]')";
+            $data1= str_replace("'", "_", $emapData[$pname]);
+            $data2= str_replace("'", "_", $emapData[$iname]);
+           
+			$sql = "SELECT SKU from Itemmst where Item_name='$data2'";
+             //echo $sql;
+             $result = mysqli_query($conn,$sql);
+			$row = mysqli_fetch_array($result);
+			
+			$state=$row["SKU"];
+			
+            
+            $sql = "INSERT into Stockmst (Product, SKU,QTY,Rate,Amount,month,year)
+                 values('$data2','$state','$emapData[$qty]','$emapData[$vtype]','$emapData[$amount1]','$month','$year')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {

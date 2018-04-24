@@ -4,6 +4,20 @@ include 'header.php';
 
 ?>
  <head>
+ 
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="/kisankraft.org/src/js/sorttable.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+	<style>
+	tr:nth-child(even) {
+    background-color: #99ccb7;
+                       }
+	
+	.sortable{border-top:#CCCCCC 4px solid; width:100%;font-size:15px;}
+	.sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
+	.sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
+	</style>
     <style>
 input[type=text], select {
     width: 100%;
@@ -59,30 +73,10 @@ $row = mysqli_fetch_array($result); {
     <legend>Incentive Calculation</legend>
     <div style="margin-left:30% ;width:50%">
     <form name="frmSearch" method="post" action="">
-    <lable> Year</lable><br>
-    <input type="text" placeholder="Year" style="margin-left:2%;" id="post_at" name="year"  value="<?php echo $row['year']; ?>" class="input-control" /><br><br>
     <select name="month" id="month">
     <option value="">Select Month</option>
     </select>
-    <lable> Total Sales</lable><br>
-    <input type="text" placeholder="Total sales" style="margin-left:2%;" id="post_at" name="tsales"  value="<?php echo  $a=$row['sum(Amount)']; ?>" class="input-control" /><br><br>
-    
-    <lable> Subsidy</lable><br>
-    <input type="text" placeholder="Subsidy" style="margin-left:2%;" id="post_at" name="sub"  value="<?php echo $sub; ?>" class="input-control" /><br><br>
-    <lable> Net Sales</lable><br>
-    <input type="text" placeholder="Net Sales" style="margin-left:2%;" id="post_at" name="nsales"  value="<?php echo ($Total=$a-$sub); ?>" class="input-control" /><br><br>
-    <input type="hidden" placeholder="target" style="margin-left:2%;" id="post_at" name="pince"  value="<?php echo "0.3"; ?>" class="input-control" /><br><br>
-    <lable>Incetives for Non sales </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="inc"  value="<?php echo round($amm=($Total * ( 0.003))); ?>" class="input-control" /><br><br>
-    <lable>Incetives EXECUTIVES </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="exe"  value="<?php echo round($amm1=($Total * ( 0.0025))); ?>" class="input-control" /><br><br>
    
-    <lable>Incetives ASM </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="asm"  value="<?php echo round($amm=($Total * ( 0.00052))); ?>" class="input-control" /><br><br>
-    <lable>Incetives SM </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="sm"  value="<?php echo round($amm=($Total * ( 0.000018))); ?>" class="input-control" /><br><br>
-    <lable>Incetives ZM </lable><br>
-    <input type="text" placeholder="Incetives" style="margin-left:2%;" id="post_at" name="zm"  value="<?php echo round($amm=($Total * ( 0.00026))); ?>" class="input-control" /><br><br>
    
     <input type="submit" name="go" value="Update" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px" ><br>
     </form>
@@ -105,9 +99,7 @@ for(m = 0; m <= 3; m++) {
     optn.value = (m+1);
  
     // if june selected
-    if ( m == 2) {
-        optn.selected = true;
-    }
+    
  
     document.getElementById('month').options.add(optn);
 }
@@ -116,7 +108,7 @@ for(m = 0; m <= 3; m++) {
 
 if(isset($_POST["go"])){
     $year=$_POST["year"];
-    $month=$_POST["month"];
+    $month=$_POST["month"]; 
     $AP=$_POST['tsales'];
     $BH=$_POST['credit'];
     $CH=$_POST['sub'];
@@ -128,32 +120,86 @@ if(isset($_POST["go"])){
     $asm=$_POST['asm'];
     $sm=$_POST['sm'];
     $zm=$_POST['zm'];
+	if($month=="1"){  $start='2017-04-01';$end='2017-06-30';}elseif($month=="2"){$start='2017-07-01';$end='2017-09-30';}elseif($month=='3'){$start='2017-10-01';$end='2017-12-31';}elseif($month=='4'){$start='2018-01-01';$end='2018-03-31';}
+    $sql = "SELECT sum(Amount) from Salesmaster where Date between '$start' and '$end' ";
+	//echo $sql;
+$result = mysqli_query($conn,$sql);
+$row = mysqli_fetch_array($result);
+?>
+<table class="sortable">
+<tr>
+<th>Sales Q<?php echo ($month)?></th>
+<th><?php echo $Total=$row['sum(Amount)'];?></th>
+</tr>
+<tr>
+<th>Incentives Category</th>
+<th>Incentives Amount</th>
+</tr>
+<tr>
+<td>Incetives for Non sales</td>
+<td><?php echo round($amm=($Total * ( 0.003))); ?></td>
+</tr>
+<tr>
+<td>Incetives EXECUTIVES</td>
+<td><?php echo round($amm1=($Total * ( 0.0025))); ?></td>
+</tr>
+<tr>
+<td>Incetives ASM</td>
+<td><?php echo round($amm1=($Total * ( 0.00052))); ?></td>
+</tr>
+<tr>
+<td>Incetives SM</td>
+<td><?php echo round($amm1=($Total * ( 0.000018))); ?></td>
+</tr>
+<tr>
+<td>Incetives ZM</td>
+<td><?php echo round($amm1=($Total * ( 0.00026))); ?></td>
+</tr>
+ </table>
+
+<script>
+  function downloadCSV(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+    // CSV file
+    csvFile = new Blob([csv], {type: "text/csv"});
+
+    // Download link
+    downloadLink = document.createElement("a");
+
+    // File name
+    downloadLink.download = filename;
+
+    // Create a link to the file
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // Hide download link
+    downloadLink.style.display = "none";
+
+    // Add the link to DOM
+    document.body.appendChild(downloadLink);
+
+    // Click download link
+    downloadLink.click();
+}
+function exportTableToCSV(filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
     
-    $sql = ("SELECT count(*) as total FROM incentive where year='$year' and month='$month' ");
-    $query = $conn->query($sql); 
-    $row = mysqli_fetch_array($query);
-    if ($row['total'] == 0){
-        $sql = "INSERT into incentive(year, month, sales,credit,Subsidy,netsales,incetivenon)
-                 values('$year','$month','$AP','$BH','$CH','$DL','$GU')";
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
         
-        if ($conn->query($sql) === TRUE) {
-            echo "<script type=\"text/javascript\">
-						alert(\"Updated Succesfully.\");
-						window.location = \"\"
-					</script>";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }else{  $sql = "UPDATE incentive SET sales = '$AP',credit='$BH',Subsidy='$CH',netsales='$DL',incetivenon='$GU',Ecomm='$ecom',EXE='$exe',ASM='$asm',SM='$sm',ZM='$zm' ".
-        "WHERE year = '$year' and month='$month'" ;
-    $query = $conn->query($sql); 
-    //$retval = mysql_query( $sql, $conn );
-    
-    if(! $query ) {
-        die('Could not update data: ' . mysql_error());
+        for (var j = 0; j < cols.length; j++) 
+            row.push(cols[j].innerText);
+        
+        csv.push(row.join(","));        
     }
-    echo "<script type=\"text/javascript\">
-						alert(\"Updated Succesfully.\");
-						window.location = \"\"
-					</script>";} 
+
+    // Download CSV file
+    downloadCSV(csv.join("\n"), filename);
+}
+  </script>
+  <button onclick="exportTableToCSV('Incentives summary.csv')">Export HTML Table To CSV File</button>
+  <?php
 }
