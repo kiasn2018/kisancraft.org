@@ -24,7 +24,7 @@ $post_at_todate="2018-02-28";}
 list($tid,$tim,$tiy) = explode("-",$post_at_todate);
 //echo $tiy;
 $queryCondition .= "WHERE Date BETWEEN '$fiy-$fim-$fid' AND '" . $post_at_todate . "'";
-$sql = "SELECT * from Salesmst " . $queryCondition . " ORDER BY Date  ";
+$sql = "SELECT * from Salesmaster " . $queryCondition . " ORDER BY Date  ";
 //echo $sql;
 
 $result = mysqli_query($conn,$sql);
@@ -60,8 +60,8 @@ $wb=array();
 $rj=array();
 while($row = mysqli_fetch_array($result)) {
     //print_r($row);exit();
-    if($row["Vorture_type"]!="Sales-Stkp" && $row["Vorture_type"]!="Sales-Stkm"){
-    $d=$row["Dealer_name"];
+    {
+    $d=$row["Dealer"];
     $date=$row["Date"];
     $orderdate = explode('-', $date);
     $month = $orderdate[1];

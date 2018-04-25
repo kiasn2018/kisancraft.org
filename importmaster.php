@@ -33,7 +33,7 @@ if(isset($_POST["Import"])){
         $pname = array_search ('Party Name', $emapData);
         $iname = array_search ('Item Name', $emapData);
         $qty = array_search ('Billed Quantity', $emapData);
-        $amount1 = array_search ('Commission', $emapData);
+        $amount1 = array_search ('Amount', $emapData);
        
         while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
         {     //print_r($emapData);
@@ -65,11 +65,11 @@ if(isset($_POST["Import"])){
 			$sid=$rowe["SID"];
 			$zm=$rowe["ZM"];
 			$zid=$rowe["ZID"];
-			$amount=0-$emapData[$amount1];
+			$amount=$emapData[$amount1];
             echo $year."-".$month."-".$day."-".$data1."-".$state."-".$dis."-".$exe."-".$asm."-".$sm."-".$zm."-".$amount."<br>";
             
-            $sql = "INSERT into Salesmaster (Date,Dealer, Amount,State,District,Executive,EID,ASM,AID,SM,SID,ZM,ZID)
-                 values('$year-$day-$month','$data1','$amount','$state','$dis','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid')";
+            $sql = "INSERT into Salesmaster (Date,Dealer, Amount,State,District,Executive,EID,ASM,AID,SM,SID,ZM,ZID,Product,QTY)
+                 values('$year-$month-$day','$data1','$amount','$state','$dis','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid','$data2','$emapData[$qty]')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {

@@ -45,10 +45,30 @@ if(isset($_POST["Import"])){
             $month = $orderdate[1];
             $day   = $orderdate[0];
             $year  = $orderdate[2];
+			$sql = "SELECT * from Dealermst where D_name='$data1'";
+             //echo $sql;
+             $result = mysqli_query($conn,$sql);
+			$row = mysqli_fetch_array($result);
+			
+			$state=$row["D_state"];
+			$dis=$row["D_distict"];
+			$sqle = "SELECT * from Excutivemst where District='$dis' AND State='$state'";
+             //echo $sql;
+             $resulte = mysqli_query($conn,$sqle);
+			$rowe = mysqli_fetch_array($resulte);
+			$exe=$rowe["Exexutive"];
+			$eid=$rowe["EID"];
+			$asm=$rowe["ASM"];
+			$aid=$rowe["AID"];
+			$sm=$rowe["SM"];
+			$sid=$rowe["SID"];
+			$zm=$rowe["ZM"];
+			$zid=$rowe["ZID"];
+			
             echo $year."-".$month."-".$day.$emapData[$vtype].$emapData[$pname].$emapData[$iname].$emapData[$qty].$emapData[$amount]."<br>";
             
-            $sql = "INSERT into Salesmst (Date, Dealer_name,Vorture_type,Item_name, Quantity , Amount)
-                 values('$year-$day-$month','$data1','$emapData[$vtype]','$data2','$emapData[$qty]','$emapData[$amount]')";
+            $sql = "INSERT into Salesmst (Date, Dealer_name,Vorture_type,Item_name, Quantity , Amount,Executive,EID,ASM,AID,SM,SID,ZM,ZID)
+                 values('$year-$day-$month','$data1','$emapData[$vtype]','$data2','$emapData[$qty]','$emapData[$amount]','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {

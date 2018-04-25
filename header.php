@@ -121,7 +121,7 @@ if($_SESSION["log"]!="en"){
               <h2></h2>
               <ul>
                 <li class="current">
-                <a href="#">Standerd</a></li><br>
+                <a href="/kisancraft.org/aeging.php">Standerd</a></li><br>
                 <li><a href="#">Quaterly</a></li><br>
                 <li><a href="#">Half Yearly</a></li><br>
                 <li><a href="#">Annually</a></li><br>

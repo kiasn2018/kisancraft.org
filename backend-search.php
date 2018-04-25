@@ -1,8 +1,7 @@
 <?php
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-$link = mysqli_connect("localhost", "kisan", "yes", "branch_mst");
- 
+$link = mysqli_connect("localhost", "mayurj", "yes", "branch_mst");
 // Check connection
 if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());

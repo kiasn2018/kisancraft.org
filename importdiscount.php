@@ -12,7 +12,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully";
+//echo "Connected successfully";
 
 // select datebase and display
 if(isset($_POST["Import"])){
@@ -28,29 +28,48 @@ if(isset($_POST["Import"])){
         
         $I=0;
         ($emapData = fgetcsv($file, 10000, ",")) !== FALSE;
-          $keytd = array_search ('Trade Discount', $emapData);
-            $keyd = array_search ('Date', $emapData);
-            $keypt = array_search ('Particulars', $emapData);
-            $keyvc = array_search ('Voucher Type', $emapData);
-            $keyqty = array_search ('Quantity', $emapData);
-            $keygt = array_search ('Gross Total', $emapData);
-            $keyvl = array_search ('Debit', $emapData);
-            while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
-            {            
-                if($emapData[0]!=""){
-                
-                $vt="Trade Discount";
-                
-            
-            $orderdate = explode('/', $emapData[0]);
+        $date = array_search ('Date', $emapData);
+        $vtype = array_search ('Voucher Type', $emapData);
+        $pname = array_search ('Party Name', $emapData);
+        $iname = array_search ('Item Name', $emapData);
+        $qty = array_search ('Billed Quantity', $emapData);
+        $amount1 = array_search ('Commission', $emapData);
+       
+        while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
+        {     //print_r($emapData);
+            //It wiil insert a row to our subject table from our csv file`
+            //remove ' from string
+            $data1= str_replace("'", "_", $emapData[$pname]);
+            $data2= str_replace("'", "_", $emapData[$iname]);
+            $orderdate = explode('/', $emapData[$date]);
             $month = $orderdate[1];
             $day   = $orderdate[0];
             $year  = $orderdate[2];
-            echo $year."-".$day."-".$month."-".$emapData[$keypt]."-".$emapData[$keyvl]."-".$vt."<br>";
+			 
+			$sql = "SELECT * from Dealermst where D_name='$data1'";
+             //echo $sql;
+             $result = mysqli_query($conn,$sql);
+			$row = mysqli_fetch_array($result);
+			
+			$state=$row["D_state"];
+			$dis=$row["D_distict"];
+			$sqle = "SELECT * from Excutivemst where District='$dis' AND State='$state'";
+             //echo $sql;
+             $resulte = mysqli_query($conn,$sqle);
+			$rowe = mysqli_fetch_array($resulte);
+			$exe=$rowe["Exexutive"];
+			$eid=$rowe["EID"];
+			$asm=$rowe["ASM"];
+			$aid=$rowe["AID"];
+			$sm=$rowe["SM"];
+			$sid=$rowe["SID"];
+			$zm=$rowe["ZM"];
+			$zid=$rowe["ZID"];
+			$amount=0-$emapData[$amount1];
+            echo $year."-".$month."-".$day."-".$data1."-".$state."-".$dis."-".$exe."-".$asm."-".$sm."-".$zm."-".$amount."<br>";
             
-            //print_r($emapData);exit();
-            $sql = "INSERT into Credit_td (Date,party_name,vourture_type, amount)
-                 values('$year-$day-$month','$emapData[$keypt]','$vt','$emapData[$keyvl]')";
+            $sql = "INSERT into Salesmaster (Date,Dealer, Amount,State,District,Executive,EID,ASM,AID,SM,SID,ZM,ZID)
+                 values('$year-$day-$month','$data1','$amount','$state','$dis','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {
@@ -60,10 +79,29 @@ if(isset($_POST["Import"])){
             }//echo $result.$sql;exit();
             
             
-                }}}}?><?php
+        } } }?><?php
           EXIT();
             
-           
+                        //It wiil insert a row to our subject table from our csv file`
+           /* $sql = "INSERT into purches_mst (Date, Supplier, voucher_type,item_name , Quantity,Rate, Value,Addl_cost,Total_cost,Londedcost_unit,Total_value,Addl_value)
+	            	values('$pdate','$psupplier','$ppurchesim','$emapData[1]','$emapData[26]','$emapData[28]','$emapData[29]','$Addl','$totalcost','$landed_cost','$pvalue','$padditional_cost')";
+            //we are using mysql_query function. it returns a resource on true else False on error
+            //echo "Error: " . $sql . "<br>" . $conn->error; 
+            if ($conn->query($sql) === TRUE) {
+                echo "New record created successfully";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            } //echo $result.$sql;exit();
+            if(! $result )
+            {
+                echo "<script type=\"text/javascript\">
+							alert(\"Uploaded .\");
+							window.location = \"index.php\"
+						</script>";
+            } */
+            
+                
+       
            
         
         fclose($file);
