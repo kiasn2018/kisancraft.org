@@ -26,7 +26,7 @@ if(isset($_POST["Import"])){
     {
         //logic to save in db format
         $file = fopen($filename, "r");
-        
+        $unmatched=array();
         $I=0;
         ($emapData = fgetcsv($file, 10000, ",")) !== FALSE;
         //$date = array_search ('Date', $emapData);
@@ -49,7 +49,10 @@ if(isset($_POST["Import"])){
 			$row = mysqli_fetch_array($result);
 			
 			$state=$row["SKU"];
-			
+			if($state=="")
+			{
+				$unmatched[]=$data2;
+			}
             
             $sql = "INSERT into Stockmst (Product, SKU,QTY,Rate,Amount,month,year)
                  values('$data2','$state','$emapData[$qty]','$emapData[$vtype]','$emapData[$amount1]','$month','$year')";
@@ -62,7 +65,11 @@ if(isset($_POST["Import"])){
             }//echo $result.$sql;exit();
             
             
-        } } }?><?php
+        } } 
+		for($j=0;$j<=count($unmatched);$j++){
+		echo $unmatched[$j]	."<br/>";
+		}
+		}?><?php
           EXIT();
             
                         //It wiil insert a row to our subject table from our csv file`

@@ -18,7 +18,8 @@ if(!empty($_POST["search"]["post_at"])) {
     
     $queryCondition .= "WHERE Date BETWEEN '$fiy-$fim-$fid' AND '" . $post_at_todate . "'";
 }
-
+$sql = "SELECT DISTINCT Supplier " . $queryCondition . " ORDER BY Date desc";
+$result = mysqli_query($conn,$sql);
 $sql = "SELECT DISTINCT Supplier " . $queryCondition . " ORDER BY Date desc";
 $result = mysqli_query($conn,$sql);
 ?>
@@ -67,7 +68,7 @@ $result = mysqli_query($conn,$sql);
 	 <p class="search_input">
 		<input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>" class="input-control" />
 	    <input type="text" placeholder="To Date" id="post_at_to_date" name="search[post_at_to_date]" style="margin-left:10px"  value="<?php echo $post_at_to_date; ?>" class="input-control"  />			 
-		<input type="submit" name="go" value="Search" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px" >
+		<input type="submit" name="go" value="Submit" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px" >
 	</p>
 	</form>
 	<br>	
@@ -125,3 +126,112 @@ $("#post_at_to_date").datepicker();
 </script>
 </div>
 </body></html>
+
+<?php 
+//echo $_POST["go"];
+if($_POST["go"]=="Submit"){
+    $amount="";
+    $district=($_POST["district"]);
+    $state=($_POST["state"]);
+	 $queryCondition = "";
+    if(!empty($_POST["search"]["post_at"])) {
+        $post_at = $_POST["search"]["post_at"];
+        list($fid,$fim,$fiy) = explode("-",$post_at);    
+        $post_at_todate = date('Y-m-d');
+        if(!empty($_POST["search"]["post_at_to_date"])) {
+            $post_at_to_date = $_POST["search"]["post_at_to_date"];
+            list($tid,$tim,$tiy) = explode("-",$_POST["search"]["post_at_to_date"]);
+            $post_at_todate = "$tiy-$tim-$tid";
+            $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
+        }}
+		//echo 
+    
+   {   
+        $sqld = "SELECT * FROM purches_mst where voucher_type='Purchase Imports'".$queryCondition;
+        // echo $sqld;
+        $resultd = mysqli_query($conn,$sqld);
+        ?>
+     <div style="width:60%; float :left ; margin-left: 15%">
+     
+                <table class="sortable" style="with:40%">
+				<tr>
+				<h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
+				</tr>
+                <tr>
+                <th>Date</th>
+                <th width='25%'>Supplier</th>
+				<th>SKU</th>
+				<th>QTY</th>
+				<th>Rate in USD</th>
+				<th>Landed Cost in INR</th>
+                </tr>
+				<?php 
+  while($rowd = mysqli_fetch_array($resultd)) {
+	    $state=$rowd['Supplier'];
+		$rate=$rowd['Rate'];
+		$sku=$rowd['Quantity'];
+		$r=str_replace("US$","",$rate); 
+		$rt=str_replace("/","",$r);
+        ?>
+				<td><?php echo $rowd['Date']; ?></td>
+                <td><?php echo str_replace(",",".",$state); ?></td>
+				<?php 
+			     $pro=$rowd['Item_name'];
+				 $sqls = "SELECT SKU FROM Itemmst where Item_name='$pro' ";
+                 $results = mysqli_query($conn,$sqls);
+				 $rows = mysqli_fetch_array($results);
+         ?>
+				<td><?php echo  $rows['SKU']; ?></td>
+				<td><?php echo  str_replace("Pec.","",$sku); ?></td>
+				<td><?php echo  $rt; ?></td>
+				<td><?php echo  $rowd['Londedcost_unit']; ?></td>
+				</tr><?php
+  }?> 
+				</table>
+                </div>
+				<script>
+  function downloadCSV(csv, filename) {
+    var csvFile;
+    var downloadLink;
+
+    // CSV file
+    csvFile = new Blob([csv], {type: "text/csv"});
+
+    // Download link
+    downloadLink = document.createElement("a");
+
+    // File name
+    downloadLink.download = filename;
+
+    // Create a link to the file
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+
+    // Hide download link
+    downloadLink.style.display = "none";
+
+    // Add the link to DOM
+    document.body.appendChild(downloadLink);
+
+    // Click download link
+    downloadLink.click();
+}
+function exportTableToCSV(filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+    
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        
+        for (var j = 0; j < cols.length; j++) 
+            row.push(cols[j].innerText);
+        
+        csv.push(row.join(","));        
+    }
+
+    // Download CSV file
+    downloadCSV(csv.join("\n"), filename);
+}
+  </script>
+				<button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
+                <?php 
+}}
