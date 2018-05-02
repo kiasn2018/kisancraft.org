@@ -243,53 +243,43 @@ if($_POST["go"]=="Submit"){
                 <tr>
                 <th>State</th>
                 <th>District</th>
+				<th>SKU</th>
+				<th>QTY</th>
+				<th>Amount</th>
+				<th>Trade Discount</th>
+				</tr>
+				
 				<?php
 				while($rowdq = mysqli_fetch_array($resultdq)){ if($rowdq['SKU']!=''){?>
-                <th colspan="2"><?php echo $rowdq['SKU']; $seg[]=$rowdq['SKU'];?></th>
-				<?php }} ?>
-				<th>Trade Discount</th>
-                </tr>
-				<tr>
-				<td></td>
-				<td></td>
-				<?php
+                <?php  $seg[]=$rowdq['SKU'];?>
+				<?php }} 
 				
-				while($rowdqq = mysqli_fetch_array($resultdqq)){if($rowdqq['SKU']!=''){
-					?>
-				<td><?php echo 'QTY'; ?></td>
-                <td><?php echo 'Amount'; ?></td>
-				<?php }} ?> </tr> <?php 
   while($rowd = mysqli_fetch_array($resultd)) {
 	    $state=$rowd['State'];
         $di=$rowd["District"];
-			
-        
-        
-        ?>
-                <tr>
-                <td><?php echo $state; ?></td>
-                <td><?php echo $di; ?></td>
-				<?php 
 				for($j=0;$j<(count($seg));$j++){
          $sqld1 = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE District='$di' AND SKU='$seg[$j]' ".$queryCondition;
-        // echo $sqld;
+         //echo $sqld1;
         $resultd1 = mysqli_query($conn,$sqld1);     
         $rowd1= mysqli_fetch_array($resultd1);
         $sqld111 = "SELECT sum(QTY) from Salesmaster WHERE District='$di' AND SKU1='$seg[$j]' ".$queryCondition;
-        // echo $sqld;
+         //echo $sqld;
         $resultd111 = mysqli_query($conn,$sqld111);     
         $rowd111= mysqli_fetch_array($resultd111);
-		?>
+		?>       <tr>
+                <td><?php echo $state; ?></td>
+                <td><?php echo $di; ?></td>
+				 <td><?php echo $seg[$j]; ?></td>
 				<td><?php echo ($rowd1['sum(QTY)']+$rowd111['sum(QTY)']); ?></td>
                 <td><?php echo $rowd1['sum(Amount)']; ?></td>
                
-		<?php }
+				<?php 
 		$sqld11 = "SELECT sum(Amount) from Salesmaster WHERE District='$di' AND SKU='#N/A' ".$queryCondition;
         // echo $sqld;
         $resultd11 = mysqli_query($conn,$sqld11);     
         $rowd11= mysqli_fetch_array($resultd11);
 		?><td><?php echo $rowd11['sum(Amount)'];?></td></tr><?php
-		}?> 
+  }}?> 
 				</table>
                 </div>
 				<script>

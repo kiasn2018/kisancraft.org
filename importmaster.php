@@ -68,7 +68,7 @@ if(isset($_POST["Import"])){
 			$amount=$emapData[$amount1];
             echo $year."-".$month."-".$day."-".$data1."-".$state."-".$dis."-".$exe."-".$asm."-".$sm."-".$zm."-".$amount."<br>";
             
-            $sql = "INSERT into Salesmaster (Date,Dealer, Amount,State,District,Executive,EID,ASM,AID,SM,SID,ZM,ZID,Product,QTY)
+            $sql = "INSERT into sales (Date,Dealer, Amount,State,District,Executive,EID,ASM,AID,SM,SID,ZM,ZID,Product,QTY)
                  values('$year-$month-$day','$data1','$amount','$state','$dis','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid','$data2','$emapData[$qty]')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;

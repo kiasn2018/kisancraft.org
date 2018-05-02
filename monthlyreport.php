@@ -225,10 +225,10 @@ if($_POST["go"]=="Submit"){
 		//echo 
     
    {   $seg=array();
-        $sqld = "SELECT DISTINCT (District) District, State,Executive FROM Salesmaster";
+        $sqld = "SELECT DISTINCT District FROM sales";
         // echo $sqld;
         $resultd = mysqli_query($conn,$sqld);
-		$sqldq = "SELECT DISTINCT Segment from SKU";
+		$sqldq = "SELECT DISTINCT Seqment from sales";
         // echo $sqld;
         $resultdq = mysqli_query($conn,$sqldq);
 		$resultdqq = mysqli_query($conn,$sqldq);
@@ -243,56 +243,62 @@ if($_POST["go"]=="Submit"){
                 <tr>
                 <th>State</th>
                 <th>District</th>
+				
+				<th>ZM</th>
+				<th>SM</th>
+				<th>ASM</th>
 				<th>Executive</th>
 				<?php
-				while($rowdq = mysqli_fetch_array($resultdq)){ if($rowdq['Segment']!=''){?>
-                <th colspan="2"><?php echo $rowdq['Segment']; $seg[]=$rowdq['Segment'];?></th>
+				while($rowdq = mysqli_fetch_array($resultdq)){ if($rowdq['Seqment']!=''){?>
+                <th ><?php echo $rowdq['Seqment'].'-Qty'; $seg[]=$rowdq['Seqment'];?></th>
+				<th><?php echo $rowdq['Seqment'].'-Amt'; ?></tdh>
+				
 				<?php }} ?>
 				<th>Trade Discount</th>
+				<th>Total Sales (INR)</th>
                 </tr>
-				<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<?php
-				
-				while($rowdqq = mysqli_fetch_array($resultdqq)){if($rowdqq['Segment']!=''){
-					?>
-				<td><?php echo 'QTY'; ?></td>
-                <td><?php echo 'Amount'; ?></td>
-				<?php }} ?> </tr> <?php 
+			 <?php $to='';
   while($rowd = mysqli_fetch_array($resultd)) {
-	    $state=$rowd['State'];
+	  $to='';
         $di=$rowd["District"];
-			
-        
+	        $sqls1 = "SELECT State,Executive,ASM,SM,ZM,Dealer from sales where  District= '$di'";
+            $results1 = mysqli_query($conn,$sqls1);
+            $rows1 = mysqli_fetch_array($results1);
+            $state=$rows1['State'];
         
         ?>
                 <tr>
                 <td><?php echo $state; ?></td>
                 <td><?php echo $di; ?></td>
-				<td><?php echo $rowd["Executive"]; ?></td>
+				
+				<td><?php echo $rows1["ZM"]; ?></td>
+				<td><?php echo $rows1["SM"]; ?></td>
+				<td><?php echo $rows1["ASM"]; ?></td>
+				<td><?php echo $rows1["Executive"]; ?></td>
 				<?php 
 				for($j=0;$j<(count($seg));$j++){
-         $sqld1 = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='$seg[$j]' ".$queryCondition;
+         $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE District='$di' AND Seqment='$seg[$j]' ".$queryCondition;
         // echo $sqld;
         $resultd1 = mysqli_query($conn,$sqld1);     
         $rowd1= mysqli_fetch_array($resultd1);
-         $sqld111 = "SELECT sum(QTY) from Salesmaster WHERE District='$di' AND Segment1='$seg[$j]' ".$queryCondition;
+		//print_r($rowd1);
+         $sqld111 = "SELECT sum(QTY) from sales WHERE District='$di' AND Segment1='$seg[$j]' ".$queryCondition;
         // echo $sqld;
         $resultd111 = mysqli_query($conn,$sqld111);     
         $rowd111= mysqli_fetch_array($resultd111);
 		?>
-				<td><?php echo ($rowd1['sum(QTY)']+$rowd111['sum(QTY)']); ?></td>
-                <td><?php echo $rowd1['sum(Amount)']; ?></td>
+				<td><?php echo $rowd1['sum(QTY)']+$rowd111['sum(QTY)']; ?></td>
+                <td><?php echo $rowd1['sum(Amount)']; $to=$to+$rowd1['sum(Amount)'];?></td>
                
 		<?php }
-		$sqld11 = "SELECT sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='#N/A' ".$queryCondition;
+		$sqld11 = "SELECT sum(Amount) from sales WHERE District='$di' AND Product='' ".$queryCondition;
         // echo $sqld;
         $resultd11 = mysqli_query($conn,$sqld11);     
         $rowd11= mysqli_fetch_array($resultd11);
 		
-		?><td><?php echo $rowd11['sum(Amount)'];?></td></tr><?php
+		?><td><?php echo $rowd11['sum(Amount)']; $to=$to+$rowd11['sum(Amount)'];?></td>
+		<td><?php echo $to;?></td>
+		</tr><?php
 		}?> 
 				</table>
                 </div>
@@ -339,6 +345,6 @@ function exportTableToCSV(filename) {
     downloadCSV(csv.join("\n"), filename);
 }
   </script>
-				<button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
+				<button onclick="exportTableToCSV('Sales segment wise.csv')">Export HTML Table To CSV File</button>
                 <?php 
    }}

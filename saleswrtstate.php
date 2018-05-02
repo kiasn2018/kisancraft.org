@@ -1,6 +1,7 @@
-<?php ini_set('max_execution_time', 0);?>
+ <?php ini_set('max_execution_time', 0);?>
 <html>
 <head>
+
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="/kisankraft.org/src/js/sorttable.js"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -46,6 +47,9 @@ include '/config/db.php';
 <div>
 </div>
 <hr>
+<script language="javascript" type="text/javascript">
+	setFilterGrid("table1");
+</script> 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
 $.datepicker.setDefaults({
@@ -225,7 +229,7 @@ if($_POST["go"]=="Submit"){
 		//echo 
     
    {   $seg=array();
-        $sqld = "SELECT DISTINCT (District) District, State FROM Salesmaster";
+        $sqld = "SELECT DISTINCT (District) District, State FROM sales";
         // echo $sqld;
         $resultd = mysqli_query($conn,$sqld);
 		$sqldq = "SELECT DISTINCT Segment from SKU";
@@ -236,13 +240,14 @@ if($_POST["go"]=="Submit"){
         ?>
      <div style="width:60%; float :left ; margin-left: 15%">
      
-                <table class="sortable" style="with:40%">
+                <table class="sortable" style="with:40%" id='table'>
 				<tr>
 				<h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
 				</tr>
                 <tr>
                 <th>State</th>
                 <th>District</th>
+				<th>Executive</th>
 				<th>Amount</th>
                 </tr>
 				<tr>
@@ -258,11 +263,11 @@ if($_POST["go"]=="Submit"){
                 <td><?php echo $di; ?></td>
 				<?php 
 				
-         $sqld1 = "SELECT sum(Amount) from Salesmaster WHERE District='$di'  ".$queryCondition;
+         $sqld1 = "SELECT sum(Amount),Executive from sales WHERE District='$di'  ".$queryCondition;
         // echo $sqld;
         $resultd1 = mysqli_query($conn,$sqld1);     
         $rowd1= mysqli_fetch_array($resultd1);	?>
-				
+				<td><?php echo $rowd1['Executive']; ?></td>
                 <td><?php echo $rowd1['sum(Amount)']; ?></td></tr><?php
 		}?> 
 				</table>
@@ -310,6 +315,6 @@ function exportTableToCSV(filename) {
     downloadCSV(csv.join("\n"), filename);
 }
   </script>
-				<button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
+				<button onclick="exportTableToCSV('district executive.csv')">Export HTML Table To CSV File</button>
                 <?php 
 }}
