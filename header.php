@@ -238,6 +238,7 @@ if($_SESSION["log"]!="en"){
                 <li><a href="/kisancraft.org/discountupload.php">Credit Note</li><br>
                 <li><a href="/kisancraft.org/salesdailyreport.php">Sales Daily Report</a></li><br>
 				 <li><a href="/kisancraft.org/monthlyreport.php">Monthly Report</a></li><br>
+				 <li><a href="/kisancraft.org/monthlyreportdea.php">Monthly Report WRT Dealer</a></li><br>
                 <li><a href="/kisancraft.org/salesemp.php">Sales WRT Employees</a></li><br>
                 <li><a href="/kisancraft.org/saleswrtstate.php">Sales WRT State And District wise</a></li><br>
                 <li><a href="/kisancraft.org/Monthlyreportsku.php">Sales WRT SKU Wise</a></li><br>

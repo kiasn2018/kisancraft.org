@@ -58,6 +58,7 @@ $up_d=array();
 $uk=array();
 $wb=array();
 $rj=array();
+$rj=array();
 while($row = mysqli_fetch_array($result)) {
     //print_r($row);exit();
     {
@@ -70,8 +71,8 @@ while($row = mysqli_fetch_array($result)) {
    $sqls = "SELECT * from Dealermst where D_name='$d' ";
    $results = mysqli_query($conn,$sqls);
    $rows = mysqli_fetch_array($results);
-           $district=$rows["D_distict"];
-           $state=$rows["D_state"];
+           $district=$row["District"];
+           $state=$row["State"];
            if($state==""){echo $d; }
            
            
@@ -115,7 +116,7 @@ while($row = mysqli_fetch_array($result)) {
             }else
             if($rows1["Zone"]=="Karnataka South"){
                 $k_s[$day]=$k_s[$day]+$row["Amount"]-$rowsq["amount"];
-            }else{echo $district.$d; }
+            }else{echo $district; }
             
         }else
         if( $state=="Bihar"){
@@ -171,21 +172,21 @@ while($row = mysqli_fetch_array($result)) {
             $nep[$day]=$nep[$day]+$row["Amount"]-$rowsq["amount"];
             
         }else
-        if( $state=="North East"){
+        if( $state=="North East" || $state=="Assam" || $state=="Arunachal Pradesh" || $state=="Nagaland" || $state=="Andaman and Nicobar" || $state=="Tripura" || $state=="Manipur"){
             $ne[$day]=$ne[$day]+$row["Amount"]-$rowsq["amount"];
             
         }else
         if( $state=="Odisha"){
             $od[$day]=$od[$day]+$row["Amount"]-$rowsq["amount"];
         }else
-        if( $state=="Punjab"){
+        if( $state=="Punjab" || $state=="Chandigarh"){
             $pj[$day]=$pj[$day]+$row["Amount"]-$rowsq["amount"];
             
         }else
         if( $state=="Rajasthan"){
             $rj[$day]=$rj[$day]+$row["Amount"]-$rowsq["amount"];
         }else
-        if( $state=="Tamil Nadu"){
+        if( $state=="Tamil Nadu" || $state=="Puducherry"){
             $tn[$day]=$tn[$day]+$row["Amount"]-$rowsq["amount"];
             
         }else
@@ -199,7 +200,7 @@ while($row = mysqli_fetch_array($result)) {
         if( $state=="West Bengal"){
             $wb[$day]=$wb[$day]+$row["Amount"]-$rowsq["amount"];
             
-        }else echo $d;
+        }else echo $state;
         
     }} {
         //credit note calculation

@@ -221,7 +221,7 @@
       {   $seg=array();
 	      $amt=array();
 		  $qty=array();
-           $sqld = "SELECT DISTINCT District FROM sales";
+           $sqld = "SELECT DISTINCT Dealer FROM sales";
            // echo $sqld;
            $resultd = mysqli_query($conn,$sqld);
    		$sqldq = "SELECT DISTINCT Segment from SKU";
@@ -238,6 +238,7 @@
       <tr>
          <th>State</th>
          <th>District</th>
+		 <th>Dealer</th>
          <th>ZM</th>
          <th>SM</th>
          <th>ASM</th>
@@ -255,28 +256,29 @@
 	        
          while($rowd = mysqli_fetch_array($resultd)) {
           $to='';
-               $di=$rowd["District"];
-                $sqls1 = "SELECT State,Executive,ASM,SM,ZM,Dealer from sales where  District= '$di'";
+               $de=$rowd["Dealer"];
+                $sqls1 = "SELECT State,Executive,ASM,SM,ZM,District from sales where  Dealer= '$de'";
                    $results1 = mysqli_query($conn,$sqls1);
                    $rows1 = mysqli_fetch_array($results1);
                    $state=$rows1['State'];
-               
+				   $di=$rows1["District"];
                ?>
       <tr>
          <td><?php echo $state; ?></td>
          <td><?php echo $di; ?></td>
+		 <td><?php echo str_replace(",",".",$de); ?></td>
          <td><?php echo $rows1["ZM"]; ?></td>
          <td><?php echo $rows1["SM"]; ?></td>
          <td><?php echo $rows1["ASM"]; ?></td>
          <td><?php echo $rows1["Executive"]; ?></td>
          <?php 
             for($j=0;$j<(count($seg));$j++){
-                 $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE District='$di' AND Seqment='$seg[$j]' ".$queryCondition;
+                 $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE Dealer='$de' AND Seqment='$seg[$j]' ".$queryCondition;
                 // echo $sqld;
                 $resultd1 = mysqli_query($conn,$sqld1);     
                 $rowd1= mysqli_fetch_array($resultd1);
             //print_r($rowd1);
-                 $sqld111 = "SELECT sum(QTY) from sales WHERE District='$di' AND Segment1='$seg[$j]' ".$queryCondition;
+                 $sqld111 = "SELECT sum(QTY) from sales WHERE Dealer='$de' AND Segment1='$seg[$j]' ".$queryCondition;
                 // echo $sqld;
                 $resultd111 = mysqli_query($conn,$sqld111);     
                 $rowd111= mysqli_fetch_array($resultd111);
@@ -284,7 +286,7 @@
          <td><?php echo $rowd1['sum(QTY)']+$rowd111['sum(QTY)']; $qty[$j]=$qty[$j]+$rowd1['sum(QTY)']+$rowd111['sum(QTY)']; ?></td>
          <td><?php echo $rowd1['sum(Amount)']; $to=$to+$rowd1['sum(Amount)'];  $amt[$j]=$amt[$j]+$rowd1['sum(Amount)'];?></td>
          <?php }
-            $sqld11 = "SELECT sum(Amount) from sales WHERE District='$di' AND Product='' ".$queryCondition;
+            $sqld11 = "SELECT sum(Amount) from sales WHERE Dealer='$de' AND Product='' ".$queryCondition;
                   // echo $sqld;
                   $resultd11 = mysqli_query($conn,$sqld11);     
                   $rowd11= mysqli_fetch_array($resultd11);
@@ -297,6 +299,7 @@
 	  }?> 
 	  <tr>
 	  <td> Total</td>
+	  <td></td>
 	  <td></td>
 	  <td></td>
 	  <td></td>

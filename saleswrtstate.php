@@ -247,6 +247,7 @@ if($_POST["go"]=="Submit"){
                 <tr>
                 <th>State</th>
                 <th>District</th>
+				<th>Zone</th>
 				<th>Executive</th>
 				<th>Amount</th>
                 </tr>
@@ -262,11 +263,15 @@ if($_POST["go"]=="Submit"){
                 <td><?php echo $state; ?></td>
                 <td><?php echo $di; ?></td>
 				<?php 
-				
+				 $sqldz = "SELECT Zone from Zonesmst WHERE District='$di'  ";
+        // echo $sqld;
+        $resultdz = mysqli_query($conn,$sqldz);     
+        $rowdz= mysqli_fetch_array($resultdz);
          $sqld1 = "SELECT sum(Amount),Executive from sales WHERE District='$di'  ".$queryCondition;
         // echo $sqld;
         $resultd1 = mysqli_query($conn,$sqld1);     
         $rowd1= mysqli_fetch_array($resultd1);	?>
+		         <td><?php echo $rowdz['Zone']; ?></td>
 				<td><?php echo $rowd1['Executive']; ?></td>
                 <td><?php echo $rowd1['sum(Amount)']; ?></td></tr><?php
 		}?> 
