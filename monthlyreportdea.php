@@ -216,8 +216,6 @@
                $post_at_todate = "$tiy-$tim-$tid";
                $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
            }}
-   		//echo 
-       
       {   $seg=array();
 	      $amt=array();
 		  $qty=array();
