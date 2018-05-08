@@ -12,18 +12,48 @@
          .sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
          .sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
       </style>
+   </head>
    <body bgcolor="">
       <?php 
          include 'header.php';
          include '/config/db.php';
          ?>
-      <h1 style="text-align:center;"> sales Monthly report Segment wise </h1>
+      <h1 style="text-align:center;"> sales with respect Dealer wise </h1>
       <div class="container" style="margin-left:30%; width:50%; background-color:lightblue">
          <div class="row">
             <div class="span3 hidden-phone"></div>
             <div class="span6" id="form-login">
                <form name="insert" action="" method="post">
                   <table width="100%" height="117"  border="0">
+                     <tr>
+                        <th  height="63" scope="row"> State :</th>
+                        <td width="">
+                           <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
+                              <option value="">Select</option>
+                              <?php $sqlst = "SELECT DISTINCT D_state from Dealermst ";
+                                 $resultst = mysqli_query($conn,$sqlst);
+                                 
+                                 while($rowst=mysqli_fetch_array($resultst))
+                                 {  ?>
+                              <option value="<?php echo $rowst['D_state'];?>"><?php echo $rowst['D_state'];?></option>
+                              <?php
+                                 }
+                                 ?>
+                           </select>
+                        </td>
+                        <th scope="row">District :</th>
+                        <td>
+                           <select onChange="getdealer(this.value);" name="district" id="district-list" class="form-control">
+                              <option value="">Select</option>
+                           </select>
+                        </td>
+                        <th scope="row">Dealer :</th>
+                        <td>
+                           <select  name="dealer" id="dealer-list" class="form-control">
+                              <option value="">Select</option>
+                           </select>
+                        </td>
+                        <td>
                      <tr>
                         <td>
                            <input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>" class="input-control" />
@@ -41,9 +71,6 @@
       </div>
       <div></div>
       <hr>
-      <script language="javascript" type="text/javascript">
-         setFilterGrid("table1");
-      </script> 
       <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
       <script>
          $.datepicker.setDefaults({
@@ -80,49 +107,6 @@
          	}
          	});
          	}
-      </script>
-      <script>
-         function downloadCSV(csv, filename) {
-           var csvFile;
-           var downloadLink;
-         
-           // CSV file
-           csvFile = new Blob([csv], {type: "text/csv"});
-         
-           // Download link
-           downloadLink = document.createElement("a");
-         
-           // File name
-           downloadLink.download = filename;
-         
-           // Create a link to the file
-           downloadLink.href = window.URL.createObjectURL(csvFile);
-         
-           // Hide download link
-           downloadLink.style.display = "none";
-         
-           // Add the link to DOM
-           document.body.appendChild(downloadLink);
-         
-           // Click download link
-           downloadLink.click();
-         }
-         function exportTableToCSV(filename) {
-           var csv = [];
-           var rows = document.querySelectorAll("table tr");
-           
-           for (var i = 0; i < rows.length; i++) {
-               var row = [], cols = rows[i].querySelectorAll("td, th");
-               
-               for (var j = 0; j < cols.length; j++) 
-                   row.push(cols[j].innerText);
-               
-               csv.push(row.join(","));        
-           }
-         
-           // Download CSV file
-           downloadCSV(csv.join("\n"), filename);
-         }
       </script>
       <div style="margin-left:22%; width:75%;">
          <?php 
@@ -189,17 +173,65 @@
                    ?>
             <tbody>
          </table>
+         <button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
+         <script>
+            function downloadCSV(csv, filename) {
+              var csvFile;
+              var downloadLink;
+            
+              // CSV file
+              csvFile = new Blob([csv], {type: "text/csv"});
+            
+              // Download link
+              downloadLink = document.createElement("a");
+            
+              // File name
+              downloadLink.download = filename;
+            
+              // Create a link to the file
+              downloadLink.href = window.URL.createObjectURL(csvFile);
+            
+              // Hide download link
+              downloadLink.style.display = "none";
+            
+              // Add the link to DOM
+              document.body.appendChild(downloadLink);
+            
+              // Click download link
+              downloadLink.click();
+            }
+            function exportTableToCSV(filename) {
+              var csv = [];
+              var rows = document.querySelectorAll("table tr");
+              
+              for (var i = 0; i < rows.length; i++) {
+                  var row = [], cols = rows[i].querySelectorAll("td, th");
+                  
+                  for (var j = 0; j < cols.length; j++) 
+                      row.push(cols[j].innerText);
+                  
+                  csv.push(row.join(","));        
+              }
+            
+              // Download CSV file
+              downloadCSV(csv.join("\n"), filename);
+            }
+         </script>
          <?php
             $sql = "SELECT COUNT(ID) AS total FROM Salesmst";
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
             $total_pages = ceil($row["total"] / $results_per_page);
             
-               }?>
+            for ($i=1; $i<=$total_pages; $i++) {
+                ?>  <a href="/kisankraft.org/salesupload.php?page=<?php echo $i;?>"><?php echo $i;?></a><?php 
+            //echo "<a href=''?page=".$i."'>".$i."</a> ";
+            };
+            }?>
          <br><br><br>
       </div>
    </body>
-   </head>
+   
 </html>
 <hr>
 <?php 
@@ -220,62 +252,47 @@
                $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
            }}
    		//echo 
+   		if($district!='ALL'){$queryCondition1 .= " AND District= '$district' ";}
        
-      {   $seg=array();
-           $sqld = "SELECT DISTINCT (D_distict) D_distict, D_state FROM Dealermst";
+      { 
+           $sqld = "SELECT DISTINCT D_name from Dealermst  ";
            // echo $sqld;
            $resultd = mysqli_query($conn,$sqld);
-   		$sqldq = "SELECT DISTINCT Segment from SKU";
-           // echo $sqld;
-           $resultdq = mysqli_query($conn,$sqldq);
-   		$resultdqq = mysqli_query($conn,$sqldq);
            
            ?>
 <div style="width:60%; float :left ; margin-left: 15%">
-   <table  id="demo">
-      <tr>
-         <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
-      </tr>
+   <a href="#">Download report</a>
+   <table class="sortable" style="with:40%">
       <tr>
          <th>State</th>
-         <th>District</th>
-         <th>Zone</th>
-         <th>Executive</th>
-         <th>Amount-18</th>
-		  <th>Amount-17</th>
+         <th>Dealer</th>
+         <th>Amount</th>
       </tr>
-      <tr>
-         <td></td>
-         <td></td>
-      <tr>
-         <?php 
-            while($rowd = mysqli_fetch_array($resultd)) {
-               $state=$rowd['D_state'];
-                  $di=$rowd["D_distict"];
-                  ?>
-         <td><?php echo $state; ?></td>
-         <td><?php echo $di; ?></td>
-         <?php 
-            $sqldz = "SELECT Zone from Zonesmst WHERE District='$di'  ";
-               // echo $sqld;
-               $resultdz = mysqli_query($conn,$sqldz);     
-               $rowdz= mysqli_fetch_array($resultdz);
-                $sqld1 = "SELECT sum(Amount),Executive from sales WHERE District='$di'  ".$queryCondition;
+      <?php 
+         while($rowd = mysqli_fetch_array($resultd)) {
+             $di=$rowd["D_name"];
+                $sqld1 = "SELECT * from Dealermst WHERE D_name='$di' ";
                // echo $sqld;
                $resultd1 = mysqli_query($conn,$sqld1);     
-               $rowd1= mysqli_fetch_array($resultd1);	
-			   $sqldd = "SELECT sum(Amount),Executive from Salesmaster WHERE District='$di' AND DATE_FORMAT(date, '%Y-%m') ='2017-04' ";
-               //echo $sqldd;
-               $resultdd = mysqli_query($conn,$sqldd);     
-               $rowdd= mysqli_fetch_array($resultdd);
-			   ?>
-         <td><?php echo $rowdz['Zone']; ?></td>
-         <td><?php echo $rowd1['Executive']; ?></td>
-         <td><?php echo $rowd1['sum(Amount)']; ?></td>
-		 <td><?php echo $rowdd['sum(Amount)']; ?></td>
+               $rowd1= mysqli_fetch_array($resultd1);		
+               $state=$rowd1['D_state'];
+              // $di=$rowd1["D_name"];
+               $amount="";
+               //print_r($rows1);
+         $sqlq1 = "SELECT SUM(Amount),District from sales where where State='$state'".$queryCondition.$queryCondition1; 
+               $resultq1 = mysqli_query($conn,$sqlq1);
+               ($rowq1 = mysqli_fetch_array($resultq1));
+         $amoq1=$rowq1['SUM(amount)'];
+               ?>
+      <tr>
+         <td><?php echo $state; ?></td>
+         <td><?php echo $di; ?></td>
+         <td><?php echo ($amount1-$amoq1); ?></td>
+         <td><?php echo ($amount2-$amoq2); ?></td>
+         <td><?php echo ($amount3-$amoq3); ?></td>
+         <td><?php echo ($amount4-$amoq4); ?></td>
       </tr>
-      <?php
-         }?> 
+      <?php }?> 
    </table>
 </div>
 <script>
@@ -320,7 +337,7 @@
      // Download CSV file
      downloadCSV(csv.join("\n"), filename);
    }
-   </script>
-<button onclick="exportTableToCSV('district executive.csv')">Export HTML Table To CSV File</button>
+</script>
+<button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
 <?php 
 }}

@@ -17,6 +17,7 @@
          include 'header.php';
          include '/config/db.php';
          ?>
+		 
       <h1 style="text-align:center;"> sales Monthly report Segment wise </h1>
       <div class="container" style="margin-left:30%; width:50%; background-color:lightblue">
          <div class="row">
