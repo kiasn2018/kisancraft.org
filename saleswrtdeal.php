@@ -30,6 +30,7 @@
                         <td width="">
                            <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
                               <option value="">Select</option>
+							   <option value="ALL">ALL</option>
                               <?php $sqlst = "SELECT DISTINCT D_state from Dealermst ";
                                  $resultst = mysqli_query($conn,$sqlst);
                                  
@@ -47,13 +48,7 @@
                               <option value="">Select</option>
                            </select>
                         </td>
-                        <th scope="row">Dealer :</th>
-                        <td>
-                           <select  name="dealer" id="dealer-list" class="form-control">
-                              <option value="">Select</option>
-                           </select>
-                        </td>
-                        <td>
+                        
                      <tr>
                         <td>
                            <input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>" class="input-control" />
@@ -251,12 +246,10 @@
                $post_at_todate = "$tiy-$tim-$tid";
                $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
            }}
-   		//echo 
-   		if($district!='ALL'){$queryCondition1 .= " AND District= '$district' ";}
-       
-      { 
-           $sqld = "SELECT DISTINCT D_name from Dealermst  ";
-           // echo $sqld;
+		   if($state=='ALL'){$sqld = "SELECT DISTINCT Dealer from sales where Date!='0000-00-00' ".$queryCondition;}else{
+		   if($district=='ALL'){$sqld = "SELECT DISTINCT Dealer from sales where State='$state' ".$queryCondition;}else{
+           $sqld = "SELECT DISTINCT Dealer from sales where District='$district' ".$queryCondition;}}
+            //echo $sqld;
            $resultd = mysqli_query($conn,$sqld);
            
            ?>
@@ -265,32 +258,26 @@
    <table class="sortable" style="with:40%">
       <tr>
          <th>State</th>
+		 <th>District</th>
          <th>Dealer</th>
          <th>Amount</th>
       </tr>
       <?php 
          while($rowd = mysqli_fetch_array($resultd)) {
-             $di=$rowd["D_name"];
-                $sqld1 = "SELECT * from Dealermst WHERE D_name='$di' ";
-               // echo $sqld;
-               $resultd1 = mysqli_query($conn,$sqld1);     
-               $rowd1= mysqli_fetch_array($resultd1);		
-               $state=$rowd1['D_state'];
-              // $di=$rowd1["D_name"];
+             $di=$rowd["Dealer"];
                $amount="";
                //print_r($rows1);
-         $sqlq1 = "SELECT SUM(Amount),District from sales where where State='$state'".$queryCondition.$queryCondition1; 
+         $sqlq1 = "SELECT SUM(Amount),State,District from sales  where Dealer='$di'".$queryCondition; //echo $sqlq1;exit();
                $resultq1 = mysqli_query($conn,$sqlq1);
                ($rowq1 = mysqli_fetch_array($resultq1));
-         $amoq1=$rowq1['SUM(amount)'];
+				$amount=$rowq1['SUM(Amount)'];
+				
                ?>
       <tr>
-         <td><?php echo $state; ?></td>
+         <td><?php echo $rowq1['State']; ?></td>
+		 <td><?php echo $rowq1['District']; ?></td>
          <td><?php echo $di; ?></td>
-         <td><?php echo ($amount1-$amoq1); ?></td>
-         <td><?php echo ($amount2-$amoq2); ?></td>
-         <td><?php echo ($amount3-$amoq3); ?></td>
-         <td><?php echo ($amount4-$amoq4); ?></td>
+         <td><?php echo $amount; ?></td>
       </tr>
       <?php }?> 
    </table>
@@ -340,4 +327,4 @@
 </script>
 <button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
 <?php 
-}}
+}

@@ -241,14 +241,13 @@
          <th>District</th>
          <th>Zone</th>
          <th>Executive</th>
-         <th>Amount-18</th>
-		  <th>Amount-17</th>
+         <th>Amount-17</th>
+		  <th>Amount-18</th>
       </tr>
-      <tr>
-         <td></td>
-         <td></td>
-      <tr>
+	  
          <?php 
+			$amountp='';
+			$amountc='';
             while($rowd = mysqli_fetch_array($resultd)) {
                $state=$rowd['D_state'];
                   $di=$rowd["D_distict"];
@@ -269,13 +268,22 @@
                $resultdd = mysqli_query($conn,$sqldd);     
                $rowdd= mysqli_fetch_array($resultdd);
 			   ?>
-         <td><?php echo $rowdz['Zone']; ?></td>
+         <td><?php if($rowdz['Zone']==''){echo $state;}else{echo $rowdz['Zone'];} ?></td>
          <td><?php echo $rowd1['Executive']; ?></td>
-         <td><?php echo $rowd1['sum(Amount)']; ?></td>
-		 <td><?php echo $rowdd['sum(Amount)']; ?></td>
+         <td><?php echo $rowdd['sum(Amount)']; $amountp=$amountp+$rowdd['sum(Amount)'];?></td>
+		 <td><?php echo $rowd1['sum(Amount)']; $amountc=$amountc+$rowd1['sum(Amount)']; ?></td>
       </tr>
+	  
       <?php
          }?> 
+		 <tr>
+			<td></td>
+			<td></td>
+			<td>Total</td>
+			<td></td>
+			<td><?php echo $amountp; ?></td>
+			<td><?php echo $amountc; ?></td>
+	  </tr>
    </table>
 </div>
 <script>

@@ -17,7 +17,7 @@
          include 'header.php';
          include '/config/db.php';
          ?>
-      <h1 style="text-align:center;"> sales Monthly report Segment wise </h1>
+      <h1 style="text-align:center;">Ageing Analysis </h1>
       <div class="container" style="margin-left:30%; width:50%; background-color:lightblue">
          <div class="row">
             <div class="span3 hidden-phone"></div>
@@ -26,8 +26,12 @@
                   <table width="100%" height="117"  border="0">
                      <tr>
                         <td>
-                           <input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>" class="input-control" />
-                           <input type="text" placeholder="To Date" id="post_at_to_date" name="search[post_at_to_date]" style="margin-left:10px"  value="<?php echo $post_at_to_date; ?>" class="input-control"  />
+                           <select name="year" id="year">
+                              <option value="">Select Year</option>
+                           </select>
+                           <select name="month" id="month">
+                              <option value="">Select Month</option>
+                           </select>
                         </td>
                         <td>
                            <input type="submit" name="go" value="Submit" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px;float:left" >
@@ -41,279 +45,178 @@
       </div>
       <div></div>
       <hr>
-      <script language="javascript" type="text/javascript">
-         setFilterGrid("table1");
-      </script> 
-      <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-      <script>
-         $.datepicker.setDefaults({
-         showOn: "button",
-         buttonImage: "datepicker.png",
-         buttonText: "Date Picker",
-         buttonImageOnly: true,
-         dateFormat: 'dd-mm-yy'  
-         });
-         $(function() {
-         $("#post_at").datepicker();
-         $("#post_at_to_date").datepicker();
-         });
-      </script>
-      <script>
-         function getdistrict(val) {
-         $.ajax({
-         type: "POST",
-         url: "getdistrict.php",
-         data:'state_id='+val,
-         success: function(data){
-         $("#district-list").html(data);
-         }
-         });
-         }
-         
-         function getdealer(val) {
-         	$.ajax({
-         	type: "POST",
-         	url: "getdealer.php",
-         	data:'state_id='+val,
-         	success: function(data){
-         	$("#dealer-list").html(data);
-         	}
-         	});
-         	}
-      </script>
-      <script>
-         function downloadCSV(csv, filename) {
-           var csvFile;
-           var downloadLink;
-         
-           // CSV file
-           csvFile = new Blob([csv], {type: "text/csv"});
-         
-           // Download link
-           downloadLink = document.createElement("a");
-         
-           // File name
-           downloadLink.download = filename;
-         
-           // Create a link to the file
-           downloadLink.href = window.URL.createObjectURL(csvFile);
-         
-           // Hide download link
-           downloadLink.style.display = "none";
-         
-           // Add the link to DOM
-           document.body.appendChild(downloadLink);
-         
-           // Click download link
-           downloadLink.click();
-         }
-         function exportTableToCSV(filename) {
-           var csv = [];
-           var rows = document.querySelectorAll("table tr");
-           
-           for (var i = 0; i < rows.length; i++) {
-               var row = [], cols = rows[i].querySelectorAll("td, th");
-               
-               for (var j = 0; j < cols.length; j++) 
-                   row.push(cols[j].innerText);
-               
-               csv.push(row.join(","));        
-           }
-         
-           // Download CSV file
-           downloadCSV(csv.join("\n"), filename);
+      <script type="text/javascript">
+         for(y = 2000; y <= 2500; y++) {
+                 var optn = document.createElement("OPTION");
+                 optn.text = y;
+                 optn.value = y;
+                 
+                 // if year is 2015 selected
+                 if (y == 2018) {
+                     optn.selected = true;
+                 }
+                 
+                 document.getElementById('year').options.add(optn);
          }
       </script>
-      <div style="margin-left:22%; width:75%;">
+      <script type="text/javascript">
+         var d = new Date();
+         var monthArray = new Array();
+         monthArray[0] = "January";
+         monthArray[1] = "February";
+         monthArray[2] = "March";
+         monthArray[3] = "April";
+         monthArray[4] = "May";
+         monthArray[5] = "June";
+         monthArray[6] = "July";
+         monthArray[7] = "August";
+         monthArray[8] = "September";
+         monthArray[9] = "October";
+         monthArray[10] = "November";
+         monthArray[11] = "December";
+         for(m = 0; m <= 11; m++) {
+             var optn = document.createElement("OPTION");
+             optn.text = monthArray[m];
+             // server side month start from one
+             optn.value = (m+1);
+          
+             // if june selected
+             if ( m == 3) {
+                 optn.selected = true;
+             }
+          
+             document.getElementById('month').options.add(optn);
+         }
+      </script>
+      <?php
+         if($_POST["go"]=="Submit"){
+             $amount="";
+             $year=($_POST["year"]);
+             $month=($_POST["month"]);
+         	//echo $year."-".$month;
+         
+         ?>
+      <div style="margin-left:22%; width:100%;">
          <?php 
-            $results_per_page = 100;
-            if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
-            $start_from = ($page-1) * $results_per_page;
-            $sql = "SELECT * from Salesmst LIMIT ".$start_from.",".$results_per_page;
+            $sql1 = "SELECT month,year from Stockmst ORDER BY month DESC ";
+            $result1 = mysqli_query($conn,$sql1);
+            $row1 = mysqli_fetch_array($result1);
+            $sql = "SELECT distinct SKU from Stockmst ORDER BY month DESC ";
             $result = mysqli_query($conn,$sql);
+            
             //include '/test/index.php';
-            //include '/search.php';
-            if(!isset($_POST["go"]) ){
+            //include '/search.php'
             ?>
+         <h1>Ageing Analysis- <?php echo $month_name = date("F", mktime(0, 0, 0, $month, 10));?> - Month</h1>
          <table class="sortable">
             <thead>
                <tr class="d0">
-                  <th width="10%"><span>ID</span></th>
-                  <th width="50%"><span> Dealer Name</span></th>
-                  <th width="20%"><span>Date</span></th>
-                  <th width="20%"><span>Voucher Type</span></th>
-                  <th width="25%"><span>Item Name</span></th>
-                  <th width="25%"><span>District</span></th>
-                  <th width="25%"><span>State</span></th>
-                  <th width="25%"><span>Executive</span></th>
-                  <th width="25%"><span>ASM</span></th>
-                  <th width="25%"><span>QTY</span></th>
-                  <th width="25%"><span>Amount</span></th>
+                  <th width=""><span>Stock SKU</span></th>
+                  <th width=""><span> Stock QTY</span></th>
+                  <th width=""><span>Stock Value</span></th>
+                  <th width=""><span>Stock Rate</span></th>
+                  <th width=""><span>Last one year sales(QTY) </span></th>
+                  <th width=""><span>Last one year sales(Amount) </span></th>
+                 
                </tr>
             </thead>
             <tbody>
                <?php
-                  while($row = mysqli_fetch_array($result)) {
+                  $date =$year."-".$month;
+                  
+                  $fdate=date('Y-m', strtotime( date("Y-m-d", strtotime($date)) . '-1 month'));
+                  $fdate60=date('Y-m', strtotime('-2 month'));
+                  $fdate90=date('Y-m', strtotime('-3 month'));
+                  $fdate91=date('Y-m', strtotime('-4 month'));
+                  $fdate180=date('Y-m', strtotime('-6 month'));
+                  $fdate181=date('Y-m', strtotime('-7 month'));
+                  $fdate365=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-12 month'));
+                  $fdate366=date('Y-m', strtotime('-13 month'));
+                  $fdate367=date('Y-m', strtotime('-12 month'));
+                  $fdate1y=date('Y-m', strtotime('-18 month'));
+                  
+                  //echo $fdate.$fdate60.$fdate90.$fdate180.$fdate365.$fdate1y;
+                   $orderdate = explode('-', $date);
+                             $month = $orderdate[1];
+                             $day   = $orderdate[2];
+                             $year  = $orderdate[0];
+                  		$orderdate1 = explode('-',$fdate);
+                             $fmonth = $orderdate1[1];
+                             $day   = $orderdate1[2];
+                             $year  = $orderdate1[0];
+                  		$totalv="";
+                  		$totalv1="";
+                  while($row = mysqli_fetch_array($result)){
+                  $sku=$row["SKU"];
+                  $sql1 = "SELECT Sum(QTY),Sum(Amount),Product from Stockmst where SKU='$sku' AND month='$month'  ";
+                     $result1 = mysqli_query($conn,$sql1);
+                     while($row1 = mysqli_fetch_array($result1)){ 
+                  $p=$row["SKU"];
+                  $sql15 = "SELECT Sum(QTY),Sum(Amount) from salesmerge where SKU='$p' AND DATE_FORMAT(date, '%Y-%m') Between '$fdate365' And '$fdate' "; //echo $sql15;
+                     $result15 = mysqli_query($conn,$sql15);
+                     $row15 = mysqli_fetch_array($result15);
                   ?>
                <tr class="d1">
-                  <td><?php echo $row["ID"]; ?></td>
-                  <td><?php echo  $data= str_replace("_", "'", $row["Dealer_name"]); ?></td>
-                  <td><?php echo  $row["Date"]; ?></td>
-                  <td><?php echo $row["Vorture_type"];  ?></td>
-                  <td><?php echo $data1= str_replace("_", "'", $row["Item_name"]);$row["Item_name"]; ?></td>
-                  <td><?php $d=$row["Dealer_name"];
-                     $sqls = "SELECT * from Dealermst where D_name='$d' ";
-                     //echo $sqls;
-                              $results = mysqli_query($conn,$sqls);
-                              while($rows = mysqli_fetch_array($results)) {
-                                  $district=$rows["D_distict"];
-                                  $state=$rows["D_state"];
-                              } 
-                              $sqls1 = "SELECT * from Excutivemst where State='$state' AND District= '$district'";
-                              $results1 = mysqli_query($conn,$sqls1);
-                              while($rows1 = mysqli_fetch_array($results1)) {
-                             
-                                  $exec=$rows1["Exexutive"];
-                                  $ASM=$rows1["ASM"];
-                              }
-                              echo $district;
-                              ?></td>
-                  <td><?php echo $state;?></td>
-                  <td><?php echo $exec;?></td>
-                  <td><?php echo $ASM;?></td>
-                  <td><?php echo $row["Quantity"]; ?></a> </td>
-                  <td><?php echo $row["Amount"]; ?></a> </td>
+                  <td><?php echo $row["SKU"]; ?></td>
+                  <td><?php echo $q1=$row1["Sum(QTY)"] ; ?></td>
+                  <td><?php echo $row1["Sum(Amount)"]; $totalv=$totalv+$row1["Sum(Amount)"];?></td>
+                  <td><?php echo $v=round($row1["Sum(Amount)"]/$row1["Sum(QTY)"]); ?></td>  
+                  <td><?php echo $row15["Sum(QTY)"]; ?></td>
+				  <td><?php echo $row15["Sum(Amount)"]; ?></td>
                </tr>
                <?php
-                  }
-                   ?>
+                  }}
+                  ?>
+               
             <tbody>
          </table>
-         <?php
-            $sql = "SELECT COUNT(ID) AS total FROM Salesmst";
-            $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
-            $total_pages = ceil($row["total"] / $results_per_page);
-            
-               }?>
          <br><br><br>
+         <script>
+            function downloadCSV(csv, filename) {
+              var csvFile;
+              var downloadLink;
+            
+              // CSV file
+              csvFile = new Blob([csv], {type: "text/csv"});
+            
+              // Download link
+              downloadLink = document.createElement("a");
+            
+              // File name
+              downloadLink.download = filename;
+            
+              // Create a link to the file
+              downloadLink.href = window.URL.createObjectURL(csvFile);
+            
+              // Hide download link
+              downloadLink.style.display = "none";
+            
+              // Add the link to DOM
+              document.body.appendChild(downloadLink);
+            
+              // Click download link
+              downloadLink.click();
+            }
+            function exportTableToCSV(filename) {
+              var csv = [];
+              var rows = document.querySelectorAll("table tr");
+              
+              for (var i = 0; i < rows.length; i++) {
+                  var row = [], cols = rows[i].querySelectorAll("td, th");
+                  
+                  for (var j = 0; j < cols.length; j++) 
+                      row.push(cols[j].innerText);
+                  
+                  csv.push(row.join(","));        
+              }
+            
+              // Download CSV file
+              downloadCSV(csv.join("\n"), filename);
+            }
+         </script>
+         <button onclick="exportTableToCSV('Stock.csv')">Export HTML Table To CSV File</button>
       </div>
+      <?php } ?>
    </body>
    </head>
 </html>
-<hr>
-<?php 
-   //echo $_POST["go"];
-   if($_POST["go"]=="Submit"){
-       $amount="";
-       $district=($_POST["district"]);
-       $state=($_POST["state"]);
-   	 $queryCondition = "";
-       if(!empty($_POST["search"]["post_at"])) {
-           $post_at = $_POST["search"]["post_at"];
-           list($fid,$fim,$fiy) = explode("-",$post_at);    
-           $post_at_todate = date('Y-m-d');
-           if(!empty($_POST["search"]["post_at_to_date"])) {
-               $post_at_to_date = $_POST["search"]["post_at_to_date"];
-               list($tid,$tim,$tiy) = explode("-",$_POST["search"]["post_at_to_date"]);
-               $post_at_todate = "$tiy-$tim-$tid";
-               $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
-           }}
-   		//echo 
-       
-      {   $seg=array();
-           $sqld = "SELECT DISTINCT (District) District, State FROM sales";
-           // echo $sqld;
-           $resultd = mysqli_query($conn,$sqld);
-   		$sqldq = "SELECT DISTINCT Segment from SKU";
-           // echo $sqld;
-           $resultdq = mysqli_query($conn,$sqldq);
-   		$resultdqq = mysqli_query($conn,$sqldq);
-           
-           ?>
-<div style="width:60%; float :left ; margin-left: 15%">
-   <table class="sortable" style="with:40%" id='table'>
-      <tr>
-         <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
-      </tr>
-      <tr>
-         <th>State</th>
-         <th>District</th>
-         <th>Zone</th>
-         <th>Executive</th>
-         <th>Amount</th>
-      </tr>
-      <tr>
-         <td></td>
-         <td></td>
-      <tr>
-         <?php 
-            while($rowd = mysqli_fetch_array($resultd)) {
-               $state=$rowd['State'];
-                  $di=$rowd["District"];
-                  ?>
-         <td><?php echo $state; ?></td>
-         <td><?php echo $di; ?></td>
-         <?php 
-            $sqldz = "SELECT Zone from Zonesmst WHERE District='$di'  ";
-               // echo $sqld;
-               $resultdz = mysqli_query($conn,$sqldz);     
-               $rowdz= mysqli_fetch_array($resultdz);
-                $sqld1 = "SELECT sum(Amount),Executive from sales WHERE District='$di'  ".$queryCondition;
-               // echo $sqld;
-               $resultd1 = mysqli_query($conn,$sqld1);     
-               $rowd1= mysqli_fetch_array($resultd1);	?>
-         <td><?php echo $rowdz['Zone']; ?></td>
-         <td><?php echo $rowd1['Executive']; ?></td>
-         <td><?php echo $rowd1['sum(Amount)']; ?></td>
-      </tr>
-      <?php
-         }?> 
-   </table>
-</div>
-<script>
-   function downloadCSV(csv, filename) {
-     var csvFile;
-     var downloadLink;
-   
-     // CSV file
-     csvFile = new Blob([csv], {type: "text/csv"});
-   
-     // Download link
-     downloadLink = document.createElement("a");
-   
-     // File name
-     downloadLink.download = filename;
-   
-     // Create a link to the file
-     downloadLink.href = window.URL.createObjectURL(csvFile);
-   
-     // Hide download link
-     downloadLink.style.display = "none";
-   
-     // Add the link to DOM
-     document.body.appendChild(downloadLink);
-   
-     // Click download link
-     downloadLink.click();
-   }
-   function exportTableToCSV(filename) {
-     var csv = [];
-     var rows = document.querySelectorAll("table tr");
-     
-     for (var i = 0; i < rows.length; i++) {
-         var row = [], cols = rows[i].querySelectorAll("td, th");
-         
-         for (var j = 0; j < cols.length; j++) 
-             row.push(cols[j].innerText);
-         
-         csv.push(row.join(","));        
-     }
-   
-     // Download CSV file
-     downloadCSV(csv.join("\n"), filename);
-   }
-</script>
-<button onclick="exportTableToCSV('district executive.csv')">Export HTML Table To CSV File</button>
-<?php 
-}}

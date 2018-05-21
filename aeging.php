@@ -143,16 +143,16 @@
                <?php
                   $date =$year."-".$month;
                   
-                  $fdate=date('Y-m', strtotime('-1 month'));
-                  $fdate60=date('Y-m', strtotime('-2 month'));
-                  $fdate90=date('Y-m', strtotime('-3 month'));
-                  $fdate91=date('Y-m', strtotime('-4 month'));
-                  $fdate180=date('Y-m', strtotime('-6 month'));
-                  $fdate181=date('Y-m', strtotime('-7 month'));
-                  $fdate365=date('Y-m', strtotime('-12 month'));
-                  $fdate366=date('Y-m', strtotime('-13 month'));
-                  $fdate367=date('Y-m', strtotime('-12 month'));
-                  $fdate1y=date('Y-m', strtotime('-18 month'));
+                  $fdate=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-1 month'));
+                  $fdate60=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-2 month'));
+                  $fdate90=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-3 month'));
+                  $fdate91=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-4 month'));
+                  $fdate180=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-6 month'));
+                  $fdate181=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-7 month'));
+                  $fdate365=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-12 month'));
+                  $fdate366=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-13 month'));
+                  $fdate367=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-12 month'));
+                  $fdate1y=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-18 month'));
                   
                   //echo $fdate.$fdate60.$fdate90.$fdate180.$fdate365.$fdate1y;
                    $orderdate = explode('-', $date);

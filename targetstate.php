@@ -222,7 +222,7 @@
    		//echo 
        
       {  
-           $sqld = "SELECT DISTINCT state FROM targetmst";
+           $sqld = "SELECT DISTINCT D_state FROM Dealermst";
            // echo $sqld;
            $resultd = mysqli_query($conn,$sqld);
            ?>
@@ -233,26 +233,35 @@
       </tr>
       <tr>
          <th>State</th>
+		  <th>QTY 16-17</th>
+         <th>Amount 17-18</th>
          <th>QTY 17-18</th>
          <th>Amount 17-18</th>
 		  <th>QTY 18-19</th>
 		  <th>Amount 18-19</th>
       </tr>
-      <tr>
-         <td></td>
-         <td></td>
-      <tr>
          <?php 
             while($rowd = mysqli_fetch_array($resultd)) {
-               $state=$rowd['state'];
+               $state=$rowd['D_state'];
                 $sqld1 = "SELECT sum(Qty_17_18),sum(Amount_17_18),sum(Qty_18_19),sum(Amount_18_19) from targetmst WHERE state='$state' ";
                // echo $sqld;
                $resultd1 = mysqli_query($conn,$sqld1);     
                $rowd1= mysqli_fetch_array($resultd1);
+			   $sqld11 = "SELECT sum(Amount),sum(QTY) from sales16_17 WHERE state='$state' ";
+               // echo $sqld;
+               $resultd11 = mysqli_query($conn,$sqld11);     
+               $rowd11= mysqli_fetch_array($resultd11);
+			   
+			   $sqlm = "SELECT sum(Amount),sum(QTY) from Salesmaster WHERE state='$state' ";
+               // echo $sqld;
+               $resultm = mysqli_query($conn,$sqlm);     
+               $rowm= mysqli_fetch_array($resultm);
 			   ?>
          <td><?php echo $state; ?></td>
-         <td><?php echo $rowd1['sum(Qty_17_18)']; ?></td>
-		 <td><?php echo $rowd1['sum(Amount_17_18)']; ?></td>
+		 <td><?php echo $rowd11['sum(QTY)']; ?></td>
+		 <td><?php echo $rowd11['sum(Amount)']; ?></td>
+         <td><?php echo $rowm['sum(QTY)']; ?></td>
+		 <td><?php echo $rowm['sum(Amount)']; ?></td>
 		 <td><?php echo $rowd1['sum(Qty_18_19)']; ?></td>
 		 <td><?php echo $rowd1['sum(Amount_18_19)']; ?></td>
       </tr>
