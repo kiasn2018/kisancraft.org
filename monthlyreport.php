@@ -215,13 +215,16 @@
                $post_at_to_date = $_POST["search"]["post_at_to_date"];
                list($tid,$tim,$tiy) = explode("-",$_POST["search"]["post_at_to_date"]);
                $post_at_todate = "$tiy-$tim-$tid";
+			   $fiy1=$fiy-1;
                $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
+			   $queryCondition1 .= " AND DATE_FORMAT(date, '%Y-%m') = '$fiy1-$fim'";
            }}
    		//echo 
        
       {   $seg=array();
 	      $amt=array();
 		  $qty=array();
+		  $qtyo=array();
            $sqld = "SELECT DISTINCT District FROM sales";
            // echo $sqld;
            $resultd = mysqli_query($conn,$sqld);
@@ -245,14 +248,20 @@
          <th>Executive</th>
          <?php $td='';
 			$totalam='';
+			$totalamo='';
             while($rowdq = mysqli_fetch_array($resultdq)){ if($rowdq['Segment']!=''){?>
-         <th ><?php echo $rowdq['Segment'].'-Qty'; $seg[]=$rowdq['Segment'];?></th>
-         <th><?php echo $rowdq['Segment'].'-Amt'; ?></tdh>
+         <th ><?php echo $rowdq['Segment'].'-Qty-17-18'; ?></th>
+         <th><?php echo $rowdq['Segment'].'-Amt-17-18'; ?></tdh>
+		 <th ><?php echo $rowdq['Segment'].'-Qty-18-19'; $seg[]=$rowdq['Segment'];?></th>
+         <th><?php echo $rowdq['Segment'].'-Amt-18-19'; ?></tdh>
             <?php }} ?>
-         <th>Trade Discount</th>
-         <th>Total Sales (INR)</th>
+		<!-- <th>Trade Discount_17_18</th> 
+         <th>Trade Discount</th> -->
+		 <th>Total Sales (INR)_17_18</th>
+         <th>Total Sales (INR)_18_19</th>
       </tr>
       <?php $to='';
+	  $too='';
 	        
          while($rowd = mysqli_fetch_array($resultd)) {
           $to='';
@@ -272,6 +281,11 @@
          <td><?php echo $rows1["Executive"]; ?></td>
          <?php 
             for($j=0;$j<(count($seg));$j++){
+				
+				$sqldo = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='$seg[$j]' ".$queryCondition1;
+                 //echo $sqldo;exit();
+                $resultdo = mysqli_query($conn,$sqldo);     
+                $rowdo= mysqli_fetch_array($resultdo);
                  $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE District='$di' AND Seqment='$seg[$j]' ".$queryCondition;
                 // echo $sqld;
                 $resultd1 = mysqli_query($conn,$sqld1);     
@@ -282,6 +296,8 @@
                 $resultd111 = mysqli_query($conn,$sqld111);     
                 $rowd111= mysqli_fetch_array($resultd111);
             ?>
+		 <td><?php echo $rowdo['sum(QTY)']; $qtyo[$j]=$qtyo[$j]+$rowdo['sum(QTY)']; ?></td>
+         <td><?php echo $rowdo['sum(Amount)']; $too=$too+$rowdo['sum(Amount)'];  $amto[$j]=$amto[$j]+$rowdo['sum(Amount)'];?></td>
          <td><?php echo $rowd1['sum(QTY)']+$rowd111['sum(QTY)']; $qty[$j]=$qty[$j]+$rowd1['sum(QTY)']+$rowd111['sum(QTY)']; ?></td>
          <td><?php echo $rowd1['sum(Amount)']; $to=$to+$rowd1['sum(Amount)'];  $amt[$j]=$amt[$j]+$rowd1['sum(Amount)'];?></td>
          <?php }
@@ -289,10 +305,15 @@
                   // echo $sqld;
                   $resultd11 = mysqli_query($conn,$sqld11);     
                   $rowd11= mysqli_fetch_array($resultd11);
-            
+            $sql = "SELECT sum(Amount) from Salesmaster WHERE District='$di' AND Product='' ".$queryCondition1;
+                  // echo $sqld;
+                  $result = mysqli_query($conn,$sql);     
+                  $row= mysqli_fetch_array($result);
             ?>
+		  <td><?php echo $row['sum(Amount)']; $too=$too+$row['sum(Amount)']; $tdo=$tdo+$row['sum(Amount)'];?></td>	
          <td><?php echo $rowd11['sum(Amount)']; $to=$to+$rowd11['sum(Amount)']; $td=$td+$rowd11['sum(Amount)'];?></td>
-         <td><?php echo $to;?></td>
+         <td><?php echo $too;?></td>
+		 <td><?php echo $to;?></td>
       </tr>
 	   <?php
 	  }?> 
@@ -301,17 +322,21 @@
 	  <td></td>
 	  <td></td>
 	  <td></td>
-	  <td></td>
-	  <td></td>
+	  
 	  <?php 
 	  for($j=0;$j<(count($seg));$j++){
 		  ?>
+	  <td><?php echo $qtyo[$j]; ?></td>
+	  <td><?php echo $amto[$j]; $totalamo=$totalamo+$amto[$j];?></td>
 	  <td><?php echo $qty[$j]; ?></td>
 	  <td><?php echo $amt[$j]; $totalam=$totalam+$amt[$j];?></td>
       <?php
 	  }?>
-	  <td><?php echo $td; $totalam=$totalam+$td;?></td>
+	   <!--<td><?php echo $tdo; $totalamo=$totalamo+$tdo;?></td>
+	   <td><?php echo $td; $totalam=$totalam+$td;?></td> -->
+	   <td><?php echo $totalamo;?></td>
 	   <td><?php echo $totalam;?></td>
+	  
 	  </tr>
    </table>
 </div>

@@ -101,7 +101,7 @@
             $sql1 = "SELECT month,year from Stockmst ORDER BY month DESC ";
             $result1 = mysqli_query($conn,$sql1);
             $row1 = mysqli_fetch_array($result1);
-            $sql = "SELECT distinct SKU from Stockmst ORDER BY month DESC ";
+            $sql = "SELECT DISTINCT Product from Stockmst where SKU='X-Part' ";
             $result = mysqli_query($conn,$sql);
             
             //include '/test/index.php';
@@ -111,6 +111,7 @@
          <table class="sortable">
             <thead>
                <tr class="d0">
+			   <th width=""><span>Stock Product</span></th>
                   <th width=""><span>Stock SKU</span></th>
                   <th width=""><span> Stock QTY</span></th>
                   <th width=""><span>Stock Value</span></th>
@@ -148,16 +149,17 @@
                   		$totalv1="";
                   while($row = mysqli_fetch_array($result)){
                   $sku=$row["SKU"];
-                  $sql1 = "SELECT Sum(QTY),Sum(Amount),Product from Stockmst where SKU='$sku' AND month='$month'  ";
+				  $product=$row["Product"];
+                  $sql1 = "SELECT Sum(QTY),Sum(Amount),Product,SKU from Stockmst where Product='$product' AND month='$month'  ";
                      $result1 = mysqli_query($conn,$sql1);
                      while($row1 = mysqli_fetch_array($result1)){ 
-                  $p=$row["SKU"];
-                  $sql15 = "SELECT Sum(QTY),Sum(Amount) from salesmerge where SKU='$p' AND DATE_FORMAT(date, '%Y-%m') Between '$fdate365' And '$fdate' "; //echo $sql15;
+                  $sql15 = "SELECT Sum(QTY),Sum(Amount) from salesmerge where Product='$product' AND DATE_FORMAT(date, '%Y-%m') Between '$fdate365' And '$fdate' "; //echo $sql15;
                      $result15 = mysqli_query($conn,$sql15);
                      $row15 = mysqli_fetch_array($result15);
                   ?>
                <tr class="d1">
-                  <td><?php echo $row["SKU"]; ?></td>
+                  <td><?php echo $row["Product"]; ?></td>
+				  <td><?php echo $row1["SKU"]; ?></td>
                   <td><?php echo $q1=$row1["Sum(QTY)"] ; ?></td>
                   <td><?php echo $row1["Sum(Amount)"]; $totalv=$totalv+$row1["Sum(Amount)"];?></td>
                   <td><?php echo $v=round($row1["Sum(Amount)"]/$row1["Sum(QTY)"]); ?></td>  

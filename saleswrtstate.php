@@ -17,13 +17,37 @@
          include 'header.php';
          include '/config/db.php';
          ?>
-      <h1 style="text-align:center;"> sales Monthly report Segment wise </h1>
+      <h1 style="text-align:center;"> Sales Monthly report State, District wise </h1>
       <div class="container" style="margin-left:30%; width:50%; background-color:lightblue">
          <div class="row">
             <div class="span3 hidden-phone"></div>
             <div class="span6" id="form-login">
                <form name="insert" action="" method="post">
                   <table width="100%" height="117"  border="0">
+                     <tr>
+                        <th  height="63" scope="row"> State :</th>
+                        <td width="">
+                           <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
+                              <option value="">Select</option>
+							   <option value="ALL">ALL</option>
+                              <?php $sqlst = "SELECT DISTINCT D_state from Dealermst ";
+                                 $resultst = mysqli_query($conn,$sqlst);
+                                 
+                                 while($rowst=mysqli_fetch_array($resultst))
+                                 {  ?>
+                              <option value="<?php echo $rowst['D_state'];?>"><?php echo $rowst['D_state'];?></option>
+                              <?php
+                                 }
+                                 ?>
+                           </select>
+                        </td>
+                        <th scope="row">District :</th>
+                        <td>
+                           <select onChange="getdealer(this.value);" name="district" id="district-list" class="form-control">
+                              <option value="">Select</option>
+                           </select>
+                        </td>
+                        
                      <tr>
                         <td>
                            <input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>" class="input-control" />
@@ -208,6 +232,7 @@
        $amount="";
        $district=($_POST["district"]);
        $state=($_POST["state"]);
+	   $state1=$state;
    	 $queryCondition = "";
        if(!empty($_POST["search"]["post_at"])) {
            $post_at = $_POST["search"]["post_at"];
@@ -218,18 +243,21 @@
                list($tid,$tim,$tiy) = explode("-",$_POST["search"]["post_at_to_date"]);
                $post_at_todate = "$tiy-$tim-$tid";
                $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
+			   $py=$fiy-1;
+			   $post_at_todate1 = "$py-$tim-$tid";
+			    $queryCondition1 .= " AND Date BETWEEN '$py-$fim-$fid' AND '". $post_at_todate1 . "'";
            }}
    		//echo 
        
       {   $seg=array();
-           $sqld = "SELECT DISTINCT (D_distict) D_distict, D_state FROM Dealermst";
-           // echo $sqld;
-           $resultd = mysqli_query($conn,$sqld);
-   		$sqldq = "SELECT DISTINCT Segment from SKU";
-           // echo $sqld;
-           $resultdq = mysqli_query($conn,$sqldq);
-   		$resultdqq = mysqli_query($conn,$sqldq);
-           
+	  
+	  
+	        if($state1=='ALL'){$sqld = "SELECT DISTINCT State from sales where Date!='0000-00-00' ".$queryCondition;}else{
+		   if($district=='ALL'){$sqld = "SELECT DISTINCT District from Salesmaster where State='$state' ";}else{
+           $sqld = "SELECT DISTINCT District from sales where District='$district' ".$queryCondition;}}
+           //$sqld = "SELECT DISTINCT (D_distict) D_distict, D_state FROM Dealermst";
+            //echo $sqld;
+           $resultd = mysqli_query($conn,$sqld);  
            ?>
 <div style="width:60%; float :left ; margin-left: 15%">
    <table  id="demo">
@@ -238,51 +266,67 @@
       </tr>
       <tr>
          <th>State</th>
+		 <?php
+		 if($state1!='ALL'){ ?>
          <th>District</th>
          <th>Zone</th>
-         <th>Executive</th>
+         <th>Executive</th> <?php }?>
          <th>Amount-17</th>
 		  <th>Amount-18</th>
+		  <th>Progress(%)</th>
       </tr>
 	  
          <?php 
 			$amountp='';
 			$amountc='';
             while($rowd = mysqli_fetch_array($resultd)) {
-               $state=$rowd['D_state'];
-                  $di=$rowd["D_distict"];
+                  if($state1=='ALL'){$state=$rowd["State"];}
+                  $di=$rowd["District"];
                   ?>
-         <td><?php echo $state; ?></td>
-         <td><?php echo $di; ?></td>
+        
          <?php 
             $sqldz = "SELECT Zone from Zonesmst WHERE District='$di'  ";
                // echo $sqld;
                $resultdz = mysqli_query($conn,$sqldz);     
                $rowdz= mysqli_fetch_array($resultdz);
-                $sqld1 = "SELECT sum(Amount),Executive from sales WHERE District='$di'  ".$queryCondition;
+			   if($state1=='ALL'){ $sqld1 = "SELECT sum(Amount),Executive,State from sales WHERE State='$state'  ".$queryCondition; }else{
+                $sqld1 = "SELECT sum(Amount),Executive,State from sales WHERE District='$di'  ".$queryCondition;
+			   }
                // echo $sqld;
                $resultd1 = mysqli_query($conn,$sqld1);     
                $rowd1= mysqli_fetch_array($resultd1);	
-			   $sqldd = "SELECT sum(Amount),Executive from Salesmaster WHERE District='$di' AND DATE_FORMAT(date, '%Y-%m') ='2017-04' ";
-               //echo $sqldd;
+			    if($state1=='ALL'){  $sqldd = "SELECT sum(Amount),Executive,State From Salesmaster WHERE State='$state'  ".$queryCondition1;}else{
+			   $sqldd = "SELECT sum(Amount),Executive,State from Salesmaster WHERE District='$di' AND DATE_FORMAT(date, '%Y-%m') ='$py-$fim' ";
+				}//echo $sqldd;
                $resultdd = mysqli_query($conn,$sqldd);     
                $rowdd= mysqli_fetch_array($resultdd);
 			   ?>
+		 <td><?php echo $state; ?></td>
+		 <?php if($state1!='ALL'){ ?>
+         <td><?php echo $di; ?></td>
          <td><?php if($rowdz['Zone']==''){echo $state;}else{echo $rowdz['Zone'];} ?></td>
          <td><?php echo $rowd1['Executive']; ?></td>
+		 <?php } ?>
          <td><?php echo $rowdd['sum(Amount)']; $amountp=$amountp+$rowdd['sum(Amount)'];?></td>
 		 <td><?php echo $rowd1['sum(Amount)']; $amountc=$amountc+$rowd1['sum(Amount)']; ?></td>
+		 <?php if($rowdd['sum(Amount)']==''){?><td> 0 </td><?php }else{ ?>
+		 <td> <?php $p=((($rowd1['sum(Amount)']/$rowdd['sum(Amount)'])-1));  $q=sprintf('%0.2f', $p);$m=$q*100; echo $padded = sprintf('%0.0f', $m);?></td><?php }?>
       </tr>
 	  
       <?php
          }?> 
 		 <tr>
+		  <?php if($state1!='ALL'){ ?>
 			<td></td>
 			<td></td>
+		  <?php } ?>
 			<td>Total</td>
+			<?php if($state1!='ALL'){ ?>
 			<td></td>
+			<?php  } ?>
 			<td><?php echo $amountp; ?></td>
 			<td><?php echo $amountc; ?></td>
+			<td><?php  $p1=((($amountc/$amountp)-1)*100); echo $padded1 = sprintf('%0.0f', $p1); ?> </td>
 	  </tr>
    </table>
 </div>
