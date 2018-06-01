@@ -25,8 +25,8 @@
                <form name="insert" action="" method="post">
                   <table width="100%" height="117"  border="0">
                      <tr>
-                        <th  height="63" scope="row"> State :</th>
-                        <td width="">
+                        <th width="50%"> State :</th>
+                        <td>
                            <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
                               <option value="">Select</option>
 							   <option value="ALL">ALL</option>
@@ -269,8 +269,7 @@
 		 <?php
 		 if($state1!='ALL'){ ?>
          <th>District</th>
-         <th>Zone</th>
-         <th>Executive</th> <?php }?>
+         <?php }?>
          <th>Amount-17</th>
 		  <th>Amount-18</th>
 		  <th>Progress(%)</th>
@@ -304,8 +303,6 @@
 		 <td><?php echo $state; ?></td>
 		 <?php if($state1!='ALL'){ ?>
          <td><?php echo $di; ?></td>
-         <td><?php if($rowdz['Zone']==''){echo $state;}else{echo $rowdz['Zone'];} ?></td>
-         <td><?php echo $rowd1['Executive']; ?></td>
 		 <?php } ?>
          <td><?php echo $rowdd['sum(Amount)']; $amountp=$amountp+$rowdd['sum(Amount)'];?></td>
 		 <td><?php echo $rowd1['sum(Amount)']; $amountc=$amountc+$rowd1['sum(Amount)']; ?></td>
@@ -315,11 +312,7 @@
 	  
       <?php
          }?> 
-		 <tr>
-		  <?php if($state1!='ALL'){ ?>
-			<td></td>
-			<td></td>
-		  <?php } ?>
+		 <tr>		  
 			<td>Total</td>
 			<?php if($state1!='ALL'){ ?>
 			<td></td>
@@ -329,6 +322,7 @@
 			<td><?php  $p1=((($amountc/$amountp)-1)*100); echo $padded1 = sprintf('%0.0f', $p1); ?> </td>
 	  </tr>
    </table>
+   <button onclick="exportTableToCSV('district executive.csv')">Export HTML Table To CSV File</button>
 </div>
 <script>
    function downloadCSV(csv, filename) {
@@ -373,6 +367,6 @@
      downloadCSV(csv.join("\n"), filename);
    }
    </script>
-<button onclick="exportTableToCSV('district executive.csv')">Export HTML Table To CSV File</button>
+
 <?php 
 }}

@@ -242,9 +242,11 @@ if($_SESSION["log"]!="en"){
 				 <li><a href="/kisancraft.org/monthlyreportdea.php">Monthly Report WRT Dealer</a></li><br>
                 <li><a href="/kisancraft.org/salesemp.php">Sales WRT Employees</a></li><br>
                 <li><a href="/kisancraft.org/saleswrtstate.php">Sales WRT State And District wise</a></li><br>
+				<li><a href="/kisancraft.org/saleswrtzone.php">Sales WRT Zone wise</a></li><br>
                 <li><a href="/kisancraft.org/Monthlyreportsku.php">Sales WRT SKU Wise</a></li><br>
                 <li><a href="/kisancraft.org/saleswrtdea.php">Sales Quarter Wise</a></li><br>
 				 <li><a href="/kisancraft.org/saleswrtdeal.php">Sales dealer wise</a></li><br>
+				 <li><a href="/kisancraft.org/saleswrtmonth.php">Sales State-Month wise</a></li><br>
                 <li><a href="#">Target V/s Actual</a></li><br>
               </ul>
             </div>

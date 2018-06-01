@@ -9,4 +9,22 @@ INNER
 INNER
   JOIN Itemmst
     ON Salesmaster.Product = Itemmst.Item_name
-   SET Salesmaster.SKU = Itemmst.SKU
+   SET Salesmaster.SKU = Itemmst.SKU,Salesmaster.SKU1 = Itemmst.SKU1
+   
+    UPDATE Salesmaster
+INNER
+  JOIN SKU
+    ON Salesmaster.SKU = SKU.SKU
+   SET Salesmaster.seqment = SKU.segment
+   
+   Select Salesmaster.amount,Salesmastermaster.amount
+INNER
+  JOIN Dealermst
+    ON Salesmaster.State = Dealermst.D_state,Salesmastermaster.State = Dealermst.D_state
+   
+   
+   UPDATE sales
+INNER
+  JOIN Dealermst
+    ON sales.Dealer = Dealermst.D_name
+   SET sales.state = Dealermst.D_state,sales.District = Dealermst.D_distict

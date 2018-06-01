@@ -2,9 +2,9 @@
 ini_set('max_execution_time', 0);
 // date base connection
 $servername = "localhost";
-$username = "kisan";
+$username = "mayurj";
 $password = "yes";
-$dbname = "Branch_mst";
+$dbname = "branch_mst";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -33,7 +33,7 @@ if(isset($_POST["Import"])){
             if($emapData[0]!=""){
                 
                 //It wiil insert a row to our subject table from our csv file`
-                $sql = "INSERT into Zonesmst(State, District, Zone)
+                $sql = "INSERT into Zonesmst(District, State, Zone)
                  values('$emapData[0]','$emapData[1]','$emapData[2]')";
                 //we are using mysql_query function. it returns a resource on true else False on error
                 //echo "Error: " . $sql . "<br>" . $conn->error;
