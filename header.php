@@ -220,6 +220,7 @@ if($_SESSION["log"]!="en"){
                 <li><a href="#">Distict Master</a></li><br>
                 <li><a href="/kisancraft.org/itemid.php">Item Master</a></li><br>
 				<li><a href="/kisancraft.org/SKU.php">SKU Master</a></li><br>
+				<li><a href="/kisancraft.org/supersegment.php">Super Segment Master</a></li><br>
                 <li><a href="/kisancraft.org/dealermst.php">Dealer Master</a></li><br>
 				<li><a href="/kisancraft.org/stockmst.php">Stock Master</a></li><br>
                 <li><a href="#">Trial Balance Master</a></li><br>

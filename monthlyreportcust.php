@@ -225,10 +225,10 @@
      $amto=array();
     $qty=array();
     $qtyo=array();
-           $sqld = "SELECT DISTINCT District FROM sales UNION SELECT DISTINCT District FROM Salesmaster ";
+           $sqld = "SELECT DISTINCT District,Zone FROM sales UNION SELECT DISTINCT District,Zone FROM Salesmaster ORDER by Zone,District ASC";
            // echo $sqld;
            $resultd = mysqli_query($conn,$sqld);
-   		$sqldq = "SELECT DISTINCT Seqment from sales";
+   		$sqldq = "SELECT DISTINCT supersegment from supersegment where supersegment!='0'";
            // echo $sqld;
            $resultdq = mysqli_query($conn,$sqldq);
    		$resultdqq = mysqli_query($conn,$sqldq);
@@ -240,50 +240,50 @@
          <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
       </tr>
       <tr>
-         <th>State</th>
-         <th>District</th>
-         <th>ZM</th>
-         <th>SM</th>
-         <th>ASM</th>
-         <th>Executive</th>
-         <?php $td='';
+            <th>State</th>
+			<th>Executive</th>
+            <th>ZM</th>
+            <th>SM</th>
+            <th>ASM</th>
+            <th>District</th>
+            <?php $td='';
             $totalam='';
             $totalamo='';
-                     while($rowdq = mysqli_fetch_array($resultdq)){ if($rowdq['Seqment']!=''){?>
-         <th><?php echo $rowdq['Seqment'].'-Amt-17-18'; $seg[]=$rowdq['Seqment'];?></th>
-         <th><?php echo $rowdq['Seqment'].'-Amt-18-19'; ?></th>
+                     while($rowdq = mysqli_fetch_array($resultdq)){ if($rowdq['supersegment']!=''){?>
+            <th><?php echo $rowdq['supersegment'].'-Amt-17-18'; $seg[]=$rowdq['supersegment'];?></th>
+            <th><?php echo $rowdq['supersegment'].'-Amt-18-19'; ?></th>
             <?php }} ?>
             <th>Trade Discount_17_18</th> 
-               <th>Trade Discount_18_19</th>
-         <th>Total Sales (INR)_17_18</th>
-         <th>Total Sales (INR)_18_19</th>
+            <th>Trade Discount_18_19</th>
+            <th>Total Sales (INR)_17_18</th>
+            <th>Total Sales (INR)_18_19</th>
       </tr>
       <?php $to='';
-         while($rowd = mysqli_fetch_array($resultd)) {
+         while($rowd = mysqli_fetch_array($resultd)) { //print_r($rowd); 
           $to='';
          $too='';
                $di=$rowd["District"];
-                $sqls1 = "SELECT State,Executive,ASM,SM,ZM,Dealer from Salesmaster where  District= '$di'";
+                $sqls1 = "SELECT DISTINCT Executive,ASM,SM,ZM,Dealer from Salesmaster  where  District= '$di' order by Executive,ASM,SM,ZM ASC";
                    $results1 = mysqli_query($conn,$sqls1);
                    $rows1 = mysqli_fetch_array($results1);
-                   $state=$rows1['State'];
+                   $state=$rowd['Zone'];
                
                ?>
       <tr>
          <td><?php echo $state; ?></td>
-         <td><?php echo $di; ?></td>
+         <td><?php echo $rows1["Executive"]; ?></td>
          <td><?php echo $rows1["ZM"]; ?></td>
          <td><?php echo $rows1["SM"]; ?></td>
          <td><?php echo $rows1["ASM"]; ?></td>
-         <td><?php echo $rows1["Executive"]; ?></td>
+		 <td><?php echo $di; ?></td>
          <?php 
             for($j=0;$j<(count($seg));$j++){
             
-            $sqldo = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE District='$di' AND Seqment='$seg[$j]' ".$queryCondition1;
+            $sqldo = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE District='$di' AND supersegment='$seg[$j]' ".$queryCondition1;
                  //echo $sqldo;exit();
                 $resultdo = mysqli_query($conn,$sqldo);     
                 $rowdo= mysqli_fetch_array($resultdo);
-                 $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE District='$di' AND Seqment='$seg[$j]' ".$queryCondition;
+                 $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE District='$di' AND supersegment='$seg[$j]' ".$queryCondition;
                 // echo $sqld;
                 $resultd1 = mysqli_query($conn,$sqld1);     
                 $rowd1= mysqli_fetch_array($resultd1);

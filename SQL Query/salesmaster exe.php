@@ -1,26 +1,26 @@
-UPDATE Salesmaster
+UPDATE sales
 INNER
   JOIN Excutivemst
-    ON Salesmaster.District = Excutivemst.District 
-   SET Salesmaster.Executive = Excutivemst.Exexutive,Salesmaster.EID = Excutivemst.EID,Salesmaster.ASM = Excutivemst.ASM,Salesmaster.AID = Excutivemst.AID,Salesmaster.SM = Excutivemst.SM,Salesmaster.SID = Excutivemst.SID,Salesmaster.ZM = Excutivemst.ZM,Salesmaster.ZID = Excutivemst.ZID
+    ON sales.District = Excutivemst.District 
+   SET sales.Executive = Excutivemst.Exexutive,sales.EID = Excutivemst.EID,sales.ASM = Excutivemst.ASM,sales.AID = Excutivemst.AID,sales.SM = Excutivemst.SM,sales.SID = Excutivemst.SID,sales.ZM = Excutivemst.ZM,sales.ZID = Excutivemst.ZID
    
    
-   UPDATE Salesmaster
+   UPDATE sales
 INNER
   JOIN Itemmst
-    ON Salesmaster.Product = Itemmst.Item_name
-   SET Salesmaster.SKU = Itemmst.SKU,Salesmaster.SKU1 = Itemmst.SKU1
+    ON sales.Product = Itemmst.Item_name
+   SET sales.SKU = Itemmst.SKU,sales.SKU1 = Itemmst.SKU1
    
-    UPDATE Salesmaster
+    UPDATE sales
 INNER
-  JOIN SKU
-    ON Salesmaster.SKU = SKU.SKU
-   SET Salesmaster.seqment = SKU.segment
+  JOIN SKU       
+    ON sales.SKU = SKU.SKU
+   SET sales.seqment = SKU.segment
    
-   Select Salesmaster.amount,Salesmastermaster.amount
+   Select sales.amount,salesmaster.amount
 INNER
   JOIN Dealermst
-    ON Salesmaster.State = Dealermst.D_state,Salesmastermaster.State = Dealermst.D_state
+    ON sales.State = Dealermst.D_state,salesmaster.State = Dealermst.D_state
    
    
    UPDATE sales
@@ -28,3 +28,13 @@ INNER
   JOIN Dealermst
     ON sales.Dealer = Dealermst.D_name
    SET sales.state = Dealermst.D_state,sales.District = Dealermst.D_distict
+   
+   SELECT DISTINCT SKU FROM `sales` where SKU!='' and Seqment=''
+   
+   UPDATE sales
+INNER
+  JOIN Zonesmst
+    ON sales.District = Zonesmst.District and sales.State=Zonesmst.State 
+   SET sales.Zone = Zonesmst.Zone
+   
+   UPDATE sales INNER JOIN supersegment ON sales.Seqment = supersegment.segment SET sales.supersegment = supersegment.supersegment
