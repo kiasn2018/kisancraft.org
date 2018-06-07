@@ -17,7 +17,7 @@
          include 'header.php';
          include '/config/db.php';
          ?>
-      <h1 style="text-align:center;"> Sales Monthly report State, District wise </h1>
+      <h1 style="text-align:center;"> Sales Monthly report State wise </h1>
       <div class="container" style="margin-left:30%; width:50%; background-color:lightblue">
          <div class="row">
             <div class="span3 hidden-phone"></div>
@@ -252,7 +252,7 @@
       {   $seg=array();
 	  
 	  
-	        if($state1=='ALL'){$sqld = "SELECT DISTINCT State from sales where Date!='0000-00-00' ".$queryCondition;}else{
+	        if($state1=='ALL'){$sqld = "SELECT DISTINCT Zone FROM sales UNION SELECT DISTINCT Zone  FROM Salesmaster ORDER by Zone ASC ";}else{
 		   if($district=='ALL'){$sqld = "SELECT DISTINCT District from Salesmaster where State='$state' ";}else{
            $sqld = "SELECT DISTINCT District from sales where District='$district' ".$queryCondition;}}
            //$sqld = "SELECT DISTINCT (D_distict) D_distict, D_state FROM Dealermst";
@@ -279,7 +279,7 @@
 			$amountp='';
 			$amountc='';
             while($rowd = mysqli_fetch_array($resultd)) {
-                  if($state1=='ALL'){$state=$rowd["State"];}
+                  if($state1=='ALL'){$state=$rowd["Zone"];}
                   $di=$rowd["District"];
                   ?>
         
@@ -288,13 +288,13 @@
                // echo $sqld;
                $resultdz = mysqli_query($conn,$sqldz);     
                $rowdz= mysqli_fetch_array($resultdz);
-			   if($state1=='ALL'){ $sqld1 = "SELECT sum(Amount),Executive,State from sales WHERE State='$state'  ".$queryCondition; }else{
+			   if($state1=='ALL'){ $sqld1 = "SELECT sum(Amount),Executive,State from sales WHERE Zone='$state'  ".$queryCondition; }else{
                 $sqld1 = "SELECT sum(Amount),Executive,State from sales WHERE District='$di'  ".$queryCondition;
 			   }
                // echo $sqld;
                $resultd1 = mysqli_query($conn,$sqld1);     
                $rowd1= mysqli_fetch_array($resultd1);	
-			    if($state1=='ALL'){  $sqldd = "SELECT sum(Amount),Executive,State From Salesmaster WHERE State='$state'  ".$queryCondition1;}else{
+			    if($state1=='ALL'){  $sqldd = "SELECT sum(Amount),Executive,State From Salesmaster WHERE Zone='$state'  ".$queryCondition1;}else{
 			   $sqldd = "SELECT sum(Amount),Executive,State from Salesmaster WHERE District='$di' AND DATE_FORMAT(date, '%Y-%m') ='$py-$fim' ";
 				}//echo $sqldd;
                $resultdd = mysqli_query($conn,$sqldd);     

@@ -225,7 +225,7 @@
      $amto=array();
     $qty=array();
     $qtyo=array();
-           $sqld = "SELECT DISTINCT District,Zone FROM sales UNION SELECT DISTINCT District,Zone FROM Salesmaster ORDER by Zone,District ASC";
+           $sqld = "SELECT DISTINCT District,Zone,Executive,ASM,SM,ZM FROM sales UNION SELECT DISTINCT District,Zone,Executive,ASM,SM,ZM  FROM Salesmaster ORDER by Zone,Executive,ASM,SM,ZM ASC";
            // echo $sqld;
            $resultd = mysqli_query($conn,$sqld);
    		$sqldq = "SELECT DISTINCT supersegment from supersegment where supersegment!='0'";
@@ -242,9 +242,9 @@
       <tr>
             <th>State</th>
 			<th>Executive</th>
+			<th>ASM</th>
+			<th>SM</th>
             <th>ZM</th>
-            <th>SM</th>
-            <th>ASM</th>
             <th>District</th>
             <?php $td='';
             $totalam='';
@@ -253,28 +253,23 @@
             <th><?php echo $rowdq['supersegment'].'-Amt-17-18'; $seg[]=$rowdq['supersegment'];?></th>
             <th><?php echo $rowdq['supersegment'].'-Amt-18-19'; ?></th>
             <?php }} ?>
-            <th>Trade Discount_17_18</th> 
-            <th>Trade Discount_18_19</th>
             <th>Total Sales (INR)_17_18</th>
             <th>Total Sales (INR)_18_19</th>
       </tr>
       <?php $to='';
          while($rowd = mysqli_fetch_array($resultd)) { //print_r($rowd); 
-          $to='';
-         $too='';
-               $di=$rowd["District"];
-                $sqls1 = "SELECT DISTINCT Executive,ASM,SM,ZM,Dealer from Salesmaster  where  District= '$di' order by Executive,ASM,SM,ZM ASC";
-                   $results1 = mysqli_query($conn,$sqls1);
-                   $rows1 = mysqli_fetch_array($results1);
-                   $state=$rowd['Zone'];
+				$to='';
+				$too='';
+                $di=$rowd["District"];
+                $state=$rowd['Zone'];
                
                ?>
       <tr>
          <td><?php echo $state; ?></td>
-         <td><?php echo $rows1["Executive"]; ?></td>
-         <td><?php echo $rows1["ZM"]; ?></td>
-         <td><?php echo $rows1["SM"]; ?></td>
-         <td><?php echo $rows1["ASM"]; ?></td>
+         <td><?php echo $rowd["Executive"]; ?></td>
+         <td><?php echo $rowd["ASM"]; ?></td>
+         <td><?php echo $rowd["SM"]; ?></td>
+         <td><?php echo $rowd["ZM"]; ?></td>
 		 <td><?php echo $di; ?></td>
          <?php 
             for($j=0;$j<(count($seg));$j++){
@@ -305,8 +300,8 @@
                   $result = mysqli_query($conn,$sql);     
                   $row= mysqli_fetch_array($result);
             ?>
-         <td><?php echo $row['sum(Amount)']; $too=$too+$row['sum(Amount)']; $tdo=$tdo+$row['sum(Amount)'];?></td>	
-            <td><?php echo $rowd11['sum(Amount)']; $to=$to+$rowd11['sum(Amount)']; $td=$td+$rowd11['sum(Amount)'];?></td> 
+         <!--<td><?php echo $row['sum(Amount)']; $too=$too+$row['sum(Amount)']; $tdo=$tdo+$row['sum(Amount)'];?></td>	
+            <td><?php echo $rowd11['sum(Amount)']; $to=$to+$rowd11['sum(Amount)']; $td=$td+$rowd11['sum(Amount)'];?></td> -->
          <td><?php echo $too;?></td>
          <td><?php echo $to;?></td>
       </tr>
@@ -326,8 +321,8 @@
          <td><?php echo $amt[$j]; $totalam=$totalam+$amt[$j];?></td>
          <?php
             }?>
-         <td><?php echo $tdo; $totalamo=$totalamo+$tdo;?></td>
-            <td><?php echo $td; $totalam=$totalam+$td;?></td> 
+         <!--<td><?php echo $tdo; $totalamo=$totalamo+$tdo;?></td>
+            <td><?php echo $td; $totalam=$totalam+$td;?></td> -->
          <td><?php echo $totalamo;?></td>
          <td><?php echo $totalam;?></td>
       </tr>
