@@ -237,9 +237,15 @@
      $resultd5 = mysqli_query($conn,$sqld); 	
      $resultd6 = mysqli_query($conn,$sqld); 
      $resultd7 = mysqli_query($conn,$sqld); 		   
-           ?>
+      $sqlc = "SELECT count(DISTINCT Executive),count(DISTINCT ASM) FROM sales where zone='$state' UNION SELECT count(DISTINCT Executive),count(DISTINCT ASM) FROM Salesmaster where zone='$state' " ; 
+	  $resultc = mysqli_query($conn,$sqlc); 
+      $rowc = mysqli_fetch_array($resultc);
+	 $counte=$rowc["count(DISTINCT Executive)"];
+	 $counts=$rowc["count(DISTINCT Executive)"];
+	 
+?>	  
 <div style="width:60%; float :left ; margin-left: 15%">
-   <table  id="demo">
+   <table  id="demo" >
       <tr>
          <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
       </tr>
@@ -247,65 +253,70 @@
          <th>State</th>
          <?php while($row = mysqli_fetch_array($resultd)) {
             $exe=$row["Executive"];
-            if($exel != $exe){
+			$SM=$row["ASM"];
+            if($exel != $exe || $SM != $SML){
                  ?>
          <td><?php echo $row["Zone"]; ?></td>
          <td></td>
          <?php }else{?>
          <td></td>
          <td></td>
-         <?php } $exel=$row["Executive"];}?>
+         <?php } $exel=$row["Executive"]; $SML=$row["ASM"];}?>
       </tr>
       <tr>
          <th>Executive</th>
          <?php while($row = mysqli_fetch_array($resultd1)) {
-            $exe=$row["Executive"];
-            if($exel != $exe){
+            $exe1=$row["Executive"];
+            $SM1=$row["ASM"];
+            if($exel1 != $exe1 || $SM1 != $SML1){
                  ?>
          <td><?php echo $row["Executive"]; ?></td>
          <td></td>
          <?php }else{?>
          <td></td>
          <td></td>
-         <?php } $exel=$row["Executive"];}?>
+         <?php } $exel1=$row["Executive"]; $SML1=$row["ASM"];}?>
       </tr>
       <th>ASM</th>
       <?php while($row = mysqli_fetch_array($resultd2)) {
-         $exe=$row["Executive"];
-         if($exel != $exe){
+         $exe2=$row["Executive"];
+        $SM2=$row["ASM"];
+            if($exel2 != $exe2 || $SM2 != $SML2){
               ?>
       <td><?php echo $row["ASM"]; ?></td>
       <td></td>
       <?php }else{?>
       <td></td>
       <td></td>
-      <?php } $exel=$row["Executive"];}?>
+      <?php } $exel2=$row["Executive"];$SML2=$row["ASM"];}?>
       </tr>
       <tr>
          <th>SM</th>
          <?php while($row = mysqli_fetch_array($resultd3)) {
-            $exe=$row["Executive"];
-            if($exel != $exe){
+            $exe3=$row["Executive"];
+           $SM3=$row["ASM"];
+            if($exel3 != $exe3 || $SM3 != $SML3){
                  ?>
          <td><?php echo $row["SM"]; ?></td>
          <td></td>
          <?php }else{?>
          <td></td>
          <td></td>
-         <?php } $exel=$row["Executive"];}?>
+         <?php } $exel3=$row["Executive"];$SML3=$row["ASM"];}?>
       </tr>
       <tr>
          <th>ZM</th>
          <?php while($row = mysqli_fetch_array($resultd4)) {
-            $exe=$row["Executive"];
-            if($exel != $exe){
+            $exe4=$row["Executive"];
+            $SM4=$row["ASM"];
+            if($exel4 != $exe4 || $SM4 != $SML4){
                  ?>
          <td><?php echo $row["ZM"]; ?></td>
          <td></td>
          <?php }else{?>
          <td></td>
          <td></td>
-         <?php } $exel=$row["Executive"];}?>
+	 <?php } $exel4=$row["Executive"];$SML4=$row["ASM"];}?>
       </tr>
       <tr>
          <th>District</th>
@@ -335,10 +346,10 @@
             $totalamo='';
          while($row = mysqli_fetch_array($resultd7)){
          $ss[]=$row["District"]; }
-         $sqlss = "SELECT DISTINCT supersegment FROM sales UNION SELECT DISTINCT supersegment FROM Salesmaster ORDER by supersegment ASC";
+         $sqlss = "SELECT DISTINCT SKU FROM sales UNION SELECT DISTINCT SKU FROM Salesmaster ORDER by SKU ASC";
          $resultss = mysqli_query($conn,$sqlss);
           while($rowss = mysqli_fetch_array($resultss)){
-          $di[]=$rowss["supersegment"]; }
+          $di[]=$rowss["SKU"]; }
           for($j=1;$j<count($di);$j++)
           { $too='';
          $to='';
@@ -348,10 +359,10 @@
          <?php
             for($i=0;$i<count($ss);$i++)
             { 
-            $sqldo = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE supersegment='$di[$j]' AND District='$ss[$i]' ".$queryCondition1;
+            $sqldo = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE SKU='$di[$j]' AND District='$ss[$i]' ".$queryCondition1;
                        $resultdo = mysqli_query($conn,$sqldo);     
                        $rowdo= mysqli_fetch_array($resultdo);
-                        $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE supersegment='$di[$j]' AND District='$ss[$i]' ".$queryCondition;
+                        $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE SKU='$di[$j]' AND District='$ss[$i]' ".$queryCondition;
                         //echo $sqld1;
                        $resultd1 = mysqli_query($conn,$sqld1);     
                        $rowd1= mysqli_fetch_array($resultd1);

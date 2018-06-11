@@ -1,0 +1,260 @@
+Sheets.Add After:=ActiveSheet
+    Sheets("Sheet2").Name = "Andhra Pradesh"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Andhra Pradesh (5).xlsx"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet3").Name = "Bihar"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Bihar.xlsx"
+    Cells.Select
+    'Range("I4").Activate
+    Application.CutCopyMode = False
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet4").Name = "Chhattisgarh"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Chhattisgarh.xlsx"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+     Sheets.Add After:=ActiveSheet
+    Sheets("Sheet5").Name = "Delhi"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Delhi.xlsx"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+     Sheets.Add After:=ActiveSheet
+    Sheets("Sheet6").Name = "Goa"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Goa.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet7").Name = "Gujarat"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Gujarat.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet8").Name = "Haryana"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Haryana.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet9").Name = "Himachal Pradesh"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Himachal Pradesh.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet10").Name = "Jammu and Kashmir"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Jammu and Kashmir.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet11").Name = "Jharkhand"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Jharkhand.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet12").Name = "Karnataka Central"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Karnataka Central.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet13").Name = "Karnataka Local"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Karnataka Local.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet14").Name = "Karnataka North"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Karnataka North.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet15").Name = "Karnataka South"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Karnataka South.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet16").Name = "Kerala"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Kerala.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet17").Name = "Madhya Pradesh"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Madhya Pradesh.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet18").Name = "Maharashtra"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Maharashtra.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet19").Name = "Nepal"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Nepal.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet20").Name = "North East"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\North East.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet21").Name = "Odisha"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Odisha.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet22").Name = "Punjab"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Punjab.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet23").Name = "Rajasthan"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Rajasthan.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet24").Name = "Tamil Nadu"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Tamil Nadu.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet25").Name = "Telangana"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Telangana.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet26").Name = "Uttar Pradesh A"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Uttar Pradesh A.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet27").Name = "Uttar Pradesh B"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Uttar Pradesh B.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet28").Name = "Uttar Pradesh D"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Uttar Pradesh D.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet29").Name = "Uttarakhand"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Uttarakhand.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet30").Name = "West Bengal"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\West Bengal.csv"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
