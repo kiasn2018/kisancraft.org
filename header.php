@@ -1,18 +1,13 @@
 <?php 
 // Start the session
 session_start();
-/*if($_SESSION['timeout'] + 10 * 60 < time()){
+
+if($_SESSION['role']==''){ 
     echo "<script type=\"text/javascript\">
 						alert(\"Please Login to continue.\");
 						window.location = \"login.php\"
 					</script>";
 }
-if($_SESSION["log"]!="en"){
-    echo "<script type=\"text/javascript\">
-						alert(\"Please Login to continue.\");
-						window.location = \"login.php\"
-					</script>";
-}*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,6 +93,7 @@ if($_SESSION["log"]!="en"){
     <img src="/kisancraft.org/images/KK-LOGO.JPG" alt="Smiley face" height="60" width="30%">
      <h1 style="text-align:center; background-color: lightblue; "> Kisankraft Reports</h1>
       <ul class="sf-menu" id="example">
+	  <?php  if($_SESSION['role']=='1'){ ?>
         <li class="current">
           <a href="#">Purchase Report</a>
            <div class="sf-mega">
@@ -201,6 +197,7 @@ if($_SESSION["log"]!="en"){
         <li>
           <a href="#">Quaterly Meeting</a>
         </li> 
+	 <?php }?>
         <li>
           <a href="#">Master File Updation</a>
           <div class="sf-mega">

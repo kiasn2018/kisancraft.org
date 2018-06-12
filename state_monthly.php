@@ -221,8 +221,8 @@
    		//echo 
        
       {   $seg=array();
-   $amt=array();
-     $amto=array();
+          $amt=array();
+          $amto=array();
    
          if($state1=='ALL'){$sqld = "SELECT DISTINCT Zone,ZM,SM FROM sales UNION SELECT DISTINCT Zone,ZM,SM  FROM Salesmaster ORDER by Zone,ZM,SM ASC";}else{
      if($district=='ALL'){$sqld = "SELECT DISTINCT District,Zone,Executive,ASM,SM,ZM FROM sales where zone='$state' UNION SELECT DISTINCT District,Zone,Executive,ASM,SM,ZM  FROM Salesmaster where zone='$state' ORDER by Zone,Executive,ASM,SM,ZM,District ASC";}else{
