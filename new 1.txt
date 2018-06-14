@@ -1,0 +1,5 @@
+UPDATE Stockmst
+INNER JOIN Itemmst ON (Stockmst.Product = Itemmst.Item_name)
+SET Stockmst.SKU = Itemmst.SKU
+
+SELECT * FROM `Salesmaster` where SKU1!="" AND Segment1="" ORDER BY `Segment1` ASC

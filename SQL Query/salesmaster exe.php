@@ -38,3 +38,5 @@ INNER
    SET sales.Zone = Zonesmst.Zone
    
    UPDATE sales INNER JOIN supersegment ON sales.Seqment = supersegment.segment SET sales.supersegment = supersegment.supersegment
+
+   

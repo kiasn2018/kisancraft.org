@@ -12,6 +12,9 @@ if($_SESSION['role']==''){
 <!DOCTYPE html>
 <html lang="en">
   <head>
+     
+	 
+  
     <meta charset="utf-8">
    
     <link rel="stylesheet" href="/kisancraft.org/src/css/megafish.css" media="screen">
@@ -133,7 +136,9 @@ if($_SESSION['role']==''){
             <div class="sf-mega-section" style="background-color: #f2f2f2">              
               <ul>
                 <li class="current">
-                <a href="#">Projected</a></li><br>
+                <a href="/kisancraft.org/uploadorder.php">Upload</a></li><br>
+                <li> <a href="/kisancraft.org/orderplanning.php">Order Planning</a> </li><br>
+                <li> <a href="#">Projected</a></li><br>
                 <li><a href="#">Actual</a></li><br>
                 <li><a href="#">Both</a></li><br>
               </ul>

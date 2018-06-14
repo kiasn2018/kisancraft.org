@@ -152,7 +152,7 @@
                   $fdate365=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-12 month'));
                   $fdate366=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-13 month'));
                   $fdate367=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-12 month'));
-                  $fdate1y=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-18 month'));
+                  $fdate1y=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .  '-18 month'));
                   
                   //echo $fdate.$fdate60.$fdate90.$fdate180.$fdate365.$fdate1y;
                    $orderdate = explode('-', $date);

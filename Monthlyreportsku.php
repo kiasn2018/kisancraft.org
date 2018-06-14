@@ -249,6 +249,12 @@
             $state=$rowd['State'];
                $di=$rowd["District"];
          		for($j=0;$j<(count($seg));$j++){
+					"SELECT column_list
+					FROM t1
+					INNER JOIN t2 ON join_condition1
+					INNER JOIN t3 ON join_condition2
+					...
+					WHERE where_conditions;";
                 $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE District='$di' AND SKU='$seg[$j]' ".$queryCondition;
                 //echo $sqld1;
                $resultd1 = mysqli_query($conn,$sqld1);     

@@ -14,7 +14,7 @@
       </style>
    <body bgcolor="">
       <?php 
-         include 'header.php';
+         include 'header2.php';
          include '/config/db.php';
          
          $sqld = "SELECT Date FROM `sales` ORDER BY `sales`.`Date` DESC ";
@@ -23,172 +23,179 @@
           $rowd= mysqli_fetch_array($resultd);
          
          ?>
-      <h1 style="text-align:center;"> Sales Report State,Month wise </h1>
-      <div class="container" style="margin-left:30%; width:50%; background-color:lightblue">
-         <div class="row">
-            <div class="span3 hidden-phone"></div>
-            <div class="span6" id="form-login">
-               <form name="insert" action="" method="post">
-                  <table width="100%" height="117"  border="0">
-                     <tr>
-                        <th width="50%"> State :</th>
-                        <td>
-                           <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
-                              <option value="">Select</option>
-                              <option value="ALL">ALL</option>
-                              <?php $sqlst = "SELECT DISTINCT Zone FROM sales UNION SELECT DISTINCT Zone  FROM Salesmaster ORDER by Zone ASC ";
-                                 $resultst = mysqli_query($conn,$sqlst);
-                                 
-                                 while($rowst=mysqli_fetch_array($resultst))
-                                 {  ?>
-                              <option value="<?php echo $rowst['Zone'];?>"><?php echo $rowst['Zone'];?></option>
-                              <?php
-                                 }
-                                 ?>
-                           </select>
-                        </td>
-                        <th scope="row">District :</th>
-                        <td>
-                           <select onChange="getdealer(this.value);" name="district" id="district-list" class="form-control">
-                              <option value="">Select</option>
-                           </select>
-                        </td>
-                     <tr>
-                        <td>
-                           <input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>" class="input-control" />
-                           <input type="text" placeholder="To Date" id="post_at_to_date" name="search[post_at_to_date]" style="margin-left:10px"  value="<?php echo $post_at_to_date; ?>" class="input-control"  />
-                        </td>
-                        <td>
-                           <input type="submit" name="go" value="Submit" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px;float:left" >
-                        </td>
-                        <td>
-                           <h3> Updated Till <?php echo $rowd["Date"]; ?></h3>
-                        </td>
-                     </tr>
-                  </table>
-               </form>
+      <div class="main-panel">
+      <div class="content-wrapper">
+         <div class ="row">
+            <div class="col-6" >
+               <h1 style="text-align:center;"> Sales Report State,Month wise </h1>
+               <div class="col-12 stretch-card">
+                  <div class="card">
+                     <div class="card-body">
+                        <h3> Updated Till <?php echo $rowd["Date"]; ?></h3>
+                        <form class="forms-sample" action="" method="post">
+                           <div class="form-group row">
+                              <label for="exampleInputEmail2" class="col-sm-3 col-form-label">State</label>
+                              <div class="col-sm-9">
+                                 <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
+                                    <option value="">Select</option>
+                                    <option value="ALL">ALL</option>
+                                    <?php $sqlst = "SELECT DISTINCT Zone FROM sales UNION SELECT DISTINCT Zone  FROM Salesmaster ORDER by Zone ASC ";
+                                       $resultst = mysqli_query($conn,$sqlst);
+                                       
+                                       while($rowst=mysqli_fetch_array($resultst))
+                                       {  ?>
+                                    <option value="<?php echo $rowst['Zone'];?>"><?php echo $rowst['Zone'];?></option>
+                                    <?php
+                                       }
+                                       ?>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">District</label>
+                              <div class="col-sm-9">
+                                 <select onChange="getdealer(this.value);" name="district" id="district-list" class="form-control">
+                                    <option value="">Select</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">From </label>
+                              <div class="col-sm-9">
+                                 <input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>"   />
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">To Date</label>
+                              <div class="col-sm-9">
+                                 <input type="text" placeholder="To Date" id="post_at_to_date" name="search[post_at_to_date]" style="margin-left:10px"  value="<?php echo $post_at_to_date; ?>"  />
+                              </div>
+                           </div>
+                           <button type="submit" name="go" value="Submit" class="btn btn-success mr-2">Submit</button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <div class="span3 hidden-phone"></div>
+         </div>
+         <script language="javascript" type="text/javascript">
+            setFilterGrid("table1");
+         </script> 
+         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+         <script>
+            $.datepicker.setDefaults({
+            showOn: "button",
+            buttonImage: "datepicker.png",
+            buttonText: "Date Picker",
+            buttonImageOnly: true,
+            dateFormat: 'dd-mm-yy'  
+            });
+            $(function() {
+            $("#post_at").datepicker();
+            $("#post_at_to_date").datepicker();
+            });
+         </script>
+         <script>
+            function getdistrict(val) {
+            $.ajax({
+            type: "POST",
+            url: "getdistrict1.php",
+            data:'state_id='+val,
+            success: function(data){
+            $("#district-list").html(data);
+            }
+            });
+            }
+            
+            function getdealer(val) {
+              $.ajax({
+              type: "POST",
+              url: "getdealer.php",
+              data:'state_id='+val,
+              success: function(data){
+              $("#dealer-list").html(data);
+              }
+              });
+              }
+         </script>
+         <div class="col-md-12 ">
+            <div class="card">
+               <?php 
+                  $results_per_page = 100;
+                  if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
+                  $start_from = ($page-1) * $results_per_page;
+                  $sql = "SELECT * from Salesmst LIMIT ".$start_from.",".$results_per_page;
+                  $result = mysqli_query($conn,$sql);
+                  //include '/test/index.php';
+                  //include '/search.php';
+                  if(!isset($_POST["go"]) ){
+                  ?>
+               <table class="sortable">
+                  <thead>
+                     <tr class="d0">
+                        <th width="10%"><span>ID</span></th>
+                        <th width="50%"><span> Dealer Name</span></th>
+                        <th width="20%"><span>Date</span></th>
+                        <th width="20%"><span>Voucher Type</span></th>
+                        <th width="25%"><span>Item Name</span></th>
+                        <th width="25%"><span>District</span></th>
+                        <th width="25%"><span>State</span></th>
+                        <th width="25%"><span>Executive</span></th>
+                        <th width="25%"><span>ASM</span></th>
+                        <th width="25%"><span>QTY</span></th>
+                        <th width="25%"><span>Amount</span></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <?php
+                        while($row = mysqli_fetch_array($result)) {
+                        ?>
+                     <tr class="d1">
+                        <td><?php echo $row["ID"]; ?></td>
+                        <td><?php echo  $data= str_replace("_", "'", $row["Dealer_name"]); ?></td>
+                        <td><?php echo  $row["Date"]; ?></td>
+                        <td><?php echo $row["Vorture_type"];  ?></td>
+                        <td><?php echo $data1= str_replace("_", "'", $row["Item_name"]);$row["Item_name"]; ?></td>
+                        <td><?php $d=$row["Dealer_name"];
+                           $sqls = "SELECT * from Dealermst where D_name='$d' ";
+                           //echo $sqls;
+                                    $results = mysqli_query($conn,$sqls);
+                                    while($rows = mysqli_fetch_array($results)) {
+                                        $district=$rows["D_distict"];
+                                        $state=$rows["D_state"];
+                                    } 
+                                    $sqls1 = "SELECT * from Excutivemst where State='$state' AND District= '$district'";
+                                    $results1 = mysqli_query($conn,$sqls1);
+                                    while($rows1 = mysqli_fetch_array($results1)) {
+                                   
+                                        $exec=$rows1["Exexutive"];
+                                        $ASM=$rows1["ASM"];
+                                    }
+                                    echo $district;
+                                    ?></td>
+                        <td><?php echo $state;?></td>
+                        <td><?php echo $exec;?></td>
+                        <td><?php echo $ASM;?></td>
+                        <td><?php echo $row["Quantity"]; ?></a> </td>
+                        <td><?php echo $row["Amount"]; ?></a> </td>
+                     </tr>
+                     <?php
+                        }
+                         ?>
+                  <tbody>
+               </table>
+               <?php
+                  $sql = "SELECT COUNT(ID) AS total FROM Salesmst";
+                  $result = $conn->query($sql);
+                  $row = $result->fetch_assoc();
+                  $total_pages = ceil($row["total"] / $results_per_page);
+                  
+                     }?>
+               <br><br><br>
+            </div>
          </div>
       </div>
-      <div></div>
-      <hr>
-      <script language="javascript" type="text/javascript">
-         setFilterGrid("table1");
-      </script> 
-      <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-      <script>
-         $.datepicker.setDefaults({
-         showOn: "button",
-         buttonImage: "datepicker.png",
-         buttonText: "Date Picker",
-         buttonImageOnly: true,
-         dateFormat: 'dd-mm-yy'  
-         });
-         $(function() {
-         $("#post_at").datepicker();
-         $("#post_at_to_date").datepicker();
-         });
-      </script>
-      <script>
-         function getdistrict(val) {
-         $.ajax({
-         type: "POST",
-         url: "getdistrict1.php",
-         data:'state_id='+val,
-         success: function(data){
-         $("#district-list").html(data);
-         }
-         });
-         }
-         
-         function getdealer(val) {
-         	$.ajax({
-         	type: "POST",
-         	url: "getdealer.php",
-         	data:'state_id='+val,
-         	success: function(data){
-         	$("#dealer-list").html(data);
-         	}
-         	});
-         	}
-      </script>
-      <div style="margin-left:22%; width:75%;">
-         <?php 
-            $results_per_page = 100;
-            if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
-            $start_from = ($page-1) * $results_per_page;
-            $sql = "SELECT * from Salesmst LIMIT ".$start_from.",".$results_per_page;
-            $result = mysqli_query($conn,$sql);
-            //include '/test/index.php';
-            //include '/search.php';
-            if(!isset($_POST["go"]) ){
-            ?>
-         <table class="sortable">
-            <thead>
-               <tr class="d0">
-                  <th width="10%"><span>ID</span></th>
-                  <th width="50%"><span> Dealer Name</span></th>
-                  <th width="20%"><span>Date</span></th>
-                  <th width="20%"><span>Voucher Type</span></th>
-                  <th width="25%"><span>Item Name</span></th>
-                  <th width="25%"><span>District</span></th>
-                  <th width="25%"><span>State</span></th>
-                  <th width="25%"><span>Executive</span></th>
-                  <th width="25%"><span>ASM</span></th>
-                  <th width="25%"><span>QTY</span></th>
-                  <th width="25%"><span>Amount</span></th>
-               </tr>
-            </thead>
-            <tbody>
-               <?php
-                  while($row = mysqli_fetch_array($result)) {
-                  ?>
-               <tr class="d1">
-                  <td><?php echo $row["ID"]; ?></td>
-                  <td><?php echo  $data= str_replace("_", "'", $row["Dealer_name"]); ?></td>
-                  <td><?php echo  $row["Date"]; ?></td>
-                  <td><?php echo $row["Vorture_type"];  ?></td>
-                  <td><?php echo $data1= str_replace("_", "'", $row["Item_name"]);$row["Item_name"]; ?></td>
-                  <td><?php $d=$row["Dealer_name"];
-                     $sqls = "SELECT * from Dealermst where D_name='$d' ";
-                     //echo $sqls;
-                              $results = mysqli_query($conn,$sqls);
-                              while($rows = mysqli_fetch_array($results)) {
-                                  $district=$rows["D_distict"];
-                                  $state=$rows["D_state"];
-                              } 
-                              $sqls1 = "SELECT * from Excutivemst where State='$state' AND District= '$district'";
-                              $results1 = mysqli_query($conn,$sqls1);
-                              while($rows1 = mysqli_fetch_array($results1)) {
-                             
-                                  $exec=$rows1["Exexutive"];
-                                  $ASM=$rows1["ASM"];
-                              }
-                              echo $district;
-                              ?></td>
-                  <td><?php echo $state;?></td>
-                  <td><?php echo $exec;?></td>
-                  <td><?php echo $ASM;?></td>
-                  <td><?php echo $row["Quantity"]; ?></a> </td>
-                  <td><?php echo $row["Amount"]; ?></a> </td>
-               </tr>
-               <?php
-                  }
-                   ?>
-            <tbody>
-         </table>
-         <?php
-            $sql = "SELECT COUNT(ID) AS total FROM Salesmst";
-            $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
-            $total_pages = ceil($row["total"] / $results_per_page);
-            
-               }?>
-         <br><br><br>
-      </div>
    </body>
-   </head>
 </html>
 <hr>
 <?php 
@@ -197,8 +204,8 @@
        $amount="";
        $district=($_POST["district"]);
        $state=($_POST["state"]);
-    $state1=$state;
-   	 $queryCondition = "";
+       $state1=$state;
+       $queryCondition = "";
        if(!empty($_POST["search"]["post_at"])) {
            $post_at = $_POST["search"]["post_at"];
            list($fid,$fim,$fiy) = explode("-",$post_at);    
@@ -212,17 +219,17 @@
       $post_at_todate1 = "$py-$tim-$tid";
       $lm=$fim-'01';
       $lm='0'.$lm;
-       $post_at_todate2 = "$tiy-$lm-$tid";
-   	$post_at_todate3 = "$py-$lm-$tid";
-   	$queryCondition1 .= " AND Date BETWEEN '$py-$fim-$fid' AND '". $post_at_todate1 . "'";
-       $queryCondition2 .= " AND Date BETWEEN '$fiy-$lm-$fid' AND '". $post_at_todate2 . "'";
-   	$queryCondition3 .= " AND Date BETWEEN '$py-$lm-$fid' AND '". $post_at_todate3 . "'";
+      $post_at_todate2 = "$tiy-$lm-$tid";
+      $post_at_todate3 = "$py-$lm-$tid";
+      $queryCondition1 .= " AND Date BETWEEN '$py-$fim-$fid' AND '". $post_at_todate1 . "'";
+      $queryCondition2 .= " AND Date BETWEEN '$fiy-$lm-$fid' AND '". $post_at_todate2 . "'";
+      $queryCondition3 .= " AND Date BETWEEN '$py-$lm-$fid' AND '". $post_at_todate3 . "'";
            }}
-   		//echo 
+      //echo 
        
       {   $seg=array();
-   $amt=array();
-     $amto=array();
+          $amt=array();
+          $amto=array();
    
          if($state1=='ALL'){$sqld = "SELECT DISTINCT District,Zone,Executive,ASM,SM,ZM FROM sales UNION SELECT DISTINCT District,Zone,Executive,ASM,SM,ZM  FROM Salesmaster ORDER by Zone,Executive,ASM,SM,ZM,District ASC";}else{
      if($district=='ALL'){$sqld = "SELECT DISTINCT District,Zone,Executive,ASM,SM,ZM FROM sales where zone='$state' UNION SELECT DISTINCT District,Zone,Executive,ASM,SM,ZM  FROM Salesmaster where zone='$state' ORDER by Zone,Executive,ASM,SM,ZM,District ASC";}else{
@@ -233,19 +240,19 @@
      $resultd1 = mysqli_query($conn,$sqld);  
      $resultd2 = mysqli_query($conn,$sqld); 
      $resultd3 = mysqli_query($conn,$sqld); 
-     $resultd4 = mysqli_query($conn,$sqld); 	
-     $resultd5 = mysqli_query($conn,$sqld); 	
+     $resultd4 = mysqli_query($conn,$sqld);   
+     $resultd5 = mysqli_query($conn,$sqld);   
      $resultd6 = mysqli_query($conn,$sqld); 
-     $resultd7 = mysqli_query($conn,$sqld); 		   
+     $resultd7 = mysqli_query($conn,$sqld);        
       $sqlc = "SELECT count(DISTINCT Executive),count(DISTINCT ASM) FROM sales where zone='$state' UNION SELECT count(DISTINCT Executive),count(DISTINCT ASM) FROM Salesmaster where zone='$state' " ; 
-	  $resultc = mysqli_query($conn,$sqlc); 
+   $resultc = mysqli_query($conn,$sqlc); 
       $rowc = mysqli_fetch_array($resultc);
-	 $counte=$rowc["count(DISTINCT Executive)"];
-	 $counts=$rowc["count(DISTINCT Executive)"];
-	 
-?>	  
-<div style="width:60%; float :left ; margin-left: 15%">
-   <table  id="demo" >
+   $counte=$rowc["count(DISTINCT Executive)"];
+   $counts=$rowc["count(DISTINCT Executive)"];
+   
+   ?>   
+<div class="table-responsive">
+   <table  id="demo" class="table table-hover" >
       <tr>
          <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
       </tr>
@@ -253,7 +260,7 @@
          <th>State</th>
          <?php while($row = mysqli_fetch_array($resultd)) {
             $exe=$row["Executive"];
-			$SM=$row["ASM"];
+            $SM=$row["ASM"];
             if($exel != $exe || $SM != $SML){
                  ?>
          <td><?php echo $row["Zone"]; ?></td>
@@ -280,7 +287,7 @@
       <th>ASM</th>
       <?php while($row = mysqli_fetch_array($resultd2)) {
          $exe2=$row["Executive"];
-        $SM2=$row["ASM"];
+         $SM2=$row["ASM"];
             if($exel2 != $exe2 || $SM2 != $SML2){
               ?>
       <td><?php echo $row["ASM"]; ?></td>
@@ -294,7 +301,7 @@
          <th>SM</th>
          <?php while($row = mysqli_fetch_array($resultd3)) {
             $exe3=$row["Executive"];
-           $SM3=$row["ASM"];
+            $SM3=$row["ASM"];
             if($exel3 != $exe3 || $SM3 != $SML3){
                  ?>
          <td><?php echo $row["SM"]; ?></td>
@@ -316,7 +323,7 @@
          <?php }else{?>
          <td></td>
          <td></td>
-	 <?php } $exel4=$row["Executive"];$SML4=$row["ASM"];}?>
+         <?php } $exel4=$row["Executive"];$SML4=$row["ASM"];}?>
       </tr>
       <tr>
          <th>District</th>

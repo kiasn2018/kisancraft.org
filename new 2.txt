@@ -1,0 +1,58 @@
+ <!-- - - - - - - - - - - - - - Breadcrumbs - - - - - - - - - - - - - - - - -->
+
+    <div class="breadcrumbs-wrap data-grad-bg">
+
+      <div class="container">
+        
+        <h3 class="page-title">Media</h3>
+
+      
+
+      </div>
+
+    </div>
+
+    <!-- - - - - - - - - - - - - end Breadcrumbs - - - - - - - - - - - - - - - -->
+
+    <!-- - - - - - - - - - - - - - Content - - - - - - - - - - - - - - - - -->
+
+    <div id="content" class="page-content-wrap">
+      
+      <div class="container">
+          
+          <div class="features-area align-left">
+            <div class="row">
+          <?php
+			if ($get_data == NULL) {
+			?>
+				<tr align="center"> <td colspan="9">No Data to display</td></tr>
+			<?php
+			} else { 
+				foreach ($get_data as $row) {
+					$thumb = ADMIN_URL."/assets/mediathumb/".$row->thumbnail_img;
+					$file = ADMIN_URL."/assets/mediamain/".$row->media_file;
+				?>
+              <div class="col-sm-4 col-xs-6">
+                
+                <div class="feature-item">
+                  <img style="max-height: 50px !important; overflow: hidden; min-height: 250px !important; min-width: 250px;" src="<?=$thumb?>" alt="">
+                  <div class="feature-inner">
+                    <h6><?=$row->title?></h6>
+                    <a target="_blank" href="<?php echo $file; ?>" class="info-btn">View</a>
+                  </div>
+                </div>
+
+              </div>
+			<?php
+					}
+				}
+			?>
+			
+			</div>
+          </div>
+
+        </div>
+
+    </div>
+
+    <!-- - - - - - - - - - - - - end Content - - - - - - - - - - - - - - - -->

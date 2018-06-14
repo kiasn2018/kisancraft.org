@@ -1,0 +1,22 @@
+ Macro2 Macro
+'
+
+'
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet2").Name = "AP"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Andhra Pradesh (5).xlsx"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet3").Name = "BH"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\sales reports state wise\Bihar.xlsx"
+    Cells.Select
+    Range("I4").Activate
+    Application.CutCopyMode = False
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste

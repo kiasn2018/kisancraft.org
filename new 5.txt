@@ -1,0 +1,46 @@
+ <th  height="63" scope="row"> State :</th>
+                        <td width="">
+                           <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
+                              <option value="">Select</option>
+							   <option value="ALL">ALL</option>
+                              <?php $sqlst = "SELECT DISTINCT D_state from Dealermst ";
+                                 $resultst = mysqli_query($conn,$sqlst);
+                                 
+                                 while($rowst=mysqli_fetch_array($resultst))
+                                 {  ?>
+                              <option value="<?php echo $rowst['D_state'];?>"><?php echo $rowst['D_state'];?></option>
+                              <?php
+                                 }
+                                 ?>
+                           </select>
+                        </td>
+                        <th scope="row">District :</th>
+                        <td>
+                           <select onChange="getdealer(this.value);" name="district" id="district-list" class="form-control">
+                              <option value="">Select</option>
+                           </select>
+                        </td>
+						
+						<script>
+         function getdistrict(val) {
+         $.ajax({
+         type: "POST",
+         url: "getdistrict.php",
+         data:'state_id='+val,
+         success: function(data){
+         $("#district-list").html(data);
+         }
+         });
+         }
+         
+         function getdealer(val) {
+         	$.ajax({
+         	type: "POST",
+         	url: "getdealer.php",
+         	data:'state_id='+val,
+         	success: function(data){
+         	$("#dealer-list").html(data);
+         	}
+         	});
+         	}
+      </script>

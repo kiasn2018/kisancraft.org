@@ -404,10 +404,7 @@ $sqld = "SELECT DISTINCT ASM FROM sales UNION SELECT DISTINCT ASM  FROM Salesmas
 	  <?php 
 $sqld = "SELECT DISTINCT SM FROM sales UNION SELECT DISTINCT SM  FROM Salesmaster ORDER by SM ASC";
  $resultd = mysqli_query($conn,$sqld);  
-           ?>
-
-	  
-         <?php 
+           
 			$amountp='';
 			$amountc='';
             while($rowd = mysqli_fetch_array($resultd)) {
@@ -445,8 +442,8 @@ $sqld = "SELECT DISTINCT SM FROM sales UNION SELECT DISTINCT SM  FROM Salesmaste
 		 <td> <?php $p=((($rowd1['sum(Amount)']/$rowdd['sum(Amount)'])-1));  $q=sprintf('%0.2f', $p);$m=$q*100; echo $padded = sprintf('%0.0f', $m);?></td><?php }?>
       </tr>
 	  
-      <?php
-         }?> 
+			<?php
+				}?> 
 		 <tr>		  
 			<td>Total</td>
 			<?php if($state1!='ALL'){ ?>
@@ -458,9 +455,9 @@ $sqld = "SELECT DISTINCT SM FROM sales UNION SELECT DISTINCT SM  FROM Salesmaste
 			<td><?php echo $amountc; ?></td>
 			<td><?php  $p1=((($amountc/$amountp)-1)*100); echo $padded1 = sprintf('%0.0f', $p1); ?> </td>
 	  </tr>
-	  <?php 
-$sqld = "SELECT DISTINCT ZM FROM sales UNION SELECT DISTINCT ZM  FROM Salesmaster ORDER by ZM ASC";
- $resultd = mysqli_query($conn,$sqld);  
+			<?php 
+			$sqld = "SELECT DISTINCT ZM FROM sales UNION SELECT DISTINCT ZM  FROM Salesmaster ORDER by ZM ASC";
+			$resultd = mysqli_query($conn,$sqld);  
            ?>
 
 	  
