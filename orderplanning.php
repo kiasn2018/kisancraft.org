@@ -8,7 +8,7 @@
          $sqld = "SELECT *
 FROM ordermst
 JOIN Supplier_master 
-ON ordermst.SKU = Supplier_master.SKU ";
+ON ordermst.SKU = Supplier_master.SKU order by Supplier_master.Supplier_name,Supplier_master.SKU ASC ";
                // echo $sqld;
           $result = mysqli_query($conn,$sqld);     
           //$rowd= mysqli_fetch_array($resultd);
@@ -113,247 +113,56 @@ ON ordermst.SKU = Supplier_master.SKU ";
                   <tbody>
                     <?php 
                         while($row = mysqli_fetch_array($result)) {
+                          $price=$row["price"];
+                          $res = preg_replace('/[^0-9-.]/','',$price);
+                          $del=$row["Supplier_name"];
+                          $dealer=preg_replace('/,/' , '', $del);
                           ?>
                     <tr>
-                    <td><?php echo $row["Supplier_name"];?></td>
+                    <td><?php echo $dealer;?></td>
                     <td><?php echo $row["SKU"];?></td>
-                    <td><?php echo $row["apr"];?></td>
-                    <td><?php echo $row["price"];?></td>
-                    <td><?php echo ($row["price"]*$row["apr"]);?></td>
+                    <td><?php echo $row["july"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["july"]);?></td>
+                    <td><?php echo $row["agust"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["agust"]);?></td>
+                    <td><?php echo $row["sep"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["sep"]);?></td>
+                    <td><?php echo $row["oct"];?></td>
+                     <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["oct"]);?></td>
+                    <td><?php echo $row["nov"];?></td>
+                     <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["nov"]);?></td>
+                    <td><?php echo $row["dec"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["dec"]);?></td>
+                    <td><?php echo $row["jan"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["jan"]);?></td>
+                    <td><?php echo $row["feb"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["feb"]);?></td>
+                    <td><?php echo $row["mar"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["mar"]);?></td>
+                    <td><?php echo $row["april"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["april"]);?></td>
                     <td><?php echo $row["may"];?></td>
-                    <td><?php echo $row["price"];?></td>
-                    <td><?php echo ($row["price"]*$row["may"]);?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["may"]);?></td>
                     <td><?php echo $row["june"];?></td>
-                    <td><?php echo $row["price"];?></td>
-                    <td><?php echo ($row["price"]*$row["june"]);?></td>
-                    <td><?php echo $row["Suppliet_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
-                    <td><?php echo $row["Suppliert_name"];?></td>
+                    <td><?php echo $res;?></td>
+                    <td><?php echo ($res*$row["june"]);?></td>
+                    <td><?php echo $row["year"];?></td>
                   </tr>
                   <?php }?>
-                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
                   <tbody>
                </table>
-               <button onclick="exportTableToCSV('<?php echo $state.".csv" ?>')">Export HTML Table To CSV File</button>
+               <button onclick="exportTableToCSV('Order_planning.csv')">Export HTML Table To CSV File</button>
              </div>
             </div>
          </div>

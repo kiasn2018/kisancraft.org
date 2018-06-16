@@ -38,5 +38,5 @@ INNER
    SET sales.Zone = Zonesmst.Zone
    
    UPDATE sales INNER JOIN supersegment ON sales.Seqment = supersegment.segment SET sales.supersegment = supersegment.supersegment
-
+INSERT INTO Supplier_master (Supplier_name,SKU) SELECT purches_mst.Supplier,purches_mst.SKU FROM purches_mst WHERE purches_mst.voucher_type = 'Purchase Imports'
    

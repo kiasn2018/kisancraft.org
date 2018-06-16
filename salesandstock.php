@@ -14,37 +14,34 @@
       </style>
    <body bgcolor="">
       <?php 
-         include 'header.php';
+         include 'header2.php';
          include '/config/db.php';
          ?>
-      <h1 style="text-align:center;">Ageing Analysis </h1>
-      <div class="container" style="margin-left:30%; width:50%; background-color:lightblue">
-         <div class="row">
-            <div class="span3 hidden-phone"></div>
-            <div class="span6" id="form-login">
-               <form name="insert" action="" method="post">
-                  <table width="100%" height="117"  border="0">
-                     <tr>
-                        <td>
+      <div class="main-panel">
+      <div class="content-wrapper">
+      <div class ="row">
+      <div class="col-6" >
+         <h1 style="text-align:center;">Ageing Analysis </h1>
+         <div class="col-12 stretch-card">
+            <div class="card">
+               <div class="card-body">
+                  <form name="insert" action="" method="post" class="forms-sample">
+                     <div class="form-group row">
+                        <div class="col-sm-9">
                            <select name="year" id="year">
                               <option value="">Select Year</option>
                            </select>
                            <select name="month" id="month">
                               <option value="">Select Month</option>
                            </select>
-                        </td>
-                        <td>
-                           <input type="submit" name="go" value="Submit" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px;float:left" >
-                        </td>
-                     </tr>
-                  </table>
-               </form>
+                           <input type="submit" name="go" value="Submit" class="btn btn-success mr-2" >
+                        </div>
+                     </div>
+                  </form>
+               </div>
             </div>
-            <div class="span3 hidden-phone"></div>
          </div>
       </div>
-      <div></div>
-      <hr>
       <script type="text/javascript">
          for(y = 2000; y <= 2500; y++) {
                  var optn = document.createElement("OPTION");
@@ -93,32 +90,33 @@
              $amount="";
              $year=($_POST["year"]);
              $month=($_POST["month"]);
-         	//echo $year."-".$month;
+          //echo $year."-".$month;
          
          ?>
-      <div style="margin-left:22%; width:100%;">
-         <?php 
-            $sql1 = "SELECT month,year from Stockmst ORDER BY month DESC ";
-            $result1 = mysqli_query($conn,$sql1);
-            $row1 = mysqli_fetch_array($result1);
-            $sql = "SELECT DISTINCT Product from Stockmst where SKU='X-Part' ";
-            $result = mysqli_query($conn,$sql);
-            
-            //include '/test/index.php';
-            //include '/search.php'
-            ?>
-         <h1>Ageing Analysis- <?php echo $month_name = date("F", mktime(0, 0, 0, $month, 10));?> - Month</h1>
-         <table class="sortable">
+      <?php 
+         $sql1 = "SELECT month,year from Stockmst ORDER BY month DESC ";
+         $result1 = mysqli_query($conn,$sql1);
+         $row1 = mysqli_fetch_array($result1);
+         $sql = "SELECT DISTINCT Product from Stockmst where SKU='X-Part' ";
+         $result = mysqli_query($conn,$sql);
+         
+         //include '/test/index.php';
+         //include '/search.php'
+         ?>
+      <div class="col-md-12 ">
+      <div class="card">
+      <h1>Ageing Analysis- <?php echo $month_name = date("F", mktime(0, 0, 0, $month, 10));?> - Month</h1>
+      <div class="table-responsive">
+         <table  id="demo" class="table table-hover" >
             <thead>
                <tr class="d0">
-			   <th width=""><span>Stock Product</span></th>
+                  <th width=""><span>Stock Product</span></th>
                   <th width=""><span>Stock SKU</span></th>
                   <th width=""><span> Stock QTY</span></th>
                   <th width=""><span>Stock Value</span></th>
                   <th width=""><span>Stock Rate</span></th>
                   <th width=""><span>Last one year sales(QTY) </span></th>
                   <th width=""><span>Last one year sales(Amount) </span></th>
-                 
                </tr>
             </thead>
             <tbody>
@@ -141,15 +139,15 @@
                              $month = $orderdate[1];
                              $day   = $orderdate[2];
                              $year  = $orderdate[0];
-                  		$orderdate1 = explode('-',$fdate);
+                      $orderdate1 = explode('-',$fdate);
                              $fmonth = $orderdate1[1];
                              $day   = $orderdate1[2];
                              $year  = $orderdate1[0];
-                  		$totalv="";
-                  		$totalv1="";
+                      $totalv="";
+                      $totalv1="";
                   while($row = mysqli_fetch_array($result)){
                   $sku=$row["SKU"];
-				  $product=$row["Product"];
+                  $product=$row["Product"];
                   $sql1 = "SELECT Sum(QTY),Sum(Amount),Product,SKU from Stockmst where Product='$product' AND month='$month'  ";
                      $result1 = mysqli_query($conn,$sql1);
                      while($row1 = mysqli_fetch_array($result1)){ 
@@ -159,17 +157,16 @@
                   ?>
                <tr class="d1">
                   <td><?php echo $row["Product"]; ?></td>
-				  <td><?php echo $row1["SKU"]; ?></td>
+                  <td><?php echo $row1["SKU"]; ?></td>
                   <td><?php echo $q1=$row1["Sum(QTY)"] ; ?></td>
                   <td><?php echo $row1["Sum(Amount)"]; $totalv=$totalv+$row1["Sum(Amount)"];?></td>
-                  <td><?php echo $v=round($row1["Sum(Amount)"]/$row1["Sum(QTY)"]); ?></td>  
+                  <td><?php echo $v=round($row1["Sum(Amount)"]/$row1["Sum(QTY)"]); ?></td>
                   <td><?php echo $row15["Sum(QTY)"]; ?></td>
-				  <td><?php echo $row15["Sum(Amount)"]; ?></td>
+                  <td><?php echo $row15["Sum(Amount)"]; ?></td>
                </tr>
                <?php
                   }}
                   ?>
-               
             <tbody>
          </table>
          <br><br><br>

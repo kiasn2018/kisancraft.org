@@ -243,6 +243,7 @@ if($_SESSION['role']==''){
 				 <li><a href="/kisancraft.org/monthlyreport.php">Monthly Report</a></li><br>
 				 <li><a href="/kisancraft.org/monthlyreportcust.php">Monthly Report Customized</a></li><br>
 				  <li><a href="/kisancraft.org/state_district_exe.php">Monthly Report State and District wise</a></li><br>
+          <li><a href="/kisancraft.org/monthlyreport_dealer.php">Monthly Report Dealer wise</a></li><br>
 				  <li><a href="/kisancraft.org/state_monthly.php">Monthly Only state wise</a></li><br>
 				  <li><a href="/kisancraft.org/monthly report SKU Wise.php">Monthly Report SKU wise</a></li><br>
 				 <li><a href="/kisancraft.org/monthlyreportdea.php">Monthly Report WRT Dealer</a></li><br>

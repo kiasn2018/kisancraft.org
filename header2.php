@@ -27,7 +27,7 @@ if($_SESSION['role']==''){
   <!-- inject:css -->
   <link rel="stylesheet" href="./css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="./images/favicon.png" />
+  <link rel="shortcut icon" href="./images/favicon.ico" />
 </head>
 <?php include("navbar.php");?>
 <div class="container-fluid page-body-wrapper">
@@ -291,6 +291,7 @@ if($_SESSION['role']==''){
 				 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/monthlyreport.php">Monthly Report</a></li>
 				 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/monthlyreportcust.php">Monthly Report Customized</a></li>
 				  <li class="nav-item"><a class="nav-link" href="/kisancraft.org/state_district_exe.php">Monthly Report State and District wise</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/kisancraft.org/monthlyreport_dealer.php">Monthly Report Dealer wise</a> </li>
 				  <li class="nav-item"><a class="nav-link" href="/kisancraft.org/state_monthly.php">Monthly Only state wise</a></li>
 				  <li class="nav-item"><a class="nav-link" href="/kisancraft.org/monthly report SKU Wise.php">Monthly Report SKU wise</a></li>
 				 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/monthlyreportdea.php">Monthly Report WRT Dealer</a></li>

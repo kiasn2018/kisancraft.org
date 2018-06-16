@@ -17,31 +17,39 @@
          include 'header2.php';
          include '/config/db.php';
          ?>
-      <div class="main-panel">
+       <div class="main-panel">
       <div class="content-wrapper">
-      <div class ="row">
-      <div class="col-6" >
-         <h1 style="text-align:center;">Ageing Analysis </h1>
-         <div class="col-12 stretch-card">
-            <div class="card">
-               <div class="card-body">
-                  <form name="insert" action="" method="post" class="forms-sample">
-                     <div class="form-group row">
-                        <div class="col-sm-9">
+         <div class ="row">
+            <div class="col-6" >
+              <h1 style="text-align:center;">Ageing Analysis </h1>
+
+               <div class="col-12 stretch-card">
+                  <div class="card">
+                     <div class="card-body">
+               <form name="forms-sample" action="" method="post">
+                 <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Select Year</label>
+                              <div class="col-sm-9">
                            <select name="year" id="year">
                               <option value="">Select Year</option>
                            </select>
+                            </div>
+                           </div>
+                           <div class="form-group row">
+                              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Month</label>
+                              <div class="col-sm-9">
                            <select name="month" id="month">
                               <option value="">Select Month</option>
                            </select>
-                           <input type="submit" name="go" value="Submit" class="btn btn-success mr-2"  >
-                        </div>
-                     </div>
-                  </form>
+                         </div>
+                       </div>
+                           <input type="submit" name="go" value="Submit" class="btn btn-success mr-2" >
+               </form>
+            </div>
+                  </div>
                </div>
             </div>
          </div>
-      </div>
       <script type="text/javascript">
          for(y = 2000; y <= 2500; y++) {
                  var optn = document.createElement("OPTION");
@@ -91,6 +99,10 @@
              $year=($_POST["year"]);
              $month=($_POST["month"]);
           //echo $year."-".$month;
+         
+         ?>
+      
+         <?php 
             $sql1 = "SELECT month,year from Stockmst ORDER BY month DESC ";
             $result1 = mysqli_query($conn,$sql1);
             $row1 = mysqli_fetch_array($result1);
@@ -100,11 +112,11 @@
             //include '/test/index.php';
             //include '/search.php'
             ?>
-      <div class="col-md-12 ">
-      <div class="card">
-      <h1>Ageing Analysis- <?php echo $month_name = date("F", mktime(0, 0, 0, $month, 10));?> - Month</h1>
-      <div class="table-responsive">
-         <table  id="demo" class="table table-hover" >
+            <div class="col-md-12 ">
+            <div class="card">
+              <div class="table-responsive">
+         <h1>Ageing Analysis- <?php echo $month_name = date("F", mktime(0, 0, 0, $month, 10));?> - Month</h1>
+   <table  id="demo" class="table table-hover" >
             <thead>
                <tr class="d0">
                   <th width=""><span>Stock SKU</span></th>
@@ -264,7 +276,7 @@
                </tr>
             <tbody>
          </table>
-         <br><br><br>
+         
          <script>
             function downloadCSV(csv, filename) {
               var csvFile;
@@ -310,6 +322,8 @@
          </script>
          <button onclick="exportTableToCSV('Stock.csv')">Export HTML Table To CSV File</button>
       </div>
+    </div>
+  </div>
       <?php } ?>
    </body>
    </head>

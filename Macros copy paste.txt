@@ -257,4 +257,113 @@ Sheets.Add After:=ActiveSheet
     Cells.Select
     Selection.Copy
     Windows("Book1").Activate
-    ActiveSheet.Paste
+
+
+
+
+
+
+
+
+
+
+
+Sub color()
+'
+' color Macro
+Dim n, m, i, j As Integer
+
+ n = Cells(Rows.Count, 1).End(xlUp).Row
+ m = Cells(7, Columns.Count).End(xlToLeft).Column
+  'i = 3
+  a = 3
+  'MsgBox m
+  For j = 1 To 30
+      For i = 3 To m / 2 + 2
+          Range(Cells(7, a), Cells(n, a)).Select
+          With Selection.Interior
+         .Pattern = xlSolid
+         .PatternColorIndex = xlAutomatic
+         .ThemeColor = xlThemeColorAccent5
+         .TintAndShade = 0.399975585192419
+         .PatternTintAndShade = 0
+          End With
+        a = a + 2
+        Next i
+    ActiveSheet.Index + 1.Select
+    Next j
+End Sub
+
+
+Sub color()
+'
+' color Macro
+Dim n, m, i, j As Integer
+Sheets("sheet1").Select
+ n = Cells(Rows.Count, 1).End(xlUp).Row
+ m = Cells(7, Columns.Count).End(xlToLeft).Column
+  'i = 3
+  a = 3
+  'MsgBox m
+  For j = 1 To 30
+      For i = 3 To m / 2 + 2
+          Range(Cells(7, a), Cells(n, a)).Select
+          With Selection.Interior
+         .Pattern = xlSolid
+         .PatternColorIndex = xlAutomatic
+         .ThemeColor = xlThemeColorAccent5
+         .TintAndShade = 0.399975585192419
+         .PatternTintAndShade = 0
+          End With
+        a = a + 2
+        Next i
+    Sheets("sheet1+1").Select
+    Next j
+End Sub
+                
+
+
+ Dim i As Integer
+    i = ActiveSheet.Index + 1
+    If i > Sheets.Count Then i = 1
+    Sheets(i).Activate
+
+
+
+
+    // working copy to put color
+
+    Sub color()
+'
+' color Macro
+Dim n, m, i, j, x As Integer
+ 'x = ActiveSheet.Index + 1
+
+  'i = 3
+ For x = 1 To 30
+  Sheets(x).Activate
+  n = Cells(Rows.Count, 1).End(xlUp).Row
+ m = Cells(7, Columns.Count).End(xlToLeft).Column
+  a = 3
+  Sheets(x).Activate
+  'MsgBox m
+    
+      For i = 3 To m / 2 + 2
+          Range(Cells(7, a), Cells(n, a)).Select
+          With Selection.Interior
+         .Pattern = xlSolid
+         .PatternColorIndex = xlAutomatic
+         .ThemeColor = xlThemeColorAccent5
+         .TintAndShade = 0.399975585192419
+         .PatternTintAndShade = 0
+          End With
+        a = a + 2
+        Next i
+   
+    
+  Next x
+
+End Sub
+ 
+    
+    
