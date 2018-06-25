@@ -191,13 +191,13 @@
                   $total_pages = ceil($row["total"] / $results_per_page);
                   
                      }?>
-               <br><br><br>
+             
             </div>
          </div>
       </div>
    </body>
 </html>
-<hr>
+
 <?php 
    //echo $_POST["go"];
    if($_POST["go"]=="Submit"){
@@ -252,11 +252,10 @@
    
    ?>   
 <div class="table-responsive">
+     <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
    <table  id="demo" class="table table-hover" >
       <tr>
-         <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
-      </tr>
-      <tr>
+        <td></td>
          <th>State</th>
          <?php while($row = mysqli_fetch_array($resultd)) {
             $exe=$row["Executive"];
@@ -271,6 +270,7 @@
          <?php } $exel=$row["Executive"]; $SML=$row["ASM"];}?>
       </tr>
       <tr>
+        <td></td>
          <th>Executive</th>
          <?php while($row = mysqli_fetch_array($resultd1)) {
             $exe1=$row["Executive"];
@@ -284,6 +284,8 @@
          <td></td>
          <?php } $exel1=$row["Executive"]; $SML1=$row["ASM"];}?>
       </tr>
+      <tr>
+        <td></td>
       <th>ASM</th>
       <?php while($row = mysqli_fetch_array($resultd2)) {
          $exe2=$row["Executive"];
@@ -298,6 +300,7 @@
       <?php } $exel2=$row["Executive"];$SML2=$row["ASM"];}?>
       </tr>
       <tr>
+        <td></td>
          <th>SM</th>
          <?php while($row = mysqli_fetch_array($resultd3)) {
             $exe3=$row["Executive"];
@@ -312,6 +315,7 @@
          <?php } $exel3=$row["Executive"];$SML3=$row["ASM"];}?>
       </tr>
       <tr>
+        <td></td>
          <th>ZM</th>
          <?php while($row = mysqli_fetch_array($resultd4)) {
             $exe4=$row["Executive"];
@@ -326,6 +330,7 @@
          <?php } $exel4=$row["Executive"];$SML4=$row["ASM"];}?>
       </tr>
       <tr>
+        <td></td>
          <th>District</th>
          <?php while($row = mysqli_fetch_array($resultd5)) {
             $exe=$row["Executive"];
@@ -337,6 +342,7 @@
          <td>Total</td>
       </tr>
       <tr>
+        <td>District</td>
          <th>FY</th>
          <?php while($row = mysqli_fetch_array($resultd6)) {
             ?>
@@ -349,19 +355,22 @@
       <?php 
          $ss=array();
          $di=array();
+         $dis=array();
          $totalam='';
             $totalamo='';
          while($row = mysqli_fetch_array($resultd7)){
          $ss[]=$row["District"]; }
-         $sqlss = "SELECT DISTINCT Dealer FROM sales where zone='$state' UNION SELECT DISTINCT Dealer FROM Salesmaster where zone='$state' ORDER by Dealer ASC";
+         $sqlss = "SELECT DISTINCT District,Dealer FROM sales where zone='$state' UNION SELECT DISTINCT District,Dealer FROM Salesmaster where zone='$state' ORDER by District,Dealer ASC";
          $resultss = mysqli_query($conn,$sqlss);
           while($rowss = mysqli_fetch_array($resultss)){
-          $di[]=$rowss["Dealer"]; } 
+          $di[]=$rowss["Dealer"];
+          $dis[]=$rowss["District"]; } 
           for($j=0;$j<count($di);$j++)
           { $too='';
             $to='';
          {?> 
       <tr>
+        <td><?php echo $dis[$j]; ?></td>
          <td><?php echo $di[$j]; ?></td>
          <?php
             for($i=0;$i<count($ss);$i++)
@@ -383,6 +392,7 @@
       <?php }}
          ?>
       <tr>
+        <td></td>
          <td>Total</td>
          <?php for($j=0;$j<(count($ss));$j++){ ?>
          <td><?php echo $amto[$j]; ?></td>

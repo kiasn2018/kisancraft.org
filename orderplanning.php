@@ -5,7 +5,7 @@
          include 'header2.php';
          include '/config/db.php';
          
-         $sqld = "SELECT *
+         $sqld = "SELECT Distinct ordermst.SKU,Supplier_master.Supplier_name,Supplier_master.price,ordermst.july,ordermst.agust,ordermst.sep,ordermst.oct,ordermst.nov,ordermst.dec,ordermst.jan,ordermst.feb,ordermst.mar,ordermst.april,ordermst.may,ordermst.june,ordermst.year
 FROM ordermst
 JOIN Supplier_master 
 ON ordermst.SKU = Supplier_master.SKU order by Supplier_master.Supplier_name,Supplier_master.SKU ASC ";

@@ -284,6 +284,8 @@ if($_SESSION['role']==''){
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
+                 <li class="nav-item">
+        <a class="nav-link" href="/kisancraft.org/validation.php">Validation</a></li>
                 <li class="nav-item">
 				<a class="nav-link" href="/kisancraft.org/master.php">Sales master</a></li>
                 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/salesupload.php">Upload sales</a></li>

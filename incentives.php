@@ -11,6 +11,7 @@
          .sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
          .sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
       </style>
+   </head>
    <body bgcolor="">
       <?php 
          include 'header2.php';
@@ -45,9 +46,9 @@
                   <th width="20%"><span>Branch</span></th>
                   <th width="25%"><span>Department</span></th>
                   <th width="25%"><span>Category</span></th>
-                  <th width="25%"><span>Jan</span></th>
-                  <th width="25%"><span>feb</span></th>
-                  <th width="25%"><span>mar</span></th>
+                  <th width="25%"><span>April</span></th>
+                  <th width="25%"><span>May</span></th>
+                  <th width="25%"><span>June</span></th>
                   <th width="25%"><span>Total Earning</span></th>
                   <th width="25%"><span> Incetives</span></th>
                   <th width="25%"><span>Percentage</span></th>
@@ -56,16 +57,16 @@
             <tbody>
                <?php 
                   for($m=0;$m<(count($name));$m++){
-                  $sql = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month between 1 and 3 and year='2018' ";
+                  $sql = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month between 4 and 6 and year='2018' ";
                   //echo $sql;
                   $result = mysqli_query($conn,$sql);
-                  $sql1 = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month='1' and year='2018' ";
+                  $sql1 = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month='4' and year='2018' ";
                   //echo $sql;
                   $result1 = mysqli_query($conn,$sql1);
-                  $sql2 = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month='2' and year='2018' ";
+                  $sql2 = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month='5' and year='2018' ";
                   //echo $sql;
                   $result2 = mysqli_query($conn,$sql2);
-                  $sql3 = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month='3' and year='2018' ";
+                  $sql3 = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month='6' and year='2018' ";
                   //echo $sql;
                   $result3 = mysqli_query($conn,$sql3);
                   $row1 = mysqli_fetch_array($result1);
@@ -78,22 +79,24 @@
                       $br= $row["Branch"];
                       $str = strtolower($row["Department"]);
                   }
-                  $sub='1888078';
+                  
                   $sales='sales';
-                  $sqli = "SELECT sum(Total_Earning) from Employeemst where Department!='Management' AND Department!='Sales' AND Department!='SALES' and month between 1 and 3 and year='2018' ";
+                  $sqli = "SELECT sum(Total_Earning) from Employeemst where Department!='Management' AND Department!='Sales' AND Department!='SALES' and month between 4 and 6 and year='2018' ";
                   $resulti = mysqli_query($conn,$sqli);
                   $rowi = mysqli_fetch_array($resulti);
                   
-                  $sql = "SELECT sum(Amount) from Salesmaster where Date between '2018-01-01' and '2018-03-31' ";
+                  $sql = "SELECT sum(Amount) from sales where Date between '2018-04-01' and '2018-06-31' ";
                   $result = mysqli_query($conn,$sql);
                   $row = mysqli_fetch_array($result);
                   $a=$row['sum(Amount)'];
                   ($Total=$a-$sub); 
+                  //echo $Total;
                   $noninc=round($amm=($Total * ( 0.003)));
                   //echo $am;
                   if($str!='management'){
                   	?>
                <tr class="d1">
+                  <?php if($str!='sales' && $str!='management'){ if($id!=''){?>
                   <td><?php echo $name[$m]; ?></td>
                   <td><?php echo $id; ?></td>
                   <td><?php echo $br; ?></td>
@@ -106,12 +109,55 @@
                   <td><?php if($str!='sales' && $str!='management'){ echo round(($noninc/$rowi['sum(Total_Earning)'])*$am);}else{ echo "0";}?></td>
                </tr>
                <?php
-                  }}
+                  }}}}
                      ?>
             <tbody>
          </table>
-         <br><br><br>
+         <button onclick="exportTableToCSV('Incentives.csv')">Export HTML Table To CSV File</button>
       </div>
    </body>
-   </head>
+   
 </html>
+<script>
+   function downloadCSV(csv, filename) {
+     var csvFile;
+     var downloadLink;
+   
+     // CSV file
+     csvFile = new Blob([csv], {type: "text/csv"});
+   
+     // Download link
+     downloadLink = document.createElement("a");
+   
+     // File name
+     downloadLink.download = filename;
+   
+     // Create a link to the file
+     downloadLink.href = window.URL.createObjectURL(csvFile);
+   
+     // Hide download link
+     downloadLink.style.display = "none";
+   
+     // Add the link to DOM
+     document.body.appendChild(downloadLink);
+   
+     // Click download link
+     downloadLink.click();
+   }
+   function exportTableToCSV(filename) {
+     var csv = [];
+     var rows = document.querySelectorAll("table tr");
+     
+     for (var i = 0; i < rows.length; i++) {
+         var row = [], cols = rows[i].querySelectorAll("td, th");
+         
+         for (var j = 0; j < cols.length; j++) 
+             row.push(cols[j].innerText);
+         
+         csv.push(row.join(","));        
+     }
+   
+     // Download CSV file
+     downloadCSV(csv.join("\n"), filename);
+   }
+</script>

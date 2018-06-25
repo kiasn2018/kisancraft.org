@@ -26,16 +26,16 @@
       <hr>
       <div style="margin-left:22%; width:75%;">
          <?php
-            $sql = "SELECT distinct EID from Salesmaster";
+            $sql = "SELECT distinct EID from sales";
             //echo $sql;
             $result = mysqli_query($conn,$sql);
-            $sql1 = "SELECT distinct AID from Salesmaster ";
+            $sql1 = "SELECT distinct AID from sales ";
             //echo $sql;
             $result1 = mysqli_query($conn,$sql1);
-            $sql2 = "SELECT distinct SID from Salesmaster ";
+            $sql2 = "SELECT distinct SID from sales ";
             //echo $sql;
             $result2 = mysqli_query($conn,$sql2);
-            $sql3 = "SELECT distinct ZID from Salesmaster ";
+            $sql3 = "SELECT distinct ZID from sales ";
             //echo $sql;
             $result3 = mysqli_query($conn,$sql3);
             
@@ -54,7 +54,7 @@
             <?php
                while($row = mysqli_fetch_array($result)) {
                	$eid=$row['EID'];
-                   $sqli = "SELECT sum(Amount),Executive from Salesmaster where EID='$eid' AND Date between '2018-01-01' AND '2018-03-31'";
+                   $sqli = "SELECT sum(Amount),Executive from sales where EID='$eid' AND Date between '2018-04-01' AND '2018-06-30'";
                    $resulti = mysqli_query($conn,$sqli);
                    $rowi = mysqli_fetch_array($resulti);
                	?>
@@ -70,7 +70,7 @@
                }
                while($row1 = mysqli_fetch_array($result1)) {
                	$eid=$row1['AID'];
-                   $sqli = "SELECT sum(Amount),ASM from Salesmaster where AID='$eid' AND Date between '2018-01-01' AND '2018-03-31'";
+                   $sqli = "SELECT sum(Amount),ASM from sales where AID='$eid' AND Date between '2018-04-01' AND '2018-06-30'";
                    $resulti = mysqli_query($conn,$sqli);
                    $rowi = mysqli_fetch_array($resulti);
                	?>
@@ -86,7 +86,7 @@
                }
                while($row2= mysqli_fetch_array($result2)) {
                	$eid=$row2['SID'];
-                   $sqli = "SELECT sum(Amount),SM from Salesmaster where SID='$eid' AND Date between '2018-01-01' AND '2018-03-31'";
+                   $sqli = "SELECT sum(Amount),SM from sales where SID='$eid' AND Date between '2018-04-01' AND '2018-06-30'";
                    $resulti = mysqli_query($conn,$sqli);
                    $rowi = mysqli_fetch_array($resulti);
                	?>
@@ -102,7 +102,7 @@
                }
                while($row3 = mysqli_fetch_array($result3)) {
                	$eid=$row3['ZID'];
-                   $sqli = "SELECT sum(Amount),ZM from Salesmaster where ZID='$eid' AND Date between '2018-01-01' AND '2018-03-31'";
+                   $sqli = "SELECT sum(Amount),ZM from sales where ZID='$eid' AND Date between '2018-04-01' AND '2018-06-30'";
                    $resulti = mysqli_query($conn,$sqli);
                    $rowi = mysqli_fetch_array($resulti);
                	?>
@@ -119,11 +119,11 @@
                exit();
                $sub='1888078';
                $sales='sales';
-               $sqli = "SELECT sum(Total_Earning) from Employeemst where Department!='Management' AND Department!='Sales' AND Department!='SALES' and month between 1 and 3 and year='2018' ";
+               $sqli = "SELECT sum(Total_Earning) from Employeemst where Department!='Management' AND Department!='Sales' AND Department!='SALES' and month between 4 and 6 and year='2018' ";
                $resulti = mysqli_query($conn,$sqli);
                $rowi = mysqli_fetch_array($resulti);
                
-               $sql = "SELECT sum(Amount) from Salesmaster where Date between '2018-01-01' and '2018-03-31' ";
+               $sql = "SELECT sum(Amount) from sales where Date between '2018-04-01' and '2018-06-31' ";
                $result = mysqli_query($conn,$sql);
                $row = mysqli_fetch_array($result);
                $a=$row['sum(Amount)'];

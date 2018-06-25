@@ -252,10 +252,9 @@
    
    ?>   
 <div class="table-responsive">
+  <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
    <table  id="demo" class="table table-hover" >
-      <tr>
-         <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
-      </tr>
+     
       <tr>
          <th>State</th>
          <?php while($row = mysqli_fetch_array($resultd)) {

@@ -35,17 +35,11 @@ if(isset($_POST["Import"])){
 		$des = array_search ('Designation', $emapData);
 		$dep = array_search ('Department', $emapData);
 		$basic = array_search ('BASIC+DA', $emapData);
-		$hra = array_search ('HRA', $emapData);
-		$other = array_search ('Arr.Earn', $emapData);
-		$convey = array_search ('Conveyance', $emapData);
-		$med= array_search ('Medi Reimb', $emapData);
+		$hra = array_search ('HRA', $emapData);	
 		$spi = array_search ('SPl Allow', $emapData);
 		$lta = array_search ('LTA', $emapData);
-		$bm = array_search ('Bonus M', $emapData);
 		$branch = array_search ('Branch', $emapData);
-		$el= array_search ('EL ENCASHM', $emapData);
 		
-		$be= array_search ('Bonus.Exgr', $emapData);
 		$month = $_POST["month"];
 		$year = $_POST["year"];
 		$emapData[$basic]=$emapData[$hra]=$emapData[$convey]=$emapData[$med]=$emapData[$spi]=$emapData[$lta]=$emapData[$bm]=$emapData[$other]=$emapData[$EL]=$emapData[$be]='0';
@@ -58,17 +52,29 @@ if(isset($_POST["Import"])){
             }
             $data= str_replace("'", "_", $emapData[2]);
             if($emapData[2]!=""){
-                $pdate1=date("Y-d-m", strtotime($emapData[$jdate]) );
-                if($emapData[5]!=""){
-                $pdate2=date("Y-d-m", strtotime($emapData[$ldate]) );
-                }else{$pdate2="0000-00-00";}
-				$totalearnings='';
-				//echo $emapData[$basic]."=".$emapData[$hra]."=".$emapData[$convey]."=".$emapData[$med]."=".$emapData[$spi]."=".$emapData[$lta]."=".$emapData[$bm]."=".$emapData[$other]."=".$emapData[$be]."=";
+
+                $jorderdate = explode('/', $emapData[$jdate]);
+            $jmonth = $jorderdate[1];
+            $jday   = $jorderdate[0];
+            $jyear  = $jorderdate[2];
+             if($emapData[$ldate]!=""){
+             $lorderdate = explode('/', $emapData[$ldate]);
+            $lmonth = $lorderdate[1];
+            $lday   = $lorderdate[0];
+            $lyear  = $lorderdate[2];
+             }else{$lmonth='00';
+                    $lday='00';
+                    $lyear='0000';
+         }
+               // echo $emapData[$jdate].$emapData[$ldate];
+               // print_r($jorderdate);
+               // echo $jyear."-".$jmonth."-".$jday."</br>".$lyear."-".$lmonth."-".$lday; 
+				//echo $emapData[$ename];
                 //It wiil insert a row to our subject table from our csv file`
-				$totalearnings=$emapData[$basic]+$emapData[$hra]+$emapData[$convey]+$emapData[$med]+$emapData[$spi]+$emapData[$lta]+$emapData[$bm]+$emapData[$other]+$emapData[$el];
-                $sql = "INSERT into Employeemst (E_id, E_name,E_D_O_J,D_o_l,Designation,Department,Branch,Basic_DA,HRA,Conveyance,Medi_Reimb,SPl_Allow,LTA,Bonus_M,other,Total_Earning,month,year,BE,EL_encash)
-                 values('$emapData[$eid]','$emapData[$ename]','$pdate1','$pdate2','$emapData[$des]','$emapData[$dep]','$emapData[$branch]','$emapData[$basic]','$emapData[$hra]',
-				 '$emapData[$convey]','$emapData[$med]','$emapData[$spi]','$emapData[$lta]','$emapData[$bm]','$emapData[$other]','$totalearnings','$month','$year','$emapData[$be]','$emapData[$el]')";
+				$totalearnings=$emapData[$basic]+$emapData[$hra]+$emapData[$spi]+$emapData[$lta];
+                $sql = "INSERT into Employeemst (E_id, E_name,E_D_O_J,D_o_l,Designation,Department,Branch,Basic_DA,HRA,SPl_Allow,LTA,Total_Earning,month,year)
+                 values('$emapData[$eid]','$emapData[$ename]','$jyear-$jmonth-$jday','$lyear-$lmonth-$lday','$emapData[$des]','$emapData[$dep]','$emapData[$branch]','$emapData[$basic]','$emapData[$hra]',
+				 '$emapData[$spi]','$emapData[$lta]','$totalearnings','$month','$year')";
                 //we are using mysql_query function. it returns a resource on true else False on error
                 //echo "Error: " . $sql . "<br>" . $conn->error; 
 				

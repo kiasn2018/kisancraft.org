@@ -68,8 +68,8 @@
        $asm=$_POST['asm'];
        $sm=$_POST['sm'];
        $zm=$_POST['zm'];
-    if($month=="1"){  $start='2017-04-01';$end='2017-06-30';}elseif($month=="2"){$start='2017-07-01';$end='2017-09-30';}elseif($month=='3'){$start='2017-10-01';$end='2017-12-31';}elseif($month=='4'){$start='2018-01-01';$end='2018-03-31';}
-       $sql = "SELECT sum(Amount) from Salesmaster where Date between '$start' and '$end' ";
+    if($month=="1"){  $start='2018-04-01';$end='2018-06-30';}elseif($month=="2"){$start='2018-07-01';$end='2018-09-30';}elseif($month=='3'){$start='2018-10-01';$end='2018-12-31';}elseif($month=='4'){$start='2019-01-01';$end='2019-03-31';}
+       $sql = "SELECT sum(Amount) from sales where Date between '$start' and '$end' ";
     //echo $sql;
    $result = mysqli_query($conn,$sql);
    $row = mysqli_fetch_array($result);
@@ -90,19 +90,19 @@
    </tr>
    <tr>
       <td>Incetives EXECUTIVES</td>
-      <td><?php echo round($amm1=($Total * ( 0.0025))); ?></td>
+      <td><?php echo round($amm1=($Total * ( 0.004))); ?></td>
    </tr>
    <tr>
       <td>Incetives ASM</td>
-      <td><?php echo round($amm1=($Total * ( 0.00052))); ?></td>
+      <td><?php echo round($amm1=($Total * ( 0.00125))); ?></td>
    </tr>
    <tr>
       <td>Incetives SM</td>
-      <td><?php echo round($amm1=($Total * ( 0.000018))); ?></td>
+      <td><?php echo round($amm1=($Total * ( 0.00125))); ?></td>
    </tr>
    <tr>
       <td>Incetives ZM</td>
-      <td><?php echo round($amm1=($Total * ( 0.00026))); ?></td>
+      <td><?php echo round($amm1=($Total * ( 0.0003))); ?></td>
    </tr>
 </table>
 <script>
