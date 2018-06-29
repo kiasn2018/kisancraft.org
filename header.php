@@ -238,6 +238,8 @@ if($_SESSION['role']==''){
               <ul>
                 <li class="current">
 				<a href="/kisancraft.org/master.php">Sales master</li><br>
+            <li >
+        <a  href="/kisancraft.org/validation.php">Validation</a></li><br>
                 <li><a href="/kisancraft.org/salesupload.php">Upload sales</li><br>
                 <li><a href="/kisancraft.org/salesdailyreport.php">Sales Daily Report</a></li><br>
 				 <li><a href="/kisancraft.org/monthlyreport.php">Monthly Report</a></li><br>

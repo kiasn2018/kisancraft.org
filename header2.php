@@ -210,7 +210,7 @@ if($_SESSION['role']==''){
           </li>
 		  
 		  <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/kisancraft.org/quartelymeeting.php">
               <i class="menu-icon mdi mdi-backup-restore"></i>
               <span class="menu-title">Quaterly Meeting</span>
             </a>
@@ -339,7 +339,10 @@ if($_SESSION['role']==''){
   <!-- inject:js -->
   <script src="./js/off-canvas.js"></script>
   <script src="./js/misc.js"></script>
+  <script src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+        <script src="https://static.fusioncharts.com/code/latest/fusioncharts.charts.js"></script>
+        <script src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.zune.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->
-	  
+	
