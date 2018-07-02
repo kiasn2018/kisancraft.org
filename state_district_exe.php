@@ -309,22 +309,22 @@ if ($_POST["go"] == "Submit") {
    <table  id="testTable" class="table table-hover" >
      
       <tr>
-         <th>State</th>
+         <th style=" border: 0.5pt solid #000000; ">State</th>
          <?php
         while ($row = mysqli_fetch_array($resultd)) {
             $exe = $row["Executive"];
             $SM  = $row["ASM"];
             if ($exel != $exe || $SM != $SML) {
 ?>
-        <td><?php
+        <td style=" border: 0.5pt solid #000000; "><?php
                 echo $row["Zone"];
 ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
             } else {
 ?>
-        <td></td>
-         <td></td>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
             }
             $exel = $row["Executive"];
@@ -333,22 +333,22 @@ if ($_POST["go"] == "Submit") {
 ?>
      </tr>
       <tr>
-         <th>Executive</th>
+         <th style=" border: 0.5pt solid #000000; ">Executive</th>
          <?php
         while ($row = mysqli_fetch_array($resultd1)) {
             $exe1 = $row["Executive"];
             $SM1  = $row["ASM"];
             if ($exel1 != $exe1 || $SM1 != $SML1) {
 ?>
-        <td><?php
+        <td style=" border: 0.5pt solid #000000; "><?php
                 echo $row["Executive"];
 ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
             } else {
 ?>
-        <td></td>
-         <td></td>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
             }
             $exel1 = $row["Executive"];
@@ -356,22 +356,22 @@ if ($_POST["go"] == "Submit") {
         }
 ?>
      </tr>
-      <th>ASM</th>
+      <th style=" border: 0.5pt solid #000000; ">ASM</th>
       <?php
         while ($row = mysqli_fetch_array($resultd2)) {
             $exe2 = $row["Executive"];
             $SM2  = $row["ASM"];
             if ($exel2 != $exe2 || $SM2 != $SML2) {
 ?>
-     <td><?php
+     <td style=" border: 0.5pt solid #000000; "><?php
                 echo $row["ASM"];
 ?></td>
-      <td></td>
+      <td style=" border: 0.5pt solid #000000; "></td>
       <?php
             } else {
 ?>
-     <td></td>
-      <td></td>
+     <td style=" border: 0.5pt solid #000000; "></td>
+      <td style=" border: 0.5pt solid #000000; "></td>
       <?php
             }
             $exel2 = $row["Executive"];
@@ -380,22 +380,22 @@ if ($_POST["go"] == "Submit") {
 ?>
      </tr>
       <tr>
-         <th>SM</th>
+         <th style=" border: 0.5pt solid #000000; ">SM</th>
          <?php
         while ($row = mysqli_fetch_array($resultd3)) {
             $exe3 = $row["Executive"];
             $SM3  = $row["ASM"];
             if ($exel3 != $exe3 || $SM3 != $SML3) {
 ?>
-        <td><?php
+        <td style=" border: 0.5pt solid #000000; "><?php
                 echo $row["SM"];
 ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
             } else {
 ?>
-        <td></td>
-         <td></td>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
             }
             $exel3 = $row["Executive"];
@@ -404,22 +404,22 @@ if ($_POST["go"] == "Submit") {
 ?>
      </tr>
       <tr>
-         <th>ZM</th>
+         <th style=" border: 0.5pt solid #000000; ">ZM</th>
          <?php
         while ($row = mysqli_fetch_array($resultd4)) {
             $exe4 = $row["Executive"];
             $SM4  = $row["ASM"];
             if ($exel4 != $exe4 || $SM4 != $SML4) {
 ?>
-        <td><?php
+        <td style=" border: 0.5pt solid #000000; "><?php
                 echo $row["ZM"];
 ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
             } else {
 ?>
-        <td></td>
-         <td></td>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
             }
             $exel4 = $row["Executive"];
@@ -428,33 +428,33 @@ if ($_POST["go"] == "Submit") {
 ?>
      </tr>
       <tr>
-         <th>District</th>
+         <th style=" border: 0.5pt solid #000000; ">District</th>
          <?php
         while ($row = mysqli_fetch_array($resultd5)) {
             $exe      = $row["Executive"];
             $District = $row["District"];
 ?>
-        <td ><?php
+        <td style=" border: 0.5pt solid #000000; " ><?php
             echo $row["District"];
 ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php
         }
 ?>
-        <td>Total</td>
+        <td style=" border: 0.5pt solid #000000; ">Total</td>
       </tr>
       <tr>
-         <th>FY</th>
+         <th style=" border: 0.5pt solid #000000; ">FY</th>
          <?php
         while ($row = mysqli_fetch_array($resultd6)) {
 ?>
-        <th>FY2017-18</th>
-         <th bgcolor="#6b96db">FY2018-19</th>
+        <th style=" border: 0.5pt solid #000000; ">FY2017-18</th>
+         <th style=" border: 0.5pt solid #000000; " bgcolor="#6b96db">FY2018-19</th>
          <?php
         }
 ?>
-        <th>FY2017-18</th>
-         <th bgcolor="#6b96db">FY2018-19</th>
+        <th style=" border: 0.5pt solid #000000; ">FY2017-18</th>
+         <th style=" border: 0.5pt solid #000000; " bgcolor="#6b96db">FY2018-19</th>
       </tr>
       <?php
         $ss       = array();
@@ -475,7 +475,7 @@ if ($_POST["go"] == "Submit") {
             if ($di[$j] != '0') {
 ?> 
       <tr>
-         <th><?php
+         <th style=" border: 0.5pt solid #000000; "><?php
                 echo $di[$j];
 ?></th>
          <?php
@@ -488,12 +488,12 @@ if ($_POST["go"] == "Submit") {
                     $resultd1 = mysqli_query($conn, $sqld1);
                     $rowd1    = mysqli_fetch_array($resultd1);
 ?>
-        <td><?php
+        <td style=" border: 0.5pt solid #000000; "><?php
                     echo $rowdo["sum(Amount)"];
                     $amto[$i] = $amto[$i] + $rowdo['sum(Amount)'];
                     $too      = $too + $rowdo['sum(Amount)'];
 ?></td>
-         <td bgcolor="#6b96db"><?php
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php
                     echo $rowd1["sum(Amount)"];
                     $amt[$i] = $amt[$i] + $rowd1['sum(Amount)'];
                     $to      = $to + $rowd1['sum(Amount)'];
@@ -501,11 +501,11 @@ if ($_POST["go"] == "Submit") {
          <?php
                 }
 ?>
-        <td><?php
+        <td style=" border: 0.5pt solid #000000; "><?php
                 echo $too;
                 $totalamo = $totalamo + $too;
 ?></td>
-         <td bgcolor="#6b96db"><?php
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php
                 echo $to;
                 $totalam = $totalam + $to;
 ?></td>
@@ -515,23 +515,23 @@ if ($_POST["go"] == "Submit") {
         }
 ?>
      <tr>
-         <td>Total</td>
+         <td style=" border: 0.5pt solid #000000; ">Total</td>
          <?php
         for ($j = 0; $j < (count($ss)); $j++) {
 ?>
-        <td><?php
+        <td style=" border: 0.5pt solid #000000; "><?php
             echo $amto[$j];
 ?></td>
-         <td bgcolor="#6b96db"><?php
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php
             echo $amt[$j];
 ?></td>
          <?php
         }
 ?>
-        <td><?php
+        <td style=" border: 0.5pt solid #000000; "><?php
         echo $totalamo;
 ?></td>
-         <td bgcolor="#6b96db"><?php
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php
         echo $totalam;
 ?></td>
       <tr/>

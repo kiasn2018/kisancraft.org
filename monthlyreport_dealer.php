@@ -12,6 +12,7 @@
          .sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
          .sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
       </style>
+      <script src="js/tableToExcel.js"></script>
    <body bgcolor="">
       <?php 
          include 'header2.php';
@@ -253,104 +254,104 @@
    ?>   
 <div class="table-responsive">
      <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
-   <table  id="demo" class="table table-hover" >
+   <table  id="testTable" class="table table-hover" >
       <tr>
-        <td></td>
-         <th>State</th>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <th style=" border: 0.5pt solid #000000; ">State</th>
          <?php while($row = mysqli_fetch_array($resultd)) {
             $exe=$row["Executive"];
             $SM=$row["ASM"];
             if($exel != $exe || $SM != $SML){
                  ?>
-         <td><?php echo $row["Zone"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["Zone"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php }else{?>
-         <td></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php } $exel=$row["Executive"]; $SML=$row["ASM"];}?>
       </tr>
       <tr>
-        <td></td>
-         <th>Executive</th>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <th style=" border: 0.5pt solid #000000; ">Executive</th>
          <?php while($row = mysqli_fetch_array($resultd1)) {
             $exe1=$row["Executive"];
             $SM1=$row["ASM"];
             if($exel1 != $exe1 || $SM1 != $SML1){
                  ?>
-         <td><?php echo $row["Executive"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["Executive"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php }else{?>
-         <td></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php } $exel1=$row["Executive"]; $SML1=$row["ASM"];}?>
       </tr>
       <tr>
-        <td></td>
-      <th>ASM</th>
+        <td style=" border: 0.5pt solid #000000; "></td>
+      <th style=" border: 0.5pt solid #000000; ">ASM</th>
       <?php while($row = mysqli_fetch_array($resultd2)) {
          $exe2=$row["Executive"];
          $SM2=$row["ASM"];
             if($exel2 != $exe2 || $SM2 != $SML2){
               ?>
-      <td><?php echo $row["ASM"]; ?></td>
-      <td></td>
+      <td style=" border: 0.5pt solid #000000; "><?php echo $row["ASM"]; ?></td>
+      <td style=" border: 0.5pt solid #000000; "></td>
       <?php }else{?>
-      <td></td>
-      <td></td>
+      <td style=" border: 0.5pt solid #000000; "></td>
+      <td style=" border: 0.5pt solid #000000; "></td>
       <?php } $exel2=$row["Executive"];$SML2=$row["ASM"];}?>
       </tr>
       <tr>
-        <td></td>
-         <th>SM</th>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <th style=" border: 0.5pt solid #000000; ">SM</th>
          <?php while($row = mysqli_fetch_array($resultd3)) {
             $exe3=$row["Executive"];
             $SM3=$row["ASM"];
             if($exel3 != $exe3 || $SM3 != $SML3){
                  ?>
-         <td><?php echo $row["SM"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["SM"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php }else{?>
-         <td></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php } $exel3=$row["Executive"];$SML3=$row["ASM"];}?>
       </tr>
       <tr>
-        <td></td>
-         <th>ZM</th>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <th style=" border: 0.5pt solid #000000; ">ZM</th>
          <?php while($row = mysqli_fetch_array($resultd4)) {
             $exe4=$row["Executive"];
             $SM4=$row["ASM"];
             if($exel4 != $exe4 || $SM4 != $SML4){
                  ?>
-         <td><?php echo $row["ZM"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["ZM"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php }else{?>
-         <td></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php } $exel4=$row["Executive"];$SML4=$row["ASM"];}?>
       </tr>
       <tr>
-        <td></td>
-         <th>District</th>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <th style=" border: 0.5pt solid #000000; ">District</th>
          <?php while($row = mysqli_fetch_array($resultd5)) {
             $exe=$row["Executive"];
             $District=$row["District"];
             ?>
-         <td ><?php echo $row["District"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["District"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php  } ?>
-         <td>Total</td>
+         <td style=" border: 0.5pt solid #000000; ">Total</td>
       </tr>
       <tr>
-        <td>District</td>
-         <th>FY</th>
+        <td style=" border: 0.5pt solid #000000; ">District</td>
+         <th style=" border: 0.5pt solid #000000; ">FY</th>
          <?php while($row = mysqli_fetch_array($resultd6)) {
             ?>
-         <td>FY2017-18</td>
-         <td>FY2018-19</td>
+         <td style=" border: 0.5pt solid #000000; ">FY2017-18</td>
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db">FY2018-19</td>
          <?php  } ?>
-         <td>FY2017-18</td>
-         <td>FY2018-19</td>
+         <td style=" border: 0.5pt solid #000000; ">FY2017-18</td>
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db">FY2018-19</td>
       </tr>
       <?php 
          $ss=array();
@@ -370,8 +371,8 @@
             $to='';
          {?> 
       <tr>
-        <td><?php echo $dis[$j]; ?></td>
-         <td><?php echo $di[$j]; ?></td>
+        <td style=" border: 0.5pt solid #000000; "><?php echo $dis[$j]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $di[$j]; ?></td>
          <?php
             for($i=0;$i<count($ss);$i++)
             { 
@@ -383,69 +384,27 @@
                        $resultd1 = mysqli_query($conn,$sqld1);     
                        $rowd1= mysqli_fetch_array($resultd1);
             ?>
-         <td><?php echo $rowdo["sum(Amount)"];  $amto[$i]=$amto[$i]+$rowdo['sum(Amount)']; $too=$too+$rowdo['sum(Amount)'];?></td>
-         <td><?php echo $rowd1["sum(Amount)"];  $amt[$i]=$amt[$i]+$rowd1['sum(Amount)']; $to=$to+$rowd1['sum(Amount)'];?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $rowdo["sum(Amount)"];  $amto[$i]=$amto[$i]+$rowdo['sum(Amount)']; $too=$too+$rowdo['sum(Amount)'];?></td>
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $rowd1["sum(Amount)"];  $amt[$i]=$amt[$i]+$rowd1['sum(Amount)']; $to=$to+$rowd1['sum(Amount)'];?></td>
          <?php }?>
-         <td><?php echo $too;$totalamo=$totalamo+$too;?></td>
-         <td><?php echo $to; $totalam=$totalam+$to;?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $too;$totalamo=$totalamo+$too;?></td>
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $to; $totalam=$totalam+$to;?></td>
       </tr>
       <?php }}
          ?>
       <tr>
-        <td></td>
-         <td>Total</td>
+        <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; ">Total</td>
          <?php for($j=0;$j<(count($ss));$j++){ ?>
-         <td><?php echo $amto[$j]; ?></td>
-         <td><?php echo $amt[$j]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $amto[$j]; ?></td>
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $amt[$j]; ?></td>
          <?php }?>
-         <td><?php echo $totalamo;?></td>
-         <td><?php echo $totalam;?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $totalamo;?></td>
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $totalam;?></td>
       <tr/>
    </table>
-   <button onclick="exportTableToCSV('<?php echo $state.".csv" ?>')">Export HTML Table To CSV File</button>
+   <input type="button" onclick="tableToExcel('testTable', '<?php echo $state; ?>')" value="Export to Excel">
 </div>
-<script>
-   function downloadCSV(csv, filename) {
-     var csvFile;
-     var downloadLink;
-   
-     // CSV file
-     csvFile = new Blob([csv], {type: "text/csv"});
-   
-     // Download link
-     downloadLink = document.createElement("a");
-   
-     // File name
-     downloadLink.download = filename;
-   
-     // Create a link to the file
-     downloadLink.href = window.URL.createObjectURL(csvFile);
-   
-     // Hide download link
-     downloadLink.style.display = "none";
-   
-     // Add the link to DOM
-     document.body.appendChild(downloadLink);
-   
-     // Click download link
-     downloadLink.click();
-   }
-   function exportTableToCSV(filename) {
-     var csv = [];
-     var rows = document.querySelectorAll("table tr");
-     
-     for (var i = 0; i < rows.length; i++) {
-         var row = [], cols = rows[i].querySelectorAll("td, th");
-         
-         for (var j = 0; j < cols.length; j++) 
-             row.push(cols[j].innerText);
-         
-         csv.push(row.join(","));        
-     }
-   
-     // Download CSV file
-     downloadCSV(csv.join("\n"), filename);
-   }
-</script>
+
 <?php 
 }}

@@ -367,3 +367,265 @@ End Sub
  
     
     
+// New merge sheets in single work book
+
+Sheets.Add After:=ActiveSheet
+    Sheets("Sheet2").Name = "Andhra Pradesh"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Andhra Pradesh.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet3").Name = "Bihar"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Bihar.xls"
+    Cells.Select
+    'Range("I4").Activate
+    Application.CutCopyMode = False
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet4").Name = "Chhattisgarh"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Chhattisgarh.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+     Sheets.Add After:=ActiveSheet
+    Sheets("Sheet5").Name = "Delhi"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Delhi.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+     Sheets.Add After:=ActiveSheet
+    Sheets("Sheet6").Name = "Goa"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Goa.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet7").Name = "Gujarat"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Gujarat.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet8").Name = "Haryana"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Haryana.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet9").Name = "Himachal Pradesh"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Himachal Pradesh.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet10").Name = "Jammu and Kashmir"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Jammu and Kashmir.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet11").Name = "Jharkhand"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Jharkhand.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet12").Name = "Karnataka Central"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Karnataka Central.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet13").Name = "Karnataka Local"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Karnataka Local.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet14").Name = "Karnataka North"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Karnataka North.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet15").Name = "Karnataka South"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Karnataka South.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet16").Name = "Kerala"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Kerala.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet17").Name = "Madhya Pradesh"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Madhya Pradesh.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet18").Name = "Maharashtra"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Maharashtra.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet19").Name = "Nepal"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Nepal.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet20").Name = "North East"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\North East.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet21").Name = "Odisha"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Odisha.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet22").Name = "Punjab"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Punjab.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet23").Name = "Rajasthan"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Rajasthan.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet24").Name = "Tamil Nadu"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Tamil Nadu.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet25").Name = "Telangana"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Telangana.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet26").Name = "Uttar Pradesh A"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Uttar Pradesh A.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet27").Name = "Uttar Pradesh B"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Uttar Pradesh B.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet28").Name = "Uttar Pradesh D"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Uttar Pradesh D.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet29").Name = "Uttarakhand"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\Uttarakhand.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
+    
+    Sheets.Add After:=ActiveSheet
+    Sheets("Sheet30").Name = "West Bengal"
+    Workbooks.Open Filename:= _
+        "C:\Users\Software Dev\Downloads\june\West Bengal.xls"
+    Cells.Select
+    Selection.Copy
+    Windows("Book1").Activate
+    ActiveSheet.Paste
