@@ -154,6 +154,7 @@
                   $sql15 = "SELECT Sum(QTY),Sum(Amount) from salesmerge where Product='$product' AND DATE_FORMAT(date, '%Y-%m') Between '$fdate365' And '$fdate' "; //echo $sql15;
                      $result15 = mysqli_query($conn,$sql15);
                      $row15 = mysqli_fetch_array($result15);
+                    //echo  $sql15; exit();
                   ?>
                <tr class="d1">
                   <td><?php echo $row["Product"]; ?></td>

@@ -311,7 +311,7 @@
 			   }
                // echo $sqld;
                $resultd1 = mysqli_query($conn,$sqld1);     
-               $  = mysqli_fetch_array($resultd1);	
+               $rowd1  = mysqli_fetch_array($resultd1);	
 			    if($state1=='ALL'){  $sqldd = "SELECT sum(Amount),Executive,State From Salesmaster WHERE Zone='$state'  ".$queryCondition1;}else{
 			   $sqldd = "SELECT sum(Amount),Executive,State from Salesmaster WHERE District='$di' AND DATE_FORMAT(date, '%Y-%m') ='$py-$fim' ";
 				}//echo $sqldd;
