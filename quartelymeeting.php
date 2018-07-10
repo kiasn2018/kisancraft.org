@@ -328,10 +328,10 @@
             ?></td>
          <td bgcolor="#6b96db" style=" border: 0.5pt solid #000000; " >Q1</td>
          <td bgcolor="#6b96db" style=" border: 0.5pt solid #000000; "><?php
-            echo $a = $row1["sum(Amount)"];
+            echo number_format($row1["sum(Amount)"],0); $a = $row1["sum(Amount)"];
             ?></td>
          <td bgcolor="#6b96db" style=" border: 0.5pt solid #000000; "><?php
-            echo $b = $row["sum(Amount)"];
+            echo number_format($row["sum(Amount)"],0); $b = $row["sum(Amount)"];
             ?></td>
          <td bgcolor="#6b96db" style=" border: 0.5pt solid #000000; "><?php
             echo round((($b / $a)- 1 )* 100);
@@ -350,10 +350,11 @@
          $resultde = mysqli_query($conn, $sqlde);
          while ($row = mysqli_fetch_array($resultde)) {
              $dealer    = $row["Dealer"];
-             $sqlde1    = "SELECT sum(Amount) from Salesmaster where Dealer='$dealer'";
+             $sqlde1    = "SELECT sum(Amount) from Salesmaster where Dealer='$dealer' ".$queryCondition1;
              $resultde1 = mysqli_query($conn, $sqlde1);
              while ($row1 = mysqli_fetch_array($resultde1)) {
-                 if ($row1["sum(Amount)"] == '') {
+             // echo $row1["sum(Amount)"]."-".$dealer."<br/>";
+                 if ($row1["sum(Amount)"] == Null) {
                      $count = $count + 1;
                  }
              }
@@ -365,6 +366,8 @@
          $resultdely = mysqli_query($conn, $sqldely);
          while ($rowly = mysqli_fetch_array($resultdely)) {
              $dealerly    = $rowly["Dealer"];
+
+
              $sqldely1    = "SELECT sum(Amount) from sales16_17 where Dealer='$dealerly'";
              $resultdely1 = mysqli_query($conn, $sqldely1);
              while ($rowly1 = mysqli_fetch_array($resultdely1)) {
@@ -798,15 +801,19 @@
                    
                    $disvp[]=$rowsegp["sum(Amount)"];
                  }}
+                 $a='';
+                 $b='';
+                 $c='';
+                 $e='';
                 // print_r($exe);
                  for($i=0;$i<count($exe);$i++){
                  ?>
       <tr>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo  $exe[$i];?></td>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "> Executive </td>
-         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo number_format($exemp[$i],0); ?></td>
+         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $a=number_format($exemp[$i],0); ?></td>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo number_format($exem[$i],0); ?></td>
-         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo round((($exem[$i]/$exemp[$i])-1)*100);?></td>
+         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php if($a=='0'){echo "0";}else{ echo round((($exem[$i]/$exemp[$i])-1)*100);}?></td>
       </tr>
       <?php }
          for($i=0;$i<count($ASM);$i++){
@@ -814,9 +821,9 @@
       <tr>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $ASM[$i];?></td>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "> ASM </td>
-         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $ASMmp[$i];?></td>
+         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $b=$ASMmp[$i];?></td>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $ASMm[$i];?></td>
-         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo round((($ASMm[$i]/$ASMmp[$i])-1)*100);?></td>
+         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php if($b=='0' || $b==''){echo "0";}else{echo round((($ASMm[$i]/$ASMmp[$i])-1)*100);}?></td>
       </tr>
       <?php }
          for($i=0;$i<count($SM);$i++){
@@ -824,9 +831,9 @@
       <tr>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $SM[$i];?></td>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "> SM </td>
-         <td bgcolor="#c6c6c6 " style=" border: 0.5pt solid #000000; "><?php echo number_format($SMmp[$i],0); ?></td>
+         <td bgcolor="#c6c6c6 " style=" border: 0.5pt solid #000000; "><?php echo $c=number_format($SMmp[$i],0); ?></td>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo  number_format($SMm[$i],0); ?></td>
-         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo round((($SMm[$i]/$SMmp[$i])-1)*100);?></td>
+         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php if($c=='0'){echo "0";}else{ echo round((($SMm[$i]/$SMmp[$i])-1)*100);}?></td>
       </tr>
       <?php }
          for($i=0;$i<count($ZM);$i++){
@@ -834,9 +841,9 @@
       <tr>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $ZM[$i];?></td>
          <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "> ZM </td>
-         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $ZMmp[$i];?></td>
-         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $ZMm[$i];?></td>
-         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo round((($ZMm[$i]/$ZMmp[$i])-1)*100);?></td>
+         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo $e= number_format($ZMmp[$i],0);?></td>
+         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php echo  number_format($ZMm[$i],0); ?></td>
+         <td bgcolor="#c6c6c6" style=" border: 0.5pt solid #000000; "><?php if($e=='0'){echo "0";}else{ echo round((($ZMm[$i]/$ZMmp[$i])-1)*100);}?></td>
       </tr>
       <?php }?>
       <tr></tr>
@@ -854,9 +861,9 @@
       <tr>
          <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo $seg[$i];?></td>
          <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo  $segmp[$i];?></td>
-         <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo $e= $segvp[$i];?></td>
+         <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo number_format($segvp[$i],0);$e= $segvp[$i];?></td>
          <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo  $segm[$i];?></td>
-         <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo $f= $segv[$i];?></td>
+         <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo number_format($segv[$i],0);$f= $segv[$i];?></td>
          <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php if($e==''){ echo '0';}elseif($e=='0'){echo '0';}else{ echo round((($f/$e)-1)*100);}?></td>
       </tr>
       <?php } }?> 
@@ -871,8 +878,8 @@
          ?>
       <tr>
          <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo $dis[$i];?></td>
-         <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo $m= $disvp[$i];?></td>
-         <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo $n= $disv[$i];?></td>
+         <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo number_format($disvp[$i],0);$m= $disvp[$i];?></td>
+         <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php echo number_format($disv[$i],0);$n= $disv[$i];?></td>
          <td bgclor="#a8a1a7" style=" border: 0.5pt solid #000000; "><?php if($m==''){ echo '0';}elseif($m=='0'){echo '0';}else{ echo round((($n/$m)-1)*100);}?></td>
       </tr>
       <?php } ?>             

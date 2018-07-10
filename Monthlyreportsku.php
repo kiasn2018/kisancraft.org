@@ -218,11 +218,11 @@
            }}
    		//echo 
        
-      {   $seg=array();
-           $sqld = "SELECT DISTINCT (District) District, State FROM sales";
+        $seg=array();
+           
            // echo $sqld;
-           $resultd = mysqli_query($conn,$sqld);
-   		$sqldq = "SELECT DISTINCT SKU from SKU";
+           //$resultd = mysqli_query($conn,$sqld);
+   		$sqldq = "SELECT DISTINCT SKU from Salesmaster UNION SELECT DISTINCT SKU from sales";
            // echo $sqld;
            $resultdq = mysqli_query($conn,$sqldq);
    		$resultdqq = mysqli_query($conn,$sqldq);
@@ -234,49 +234,48 @@
          <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
       </tr>
       <tr>
-         <th>State</th>
-         <th>District</th>
+         
          <th>SKU</th>
-         <th>QTY</th>
-         <th>Amount</th>
-         <th>Trade Discount</th>
+         <th>QTY 17-18</th>
+         <th>Amount 17-18</th>
+         <th>QTY 18-19</th>
+         <th>Amount 18-19</th>
+         <th>% Progress</th>
       </tr>
       <?php
          while($rowdq = mysqli_fetch_array($resultdq)){ if($rowdq['SKU']!=''){?>
-      <?php  $seg[]=$rowdq['SKU'];?>
-      <?php }} 
-         while($rowd = mysqli_fetch_array($resultd)) {
-            $state=$rowd['State'];
-               $di=$rowd["District"];
-         		for($j=0;$j<(count($seg));$j++){
-					"SELECT column_list
-					FROM t1
-					INNER JOIN t2 ON join_condition1
-					INNER JOIN t3 ON join_condition2
-					...
-					WHERE where_conditions;";
-                $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE District='$di' AND SKU='$seg[$j]' ".$queryCondition;
+      <?php  $sku=$rowdq['SKU'];
+      
+				
+                $sqld1 = "SELECT sum(QTY),sum(Amount) from sales WHERE  SKU='$sku' ".$queryCondition;
                 //echo $sqld1;
                $resultd1 = mysqli_query($conn,$sqld1);     
                $rowd1= mysqli_fetch_array($resultd1);
-               $sqld111 = "SELECT sum(QTY) from sales WHERE District='$di' AND SKU1='$seg[$j]' ".$queryCondition;
+               $sqld111 = "SELECT sum(QTY) from sales WHERE   SKU1='$sku' ".$queryCondition;
                 //print_r($rowd1);
                $resultd111 = mysqli_query($conn,$sqld111);     
                $rowd111= mysqli_fetch_array($resultd111);
+
+
+
+                $sqld11 = "SELECT sum(QTY),sum(Amount) from Salesmaster WHERE  SKU='$sku' and Date BETWEEN '2017-04-01' and '2017-06-30' ";
+                //echo $sqld1;
+               $resultd11 = mysqli_query($conn,$sqld11);     
+               $rowd11= mysqli_fetch_array($resultd11);
+               $sqld1111 = "SELECT sum(QTY) from Salesmaster WHERE   SKU1='$sku' AND Date BETWEEN '2017-04-01' and '2017-06-30' ";
+                //print_r($rowd1);
+               $resultd1111 = mysqli_query($conn,$sqld1111);     
+               $rowd1111= mysqli_fetch_array($resultd1111);
          ?>       
       <tr>
-         <td><?php echo $state; ?></td>
-         <td><?php echo $di; ?></td>
-         <td><?php echo $seg[$j]; ?></td>
+         
+         <td><?php echo $sku; ?></td>
+         <td><?php echo ($rowd11['sum(QTY)']+$rowd1111['sum(QTY)']); ?></td>
+         <td><?php echo $rowd11['sum(Amount)']; ?></td>
          <td><?php echo ($rowd1['sum(QTY)']+$rowd111['sum(QTY)']); ?></td>
-         <td><?php echo $rowd1['sum(Amount)']; ?></td>
-         <?php 
-            $sqld11 = "SELECT sum(Amount) from sales WHERE District='$di' AND SKU='' ".$queryCondition;
-                  // echo $sqld;
-                  $resultd11 = mysqli_query($conn,$sqld11);     
-                  $rowd11= mysqli_fetch_array($resultd11);
-            ?>
-         <td><?php echo $rowd11['sum(Amount)'];?></td>
+         <td><?php echo  $rowd1['sum(Amount)']; ?></td>
+         
+        
       </tr>
       <?php
          }}?> 
@@ -327,4 +326,4 @@
 </script>
 <button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
 <?php 
-}}
+}

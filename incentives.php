@@ -4,13 +4,9 @@
       <script src="/kisankraft.org/src/js/sorttable.js"></script>
       <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
       <style>
-         tr:nth-child(even) {
-         background-color: #99ccb7;
-         }
-         .sortable{border-top:#CCCCCC 4px solid; width:100%;font-size:15px;}
-         .sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
-         .sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
+         
       </style>
+       <script src="js/tableToExcel.js"></script>
    </head>
    <body bgcolor="">
       <?php 
@@ -28,17 +24,20 @@
       <div style="margin-left:22%; width:75%;">
          <?php
             $name=array();
-            $sql = "SELECT distinct E_id from Employeemst ";
+            $sql = "SELECT distinct E_id from Employeemst  ";
             $result = mysqli_query($conn,$sql);
             while($row = mysqli_fetch_array($result)) {
+              if($row["E_id"]!=''){
                 $name1=$row["E_id"];
                 $name[]=$name1;
             }
+          }
             
             //include '/test/index.php';
             //include '/search.php'
             ?>
-         <table class="sortable">
+            <input type="button" onclick="tableToExcel('testTable', 'Incentives Non-sales')" value="Export to Excel">
+         <table id='testTable' >
             <thead>
                <tr class="d0">
                   <th width="10%"><span>Emp ID</span></th>
@@ -56,8 +55,9 @@
             </thead>
             <tbody>
                <?php 
+               $sub='904663';
                   for($m=0;$m<(count($name));$m++){
-                  $sql = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month between 4 and 6 and year='2018' ";
+                  $sql = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]'  and month between 4 and 6 and year='2018' ";
                   //echo $sql;
                   $result = mysqli_query($conn,$sql);
                   $sql1 = "SELECT sum(Total_Earning) Total_Earning,E_name,Branch,Department from Employeemst where E_id='$name[$m]' and month='4' and year='2018' ";
@@ -81,7 +81,7 @@
                   }
                   
                   $sales='sales';
-                  $sqli = "SELECT sum(Total_Earning) from Employeemst where Department!='Management' AND Department!='Sales' AND Department!='SALES' and month between 4 and 6 and year='2018' ";
+                  $sqli = "SELECT sum(Total_Earning) from Employeemst where Department!='management' AND Department!='Sales' AND Department!='SALES'  and month between 4 and 6 and year='2018' ";
                   $resulti = mysqli_query($conn,$sqli);
                   $rowi = mysqli_fetch_array($resulti);
                   
@@ -94,9 +94,11 @@
                   $noninc=round($amm=($Total * ( 0.003)));
                   //echo $am;
                   if($str!='management'){
+                    if($id != ''){
+                       if($str!='sales' && $str!='management'){ if($id!=''){
                   	?>
-               <tr class="d1">
-                  <?php if($str!='sales' && $str!='management'){ if($id!=''){?>
+               <tr >
+                  
                   <td><?php echo $name[$m]; ?></td>
                   <td><?php echo $id; ?></td>
                   <td><?php echo $br; ?></td>
@@ -109,7 +111,7 @@
                   <td><?php if($str!='sales' && $str!='management'){ echo round(($noninc/$rowi['sum(Total_Earning)'])*$am);}else{ echo "0";}?></td>
                </tr>
                <?php
-                  }}}}
+                  }}}}}
                      ?>
             <tbody>
          </table>

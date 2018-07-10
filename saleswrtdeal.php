@@ -246,9 +246,9 @@
                $post_at_todate = "$tiy-$tim-$tid";
                $queryCondition .= " AND Date BETWEEN '$fiy-$fim-$fid' AND '". $post_at_todate . "'";
            }}
-		   if($state=='ALL'){$sqld = "SELECT DISTINCT Dealer,Zone,District from sales where Date!='0000-00-00' ".$queryCondition."order by Zone,District,Dealer ASC";}else{
-		   if($district=='ALL'){$sqld = "SELECT DISTINCT Dealer from sales where State='$state' ".$queryCondition;}else{
-           $sqld = "SELECT DISTINCT Dealer from sales where District='$district' ".$queryCondition;}}
+		   if($state=='ALL'){$sqld = "SELECT DISTINCT Dealer,Zone,District from Salesmaster where Date!='0000-00-00' ".$queryCondition."order by Zone,District,Dealer ASC";}else{
+		   if($district=='ALL'){$sqld = "SELECT DISTINCT Dealer from Salesmaster where State='$state' ".$queryCondition;}else{
+           $sqld = "SELECT DISTINCT Dealer from Salesmaster where District='$district' ".$queryCondition;}}
             //echo $sqld;
            $resultd = mysqli_query($conn,$sqld);
            
@@ -267,7 +267,7 @@
              $di=$rowd["Dealer"];
                $amount="";
                //print_r($rows1);
-         $sqlq1 = "SELECT SUM(Amount),Zone,District from sales  where Dealer='$di'".$queryCondition."order by Zone,District ASC"; //echo $sqlq1;exit();
+         $sqlq1 = "SELECT SUM(Amount),Zone,District from Salesmaster  where Dealer='$di'".$queryCondition."order by Zone,District ASC"; //echo $sqlq1;exit();
                $resultq1 = mysqli_query($conn,$sqlq1);
                ($rowq1 = mysqli_fetch_array($resultq1));
 				$amount=$rowq1['SUM(Amount)'];
@@ -325,6 +325,6 @@
      downloadCSV(csv.join("\n"), filename);
    }
 </script>
-<button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
+<button onclick="exportTableToCSV('Dealer wise.csv')">Export HTML Table To CSV File</button>
 <?php 
 }

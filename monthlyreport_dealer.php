@@ -352,6 +352,7 @@
          <?php  } ?>
          <td style=" border: 0.5pt solid #000000; ">FY2017-18</td>
          <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db">FY2018-19</td>
+         <td style=" border: 0.5pt solid #000000; " >Dealer Status</td>
       </tr>
       <?php 
          $ss=array();
@@ -361,7 +362,7 @@
             $totalamo='';
          while($row = mysqli_fetch_array($resultd7)){
          $ss[]=$row["District"]; }
-         $sqlss = "SELECT DISTINCT District,Dealer FROM sales where zone='$state' UNION SELECT DISTINCT District,Dealer FROM Salesmaster where zone='$state' ORDER by District,Dealer ASC";
+         $sqlss = "SELECT DISTINCT District,Dealer FROM sales where Zone='$state' ".$queryCondition." UNION SELECT DISTINCT District,Dealer FROM Salesmaster where Zone='$state' ".$queryCondition1." ORDER by District,Dealer ASC";
          $resultss = mysqli_query($conn,$sqlss);
           while($rowss = mysqli_fetch_array($resultss)){
           $di[]=$rowss["Dealer"];
@@ -389,6 +390,8 @@
          <?php }?>
          <td style=" border: 0.5pt solid #000000; "><?php echo $too;$totalamo=$totalamo+$too;?></td>
          <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $to; $totalam=$totalam+$to;?></td>
+         <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php if($too == '0' && $to != '0'){echo "New";}elseif( $to == '0'){echo "Discontinued";}else{echo "Continued";} ?></td>
+
       </tr>
       <?php }}
          ?>
@@ -398,9 +401,11 @@
          <?php for($j=0;$j<(count($ss));$j++){ ?>
          <td style=" border: 0.5pt solid #000000; "><?php echo $amto[$j]; ?></td>
          <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $amt[$j]; ?></td>
+        
          <?php }?>
          <td style=" border: 0.5pt solid #000000; "><?php echo $totalamo;?></td>
          <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $totalam;?></td>
+
       <tr/>
    </table>
    <input type="button" onclick="tableToExcel('testTable', '<?php echo $state; ?>')" value="Export to Excel">

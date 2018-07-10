@@ -81,27 +81,35 @@
       <th><?php echo $Total=$row['sum(Amount)'];?></th>
    </tr>
    <tr>
+   <th>Subsidy</th>
+      <th><?php echo $sub='904663';?></th>
+    </tr>
+    <tr>
+       <th>Net sales</th>
+      <th><?php echo $total2=$Total-$sub;?></th>
+    </tr>
+   <tr>
       <th>Incentives Category</th>
       <th>Incentives Amount</th>
    </tr>
    <tr>
-      <td>Incetives for Non sales</td>
-      <td><?php echo round($amm=($Total * ( 0.003))); ?></td>
+      <td>Incentives for Non sales</td>
+      <td><?php echo round($amm=( $total2 * ( 0.003))); ?></td>
    </tr>
    <tr>
-      <td>Incetives EXECUTIVES</td>
+      <td>Incentives EXECUTIVES</td>
       <td><?php echo round($amm1=($Total * ( 0.004))); ?></td>
    </tr>
    <tr>
-      <td>Incetives ASM</td>
+      <td>Incentives ASM</td>
       <td><?php echo round($amm1=($Total * ( 0.00125))); ?></td>
    </tr>
    <tr>
-      <td>Incetives SM</td>
+      <td>Incentives SM</td>
       <td><?php echo round($amm1=($Total * ( 0.00125))); ?></td>
    </tr>
    <tr>
-      <td>Incetives ZM</td>
+      <td>Incentives ZM</td>
       <td><?php echo round($amm1=($Total * ( 0.0003))); ?></td>
    </tr>
 </table>

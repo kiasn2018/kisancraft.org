@@ -4,17 +4,11 @@
       <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
       <script src="/kisankraft.org/src/js/sorttable.js"></script>
       <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-      <style>
-         tr:nth-child(even) {
-         background-color: #99ccb7;
-         }
-         .sortable{border-top:#CCCCCC 4px solid; width:100%;font-size:15px;}
-         .sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
-         .sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
-      </style>
+     
+      <script src="js/tableToExcel.js"></script>
    <body bgcolor="">
       <?php 
-         include 'header.php';
+         include 'header2.php';
          include '/config/db.php';
          
          $sqld = "SELECT Date FROM `sales` ORDER BY `sales`.`Date` DESC ";
@@ -23,56 +17,73 @@
           $rowd= mysqli_fetch_array($resultd);
          
          ?>
-      <h1 style="text-align:center;"> Sales Report State,Month wise </h1>
-      <div class="container" style="margin-left:30%; width:50%; background-color:lightblue">
-         <div class="row">
-            <div class="span3 hidden-phone"></div>
-            <div class="span6" id="form-login">
-               <form name="insert" action="" method="post">
-                  <table width="100%" height="117"  border="0">
-                     <tr>
-                        <th width="50%"> State :</th>
-                        <td>
-                           <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
-                              <option value="">Select</option>
-                              <option value="ALL">ALL</option>
-                              <?php $sqlst = "SELECT DISTINCT Zone FROM sales UNION SELECT DISTINCT Zone  FROM Salesmaster ORDER by Zone ASC ";
-                                 $resultst = mysqli_query($conn,$sqlst);
-                                 
-                                 while($rowst=mysqli_fetch_array($resultst))
-                                 {  ?>
-                              <option value="<?php echo $rowst['Zone'];?>"><?php echo $rowst['Zone'];?></option>
-                              <?php
-                                 }
-                                 ?>
-                           </select>
-                        </td>
-                        <th scope="row">District :</th>
-                        <td>
-                           <select onChange="getdealer(this.value);" name="district" id="district-list" class="form-control">
-                              <option value="">Select</option>
-                           </select>
-                        </td>
-                     <tr>
-                        <td>
-                           <input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php echo $post_at; ?>" class="input-control" />
-                           <input type="text" placeholder="To Date" id="post_at_to_date" name="search[post_at_to_date]" style="margin-left:10px"  value="<?php echo $post_at_to_date; ?>" class="input-control"  />
-                        </td>
-                        <td>
-                           <input type="submit" name="go" value="Submit" style="font-size:10pt;color:white;background-color:green;border:2px solid #336600;padding:8px;float:left" >
-                        </td>
-                        <td>
-                           <h3> Updated Till <?php echo $rowd["Date"]; ?></h3>
-                        </td>
-                     </tr>
-                  </table>
-               </form>
+      
+      <div class="main-panel">
+      <div class="content-wrapper">
+         <div class ="row">
+            <div class="col-6" >
+               <h1 style="text-align:center;">Sales Report State,Month,sku wise</h1>
+               <div class="col-12 stretch-card">
+                  <div class="card">
+                     <div class="card-body">
+                        <h3> Updated Till <?php
+                           echo $rowd["Date"];
+                           ?></h3>
+                        <form class="forms-sample" action="" method="post">
+                           <div class="form-group row">
+                              <label for="exampleInputEmail2" class="col-sm-3 col-form-label">State</label>
+                              <div class="col-sm-9">
+                                 <select onChange="getdistrict(this.value);"  name="state" id="state" class="form-control" >
+                                    <option value="">Select</option>
+                                    <option value="ALL">ALL</option>
+                                    <?php
+                                       $sqlst    = "SELECT DISTINCT Zone FROM sales UNION SELECT DISTINCT Zone  FROM Salesmaster ORDER by Zone ASC ";
+                                       $resultst = mysqli_query($conn, $sqlst);
+                                       
+                                       while ($rowst = mysqli_fetch_array($resultst)) {
+                                       ?>
+                                    <option value="<?php
+                                       echo $rowst['Zone'];
+                                       ?>"><?php
+                                       echo $rowst['Zone'];
+                                       ?></option>
+                                    <?php
+                                       }
+                                       ?>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">District</label>
+                              <div class="col-sm-9">
+                                 <select onChange="getdealer(this.value);" name="district" id="district-list" class="form-control">
+                                    <option value="">Select</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">From </label>
+                              <div class="col-sm-9">
+                                 <input type="text" placeholder="From Date" style="margin-left:2%;" id="post_at" name="search[post_at]"  value="<?php
+                                    echo $post_at;
+                                    ?>"   />
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">To Date</label>
+                              <div class="col-sm-9">
+                                 <input type="text" placeholder="To Date" id="post_at_to_date" name="search[post_at_to_date]" style="margin-left:10px"  value="<?php
+                                    echo $post_at_to_date;
+                                    ?>"  />
+                              </div>
+                           </div>
+                           <button type="submit" name="go" value="Submit" class="btn btn-success mr-2">Submit</button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <div class="span3 hidden-phone"></div>
          </div>
-      </div>
-      <div></div>
-      <hr>
       <script language="javascript" type="text/javascript">
          setFilterGrid("table1");
       </script> 
@@ -113,7 +124,8 @@
          	});
          	}
       </script>
-      <div style="margin-left:22%; width:75%;">
+     <div class="col-md-12 ">
+            <div class="card">
          <?php 
             $results_per_page = 100;
             if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
@@ -185,10 +197,10 @@
             $total_pages = ceil($row["total"] / $results_per_page);
             
                }?>
-         <br><br><br>
+         </div>
+         </div>
       </div>
    </body>
-   </head>
 </html>
 <hr>
 <?php 
@@ -202,7 +214,7 @@
        if(!empty($_POST["search"]["post_at"])) {
            $post_at = $_POST["search"]["post_at"];
            list($fid,$fim,$fiy) = explode("-",$post_at);    
-           $post_at_todate = date('Y-m-d');
+          // $post_at_todate = date('Y-m-d');
            if(!empty($_POST["search"]["post_at_to_date"])) {
                $post_at_to_date = $_POST["search"]["post_at_to_date"];
                list($tid,$tim,$tiy) = explode("-",$_POST["search"]["post_at_to_date"]);
@@ -244,100 +256,100 @@
 	 $counts=$rowc["count(DISTINCT Executive)"];
 	 
 ?>	  
-<div style="width:60%; float :left ; margin-left: 15%">
-   <table  id="demo" >
+<div class="table-responsive">
+   <table  id="testTable" class="table table-hover">
       <tr>
          <h1>From <?php echo $post_at; ?> TO <?php echo $post_at_todate ?></h1>
       </tr>
       <tr>
-         <th>State</th>
+         <th style=" border: 0.5pt solid #000000; ">State</th>
          <?php while($row = mysqli_fetch_array($resultd)) {
             $exe=$row["Executive"];
 			$SM=$row["ASM"];
             if($exel != $exe || $SM != $SML){
                  ?>
-         <td><?php echo $row["Zone"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["Zone"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td></td>
          <?php }else{?>
-         <td></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php } $exel=$row["Executive"]; $SML=$row["ASM"];}?>
       </tr>
       <tr>
-         <th>Executive</th>
+         <th style=" border: 0.5pt solid #000000; ">Executive</th>
          <?php while($row = mysqli_fetch_array($resultd1)) {
             $exe1=$row["Executive"];
             $SM1=$row["ASM"];
             if($exel1 != $exe1 || $SM1 != $SML1){
                  ?>
-         <td><?php echo $row["Executive"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["Executive"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php }else{?>
-         <td></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php } $exel1=$row["Executive"]; $SML1=$row["ASM"];}?>
       </tr>
-      <th>ASM</th>
+      <th style=" border: 0.5pt solid #000000; ">ASM</th>
       <?php while($row = mysqli_fetch_array($resultd2)) {
          $exe2=$row["Executive"];
         $SM2=$row["ASM"];
             if($exel2 != $exe2 || $SM2 != $SML2){
               ?>
-      <td><?php echo $row["ASM"]; ?></td>
-      <td></td>
+      <td style=" border: 0.5pt solid #000000; "><?php echo $row["ASM"]; ?></td>
+      <td style=" border: 0.5pt solid #000000; "></td>
       <?php }else{?>
-      <td></td>
-      <td></td>
+      <td style=" border: 0.5pt solid #000000; "></td>
+      <td style=" border: 0.5pt solid #000000; "></td>
       <?php } $exel2=$row["Executive"];$SML2=$row["ASM"];}?>
       </tr>
       <tr>
-         <th>SM</th>
+         <th style=" border: 0.5pt solid #000000; ">SM</th>
          <?php while($row = mysqli_fetch_array($resultd3)) {
             $exe3=$row["Executive"];
            $SM3=$row["ASM"];
             if($exel3 != $exe3 || $SM3 != $SML3){
                  ?>
-         <td><?php echo $row["SM"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["SM"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php }else{?>
-         <td></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php } $exel3=$row["Executive"];$SML3=$row["ASM"];}?>
       </tr>
       <tr>
-         <th>ZM</th>
+         <th style=" border: 0.5pt solid #000000; ">ZM</th>
          <?php while($row = mysqli_fetch_array($resultd4)) {
             $exe4=$row["Executive"];
             $SM4=$row["ASM"];
             if($exel4 != $exe4 || $SM4 != $SML4){
                  ?>
-         <td><?php echo $row["ZM"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $row["ZM"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php }else{?>
-         <td></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
 	 <?php } $exel4=$row["Executive"];$SML4=$row["ASM"];}?>
       </tr>
       <tr>
-         <th>District</th>
+         <th style=" border: 0.5pt solid #000000; ">District</th>
          <?php while($row = mysqli_fetch_array($resultd5)) {
             $exe=$row["Executive"];
             $District=$row["District"];
             ?>
-         <td ><?php echo $row["District"]; ?></td>
-         <td></td>
+         <td style=" border: 0.5pt solid #000000; " ><?php echo $row["District"]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "></td>
          <?php  } ?>
-         <td>Total</td>
+         <td style=" border: 0.5pt solid #000000; ">Total</td>
       </tr>
       <tr>
-         <th>FY</th>
+         <th style=" border: 0.5pt solid #000000; ">FY</th>
          <?php while($row = mysqli_fetch_array($resultd6)) {
             ?>
-         <td>FY2017-18</td>
-         <td>FY2018-19</td>
+         <td style=" border: 0.5pt solid #000000; ">FY2017-18</td>
+         <td bgcolor="#6b96db" style=" border: 0.5pt solid #000000; ">FY2018-19</td>
          <?php  } ?>
-         <td>FY2017-18</td>
-         <td>FY2018-19</td>
+         <td style=" border: 0.5pt solid #000000; ">FY2017-18</td>
+         <td  bgcolor="#6b96db" style=" border: 0.5pt solid #000000; ">FY2018-19</td>
       </tr>
       <?php 
          $ss=array();
@@ -346,16 +358,16 @@
             $totalamo='';
          while($row = mysqli_fetch_array($resultd7)){
          $ss[]=$row["District"]; }
-         $sqlss = "SELECT DISTINCT SKU FROM sales UNION SELECT DISTINCT SKU FROM Salesmaster ORDER by SKU ASC";
+         $sqlss = "SELECT DISTINCT SKU FROM sales where Zone='$state' UNION SELECT DISTINCT SKU FROM Salesmaster where Zone='$state' ORDER by SKU ASC"; 
          $resultss = mysqli_query($conn,$sqlss);
           while($rowss = mysqli_fetch_array($resultss)){
           $di[]=$rowss["SKU"]; }
-          for($j=1;$j<count($di);$j++)
+          for($j=0;$j<count($di);$j++)
           { $too='';
          $to='';
-         if($di[$j]!='0'){?> 
+         {?> 
       <tr>
-         <td><?php echo $di[$j]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $di[$j]; ?></td>
          <?php
             for($i=0;$i<count($ss);$i++)
             { 
@@ -367,68 +379,26 @@
                        $resultd1 = mysqli_query($conn,$sqld1);     
                        $rowd1= mysqli_fetch_array($resultd1);
             ?>
-         <td><?php echo $rowdo["sum(Amount)"];  $amto[$i]=$amto[$i]+$rowdo['sum(Amount)']; $too=$too+$rowdo['sum(Amount)'];?></td>
-         <td><?php echo $rowd1["sum(Amount)"];  $amt[$i]=$amt[$i]+$rowd1['sum(Amount)']; $to=$to+$rowd1['sum(Amount)'];?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $rowdo["sum(Amount)"];  $amto[$i]=$amto[$i]+$rowdo['sum(Amount)']; $too=$too+$rowdo['sum(Amount)'];?></td>
+         <td bgcolor="#6b96db" style=" border: 0.5pt solid #000000; "><?php echo $rowd1["sum(Amount)"];  $amt[$i]=$amt[$i]+$rowd1['sum(Amount)']; $to=$to+$rowd1['sum(Amount)'];?></td>
          <?php }?>
-         <td><?php echo $too;$totalamo=$totalamo+$too;?></td>
-         <td><?php echo $to; $totalam=$totalam+$to;?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $too;$totalamo=$totalamo+$too;?></td>
+         <td bgcolor="#6b96db" style=" border: 0.5pt solid #000000; "><?php echo $to; $totalam=$totalam+$to;?></td>
       </tr>
       <?php }}
          ?>
       <tr>
-         <td>Total</td>
+         <td style=" border: 0.5pt solid #000000; ">Total</td>
          <?php for($j=0;$j<(count($ss));$j++){ ?>
-         <td><?php echo $amto[$j]; ?></td>
-         <td><?php echo $amt[$j]; ?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $amto[$j]; ?></td>
+         <td bgcolor="#6b96db" style=" border: 0.5pt solid #000000; "><?php echo $amt[$j]; ?></td>
          <?php }?>
-         <td><?php echo $totalamo;?></td>
-         <td><?php echo $totalam;?></td>
+         <td style=" border: 0.5pt solid #000000; "><?php echo $totalamo;?></td>
+         <td style=" border: 0.5pt solid #000000;" bgcolor="#6b96db" ><?php echo $totalam;?></td>
       <tr/>
    </table>
-   <button onclick="exportTableToCSV('<?php echo $state.".csv" ?>')">Export HTML Table To CSV File</button>
+    <input type="button" onclick="tableToExcel('testTable', '<?php echo $state; ?>')" value="Export to Excel">
 </div>
-<script>
-   function downloadCSV(csv, filename) {
-     var csvFile;
-     var downloadLink;
-   
-     // CSV file
-     csvFile = new Blob([csv], {type: "text/csv"});
-   
-     // Download link
-     downloadLink = document.createElement("a");
-   
-     // File name
-     downloadLink.download = filename;
-   
-     // Create a link to the file
-     downloadLink.href = window.URL.createObjectURL(csvFile);
-   
-     // Hide download link
-     downloadLink.style.display = "none";
-   
-     // Add the link to DOM
-     document.body.appendChild(downloadLink);
-   
-     // Click download link
-     downloadLink.click();
-   }
-   function exportTableToCSV(filename) {
-     var csv = [];
-     var rows = document.querySelectorAll("table tr");
-     
-     for (var i = 0; i < rows.length; i++) {
-         var row = [], cols = rows[i].querySelectorAll("td, th");
-         
-         for (var j = 0; j < cols.length; j++) 
-             row.push(cols[j].innerText);
-         
-         csv.push(row.join(","));        
-     }
-   
-     // Download CSV file
-     downloadCSV(csv.join("\n"), filename);
-   }
-</script>
+
 <?php 
 }}
