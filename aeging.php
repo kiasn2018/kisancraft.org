@@ -136,7 +136,7 @@
                </tr>
             </thead>
             <tbody>
-               <?php
+               <?php 
                   $date =$year."-".$month;
                   
                   $fdate=date('Y-m', strtotime(date("Y-m-d", strtotime($date)) .'-1 month'));
@@ -191,7 +191,7 @@
                       //echo $sql1y; exit();
                   $result1y = mysqli_query($conn,$sql1y);
                      ($row1y = mysqli_fetch_array($result1y));
-                  $sql15 = "SELECT Sum(Quantity) from purches_mst where SKU='$p' AND DATE_FORMAT(date, '%Y-%m')  >= '$fdate1y'  "; 
+                  $sql15 = "SELECT Sum(Quantity) from purches_mst where SKU='$p' AND DATE_FORMAT(date, '%Y-%m')  <= '$fdate1y'  "; 
                      $result15 = mysqli_query($conn,$sql15);
                      ($row15 = mysqli_fetch_array($result15));
                   //if($row11["Sum(Quantity)"]==""){echo $sql11."<br/>";}

@@ -156,7 +156,7 @@
                      while($row1 = mysqli_fetch_array($result1)){ 
                   $p=$row["SKU"];
                   $sql11 = "SELECT Sum(Quantity) from purches_mst where SKU='$p' AND  DATE_FORMAT(date, '%Y-%m') between '$fdate6' and '$fdate'   "; 
-                  echo $sql11;
+                  //echo $sql11;
                      $result11 = mysqli_query($conn,$sql11);
                      ($row11 = mysqli_fetch_array($result11));
                   $sql60 = "SELECT Sum(Quantity) from purches_mst where SKU='$p' AND DATE_FORMAT(date, '%Y-%m')  between '$fdate2' and '$fdate' "; 
@@ -167,7 +167,7 @@
                   //echo $sql90;
                      $result90 = mysqli_query($conn,$sql90);
                      ($row90 = mysqli_fetch_array($result90));
-                  $sql180 = "SELECT Sum(Quantity) from purches_mst where SKU='$p' AND DATE_FORMAT(date, '%Y-%m')   >= '$fdate3'   "; 
+                  $sql180 = "SELECT Sum(Quantity) from purches_mst where SKU='$p' AND DATE_FORMAT(date, '%Y-%m')   <= '$fdate3'   "; 
                       //echo $sql180   ;
                       $result180 = mysqli_query($conn,$sql180);
                      ($row180 = mysqli_fetch_array($result180));
