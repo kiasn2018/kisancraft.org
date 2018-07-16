@@ -33,8 +33,8 @@ if(isset($_POST["Import"])){
             if($emapData[0]!=""){
                 
                 //It wiil insert a row to our subject table from our csv file`
-                $sql = "INSERT into targetmst(State, District,ZM,SM,ASM,EXE,Segment,Qty_17_18,Amount_17_18,Qty_18_19,Amount_18_19)
-                 values('$emapData[0]','$emapData[1]','$emapData[2]','$emapData[3]','$emapData[4]','$emapData[5]','$emapData[6]','$emapData[7]','$emapData[8]','$emapData[9]','$emapData[10]')";
+                $sql = "INSERT into targetmst(State, District,Segment,QS1,QS2,QS3,QS4,QT1,QT2,QT3,QT4)
+                 values('$emapData[0]','$emapData[1]','$emapData[2]','$emapData[3]','$emapData[4]','$emapData[5]','$emapData[6]','$emapData[8]','$emapData[9]','$emapData[10]','$emapData[11]')";
                 //we are using mysql_query function. it returns a resource on true else False on error
                 //echo "Error: " . $sql . "<br>" . $conn->error;
                 if ($conn->query($sql) === TRUE) {

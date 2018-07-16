@@ -173,7 +173,7 @@ if($_SESSION['role']==''){
             <div class="collapse" id="ui-basic5">
               <ul class="nav flex-column sub-menu">
 				<li class="nav-item">
-                  <a class="nav-link" href="/kisancraft.org/targetstate.php">Target State wise</a>
+                  <a class="nav-link" href="/kisancraft.org/targetsegment.php">Target segment wise</a>
                 </li>
 				<li class="nav-item">
                   <a class="nav-link" href="#">Actual</a></li>

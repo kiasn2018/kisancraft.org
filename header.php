@@ -177,7 +177,7 @@ if($_SESSION['role']==''){
             <div class="sf-mega-section" style="background-color: #f2f2f2">              
               <ul>
                 <li class="current">
-                <a href="/kisancraft.org/targetstate.php">Target State wise</a></li><br>
+                <a href="/kisancraft.org/targetsegment.php">Target segment wise</a></li><br>
                 <li><a href="#">Actual</a></li><br>
                 <li><a href="#">Both</a></li><br>
 				<li><a href="/kisancraft.org/targetstatem.php">Upload Target by state manager</a></li><br>
