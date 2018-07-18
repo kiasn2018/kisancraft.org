@@ -138,6 +138,7 @@ if($_SESSION['role']==''){
                 <li class="current">
                 <a href="/kisancraft.org/uploadorder.php">Upload</a></li><br>
                 <li> <a href="/kisancraft.org/orderplanning.php">Order Planning</a> </li><br>
+                 <li> <a href="/kisancraft.org/orderplanningsegmentwise.php">Order Planning Segment Wise</a> </li><br>
                 <li> <a href="#">Projected</a></li><br>
                 <li><a href="#">Actual</a></li><br>
                 <li><a href="#">Both</a></li><br>

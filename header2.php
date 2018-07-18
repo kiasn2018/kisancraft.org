@@ -109,6 +109,9 @@ if($_SESSION['role']==''){
                 <li class="nav-item">
                   <a class="nav-link" href="/kisancraft.org/orderplanning.php">Order Planning</a>
                 </li>
+                 <li class="nav-item">
+                  <a class="nav-link" href="/kisancraft.org/orderplanningsegmentwise.php">Order Planning Segment Wise</a>
+                </li>
 				<li class="nav-item">
                   <a class="nav-link" href="#">Projected</a>
                 </li>
@@ -275,7 +278,7 @@ if($_SESSION['role']==''){
               </ul>
             </div>
           </li>
-		  
+		 
 		  <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="menu-icon mdi mdi-restart"></i>
@@ -289,6 +292,7 @@ if($_SESSION['role']==''){
                 <li class="nav-item">
 				<a class="nav-link" href="/kisancraft.org/master.php">Sales master</a></li>
                 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/salesupload.php">Upload sales</a></li>
+                 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/WeeklyReport.php">WeeklyReports</a></li>
                 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/salesdailyreport.php">Sales Daily Report</a></li>
 				 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/monthlyreport.php">Monthly Report</a></li>
 				 <li class="nav-item"><a class="nav-link" href="/kisancraft.org/monthlyreportcust.php">Monthly Report Customized</a></li>
