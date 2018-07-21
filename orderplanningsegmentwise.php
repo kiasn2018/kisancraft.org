@@ -67,10 +67,14 @@
                         <tr >
                            <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Segment</th>
                            <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Rate</th>
-                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q1 Order</th>
-                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q2 Order</th>
-                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q3 Order</th>
-                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q4 Order</th>
+                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q4 Order-17-18</th>
+                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q4 Value</th>
+                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q1 Order-18-19</th>
+                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q1 Value</th>
+                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q2 Order-18-19</th>
+                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q2 Value</th>
+                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q3 Order-18-19</th>
+                           <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Q3 Value</th>
                            <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Total QTY</th>
                            <th style=" border: 0.5pt solid #000000;" bgcolor="#ff9999">Total Value</th>
                         </tr>
@@ -98,9 +102,13 @@
                            <td style=" border: 0.5pt solid #000000;"><?php if($qty <='0'){echo '0'; $rate = '0';}else{echo $rate=round($amount/$qty); } ?></td>
                            
                            <td style=" border: 0.5pt solid #000000;"><?php echo $qt1=$rowt['sum(QT1)'];?></td>
+                           <td style=" border: 0.5pt solid #000000;" bgcolor="#6b96db"><?php echo $qt1*$rate; $v1=$v1+$qt1*$rate;?></td>
                            <td style=" border: 0.5pt solid #000000;"><?php echo $qt2=$rowt['sum(QT2)'];?></td>
+                           <td style=" border: 0.5pt solid #000000;" bgcolor="#6b96db"><?php echo $qt2*$rate; $v2=$v2+$qt2*$rate;?></td>
                            <td style=" border: 0.5pt solid #000000;"><?php echo $qt3=$rowt['sum(QT3)'];?></td>
+                           <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $qt3*$rate; $v3=$v3+$qt3*$rate;?></td>
                            <td style=" border: 0.5pt solid #000000;"><?php echo $qt4=$rowt['sum(QT4)'];?></td>
+                           <td style=" border: 0.5pt solid #000000; " bgcolor="#6b96db"><?php echo $qt4*$rate; $v4=$v4+$qt4*$rate;?></td>
                            <td style=" border: 0.5pt solid #000000;" bgcolor="#6b96db"><?php echo $t1=$qt1+$qt2+$qt3+$qt4; $t=$t+$qt1+$qt2+$qt3+$qt4;?></td>
                            <td style=" border: 0.5pt solid #000000;" bgcolor="#6b96db"><?php echo $ta=$rate*$t1; $ta1=$ta1+$ta; ?></td>
                            
@@ -113,9 +121,13 @@
                           <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"></td>
                           
                           <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"></td>
+                          <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"> <?php echo $v1;?></td>
                           <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"></td>
+                          <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"> <?php echo $v2;?></td>
                           <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"></td>
-                          <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"></td>
+                          <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"> <?php echo $v3;?></td>
+                           <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"></td>
+                          <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"> <?php echo $v4;?></td>
                            <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"><?php echo $t;?></td>
                           <td style=" border: 0.5pt solid #000000;" bgcolor="#ff9999"><?php echo $ta1;?></td>
                           
