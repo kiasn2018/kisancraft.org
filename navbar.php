@@ -8,13 +8,25 @@
         </a>
       </div>
      
+<?php 
+include("config/db2.php");
+
+$id = $_SESSION['userid'];
+include("config/db2.php");
+$sql="SELECT * FROM import WHERE id='$id'"; 
+$result = mysqli_query($conn,$sql); 
+$row = mysqli_fetch_array($result);
+
+
+?>
+
         <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
          
           
           <li class="nav-item dropdown d-none d-xl-inline-block">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <span class="profile-text">Hello, Richard V.Welsh !</span>
-              <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image">
+              <span class="profile-text">Welcome <?php echo  $row['first_name']; ?></span>
+              
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <a class="dropdown-item p-0">

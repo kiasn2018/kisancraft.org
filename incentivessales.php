@@ -1,7 +1,9 @@
 <html>
     <head>
+        <script src="/kisancraft.org/pace/pace.js"></script>
+  <link href="/kisancraft.org/pace/themes/purple/pace-theme-loading-bar.css" rel="stylesheet" />
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script src="/kisankraft.org/src/js/sorttable.js"></script>
+        
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <style>
             tr:nth-child(even) {
@@ -12,6 +14,7 @@
             .sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
         </style>
         <script src="js/tableToExcel.js"></script>
+    </head>
     <body bgcolor="">
         <?php 
             include 'header2.php';
@@ -140,7 +143,7 @@ if ($_POST["go"] == "Submit") {
                 $result3 = mysqli_query($conn,$sql3);
                 
                 ?>
-            <input type="button" onclick="tableToExcel('testTable', 'Incentives sales')" value="Export to Excel">
+            <input type="button" onclick="tableToExcel('testTable', 'P_Bonus sales')" value="Export to Excel">
             <div class="table-responsive">
                 <table class="sortable" id="testTable">
                     <thead>
@@ -156,14 +159,14 @@ if ($_POST["go"] == "Submit") {
                             <th width="20%"><span>No of Dealers 17-18</span></th>
                             <th width="20%"><span>No of Dealers 18-19</span></th>
                             <th width="20%"><span>% Progress</span></th>
-                            <th width="20%"><span>Normal Incentives</span></th>
+                            <th width="20%"><span>Normal Bonus</span></th>
                             <th width="20%"><span>75% Sales</span></th>
                             <th width="25%"><span> 25% (Dealers)</span></th>
-                            <th width="25%"><span> Allocation of sales Incentives</span></th>
+                            <th width="25%"><span> Allocation of sales Bonus</span></th>
                             <th width="25%"><span> Allocation of sales Dealers</span></th>
-                            <th width="25%"><span> Final Incentives sales</span></th>
-                            <th width="25%"><span> Final Incentives Dealers</span></th>
-                            <th width="25%"><span>Total Incentives</span></th>
+                            <th width="25%"><span> Final Bonus sales</span></th>
+                            <th width="25%"><span> Final Bonus Dealers</span></th>
+                            <th width="25%"><span>Total Bonus</span></th>
                             <th width="25%"><span>Trasferred To Jackpot</span></th>
                             <th width="25%"><span>Remark</span></th>
                         </tr>
@@ -717,5 +720,5 @@ if ($_POST["go"] == "Submit") {
             <br><br><br>
         </div>
     </body>
-    </head>
+    
 </html>

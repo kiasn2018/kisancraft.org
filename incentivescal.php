@@ -13,7 +13,7 @@
 <div class="content-wrapper">
 <div class ="row">
 <div class="col-6" >
-   <h2>Incentive Calculation</h2>
+   <h2>P_Bonus Calculation</h2>
    <div class="col-12 stretch-card">
       <div class="card">
          <div class="card-body">
@@ -89,27 +89,27 @@
       <th><?php echo $total2=$Total-$sub;?></th>
     </tr>
    <tr>
-      <th>Incentives Category</th>
-      <th>Incentives Amount</th>
+      <th>P_Bonus Category</th>
+      <th>P_Bonus Amount</th>
    </tr>
    <tr>
-      <td>Incentives for Non sales</td>
+      <td>P_Bonus for Non sales</td>
       <td><?php echo round($amm=( $total2 * ( 0.003))); ?></td>
    </tr>
    <tr>
-      <td>Incentives EXECUTIVES</td>
+      <td>P_Bonus EXECUTIVES</td>
       <td><?php echo round($amm1=($Total * ( 0.004))); ?></td>
    </tr>
    <tr>
-      <td>Incentives ASM</td>
+      <td>P_Bonus ASM</td>
       <td><?php echo round($amm1=($Total * ( 0.00125))); ?></td>
    </tr>
    <tr>
-      <td>Incentives SM</td>
+      <td>P_Bonus SM</td>
       <td><?php echo round($amm1=($Total * ( 0.00125))); ?></td>
    </tr>
    <tr>
-      <td>Incentives ZM</td>
+      <td>P_Bonus ZM</td>
       <td><?php echo round($amm1=($Total * ( 0.0003))); ?></td>
    </tr>
 </table>

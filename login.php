@@ -48,15 +48,15 @@ $mypassword=MD5($mypassword1);
 $sql="SELECT * FROM import WHERE first_name='$myusername1' and password='$mypassword1'"; 
 $result = mysqli_query($conn,$sql); 
 $row = mysqli_fetch_array($result);
-$_SESSION['userid']=$row['userid'];
+$_SESSION['userid']=$row['id'];
 $_SESSION['role']=$row['role'];
 $count=mysqli_num_rows($result);
 if($count==1)
 {   
-			if ($row['role']=="2")
+			if ($row['role']=="2" || $row['role']=="1")
 			{  ?>
 		      <script>
-			  window.location.assign("./")
+			  window.location.assign("./index.php")
 			  </script>
 			  <?php
 			}

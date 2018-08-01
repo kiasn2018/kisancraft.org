@@ -6,6 +6,8 @@ $username = "mayurj";
 $password = "yes";
 $dbname = "branch_mst";
 
+
+ 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
@@ -39,6 +41,7 @@ if(isset($_POST["Import"])){
         {     //print_r($emapData);
             //It wiil insert a row to our subject table from our csv file`
             //remove ' from string
+            if($emapData[$vtype]!='Sales-Stkm' || $emapData[$vtype]!='Sales-Stkp' ){
             $data1= str_replace("'", "_", $emapData[$pname]);
             $data2= str_replace("'", "_", $emapData[$iname]);
             $orderdate = explode('/', $emapData[$date]);
@@ -67,8 +70,8 @@ if(isset($_POST["Import"])){
 			
             echo $year."-".$month."-".$day.$emapData[$vtype].$emapData[$pname].$emapData[$iname].$emapData[$qty].$emapData[$amount]."<br>";
             
-            $sql = "INSERT into Salesmst (Date, Dealer_name,Vorture_type,Item_name, Quantity , Amount,Executive,EID,ASM,AID,SM,SID,ZM,ZID)
-                 values('$year-$day-$month','$data1','$emapData[$vtype]','$data2','$emapData[$qty]','$emapData[$amount]','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid')";
+            $sql = "INSERT into sales (Date, Dealer,Product, QTY , Amount,Executive,EID,ASM,AID,SM,SID,ZM,ZID)
+                 values('$year-$month-$day','$data1','$data2','$emapData[$qty]','$emapData[$amount]','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid')";
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {
@@ -77,7 +80,7 @@ if(isset($_POST["Import"])){
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }//echo $result.$sql;exit();
             
-            
+            }
         } } }?><?php
           EXIT();
             

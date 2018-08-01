@@ -29,24 +29,37 @@ if(isset($_POST["Import"])){
         $I=0;
         ($emapData = fgetcsv($file, 10000, ",")) !== FALSE;
         $date = array_search ('Date', $emapData);
-        $vtype = array_search ('Voucher Type', $emapData);
-        $pname = array_search ('Party Name', $emapData);
-        $iname = array_search ('Item Name', $emapData);
-        $qty = array_search ('Billed Quantity', $emapData);
-        $amount1 = array_search ('Commission', $emapData);
+        
+        $pname = array_search ('Particulars', $emapData);
+       
+        $qty = array_search ('Quantity', $emapData);
+        $amount1 = array_search ('Value', $emapData);
        
         while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
         {     //print_r($emapData);
             //It wiil insert a row to our subject table from our csv file`
             //remove ' from string
-            $data1= str_replace("'", "_", $emapData[$pname]);
-            $data2= str_replace("'", "_", $emapData[$iname]);
+            
+            
             $orderdate = explode('/', $emapData[$date]);
-            $month = $orderdate[1];
-            $day   = $orderdate[0];
-            $year  = $orderdate[2];
-			 
-			$sql = "SELECT * from Dealermst where D_name='$data1'";
+            
+			 if($emapData[$date]!=""){
+                $Partyname= str_replace("'", "_", $emapData[$pname]);
+                
+                $pdate1=$emapData[$date];
+                $var = $pdate1;
+                $orderdate = explode('/', $var);
+                $month = $orderdate[1];
+                $day   = $orderdate[0];
+                $year  = $orderdate[2];
+                
+           // print_r($emapData[0]);
+            }elseif($emapData[$date]==""){
+                $item_name= str_replace("'", "_", $emapData[$pname]);
+                $QTY=$emapData[$qty];
+                
+            
+			$sql = "SELECT * from Dealermst where D_name='$Partyname'";
              //echo $sql;
              $result = mysqli_query($conn,$sql);
 			$row = mysqli_fetch_array($result);
@@ -66,10 +79,11 @@ if(isset($_POST["Import"])){
 			$zm=$rowe["ZM"];
 			$zid=$rowe["ZID"];
 			$amount=0-$emapData[$amount1];
-            echo $year."-".$month."-".$day."-".$data1."-".$state."-".$dis."-".$exe."-".$asm."-".$sm."-".$zm."-".$amount."<br>";
             
-            $sql = "INSERT into Salesmaster (Date,Dealer, Amount,State,District,Executive,EID,ASM,AID,SM,SID,ZM,ZID)
-                 values('$year-$day-$month','$data1','$amount','$state','$dis','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid')";
+            
+            $sql = "INSERT into sales (Date,Dealer,Product,QTY, Amount,State,District,Executive,EID,ASM,AID,SM,SID,ZM,ZID)
+                 values('$year-$month-$day','$Partyname','$item_name','$QTY','$amount','$state','$dis','$exe','$eid','$asm','$aid','$sm','$sid','$zm','$zid')";
+                
             //we are using mysql_query function. it returns a resource on true else False on error
             //echo "Error: " . $sql . "<br>" . $conn->error;
             if ($conn->query($sql) === TRUE) {
@@ -77,7 +91,7 @@ if(isset($_POST["Import"])){
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }//echo $result.$sql;exit();
-            
+            }
             
         } } }?><?php
           EXIT();

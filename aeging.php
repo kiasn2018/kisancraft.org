@@ -12,6 +12,7 @@
          .sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
          .sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
       </style>
+       <script src="js/tableToExcel.js"></script>
    <body bgcolor="">
       <?php 
          include 'header2.php';
@@ -94,7 +95,7 @@
             $sql1 = "SELECT month,year from Stockmst ORDER BY month DESC ";
             $result1 = mysqli_query($conn,$sql1);
             $row1 = mysqli_fetch_array($result1);
-            $sql = "SELECT distinct SKU from Stockmst ORDER BY month DESC ";
+            $sql = "SELECT distinct SKU from Stockmst ORDER BY SKU ASC ";
             $result = mysqli_query($conn,$sql);
             
             //include '/test/index.php';
@@ -104,6 +105,7 @@
       <div class="card">
       <h1>Ageing Analysis- <?php echo $month_name = date("F", mktime(0, 0, 0, $month, 10));?> - Month</h1>
       <div class="table-responsive">
+
          <table  id="demo" class="table table-hover" >
             <thead>
                <tr class="d0">
@@ -207,7 +209,7 @@
                   <td><?php echo $row["SKU"]; ?></td>
                   <td><?php echo $q1=$row1["Sum(QTY)"] ; ?></td>
                   <td><?php echo $row1["Sum(Amount)"]; $totalv=$totalv+$row1["Sum(Amount)"];?></td>
-                  <td><?php echo $v=round($row1["Sum(Amount)"]/$row1["Sum(QTY)"]); ?></td>
+                  <td><?php if($q1=='' || $q1=='0'){echo "0"; $v='0';}else{echo $v=round($row1["Sum(Amount)"]/$row1["Sum(QTY)"]);} ?></td>
                   <td><?php echo $q2;?></td>
                   <td><?php echo $a30=min($q1,$q2);?></td>
                   <td><?php echo $s30=-$a30+$q1;?></td>

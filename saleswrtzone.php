@@ -285,11 +285,9 @@
 		 if($state1!='ALL'){ ?>
          <th>District</th>
          <?php }?>
-         <th>Amount-April-17</th>
-		  <th>Amount-April-18</th>
-		  <th>Progress(%)</th>
-		  <th>Amount-May-17</th>
-		  <th>Amount-May-18</th>
+        
+		  <th>Amount-17</th>
+		  <th>Amount-18</th>
 		  <th>Progress(%)</th>
       </tr>
 	  
@@ -336,10 +334,7 @@
 		 <?php if($state1!='ALL'){ ?>
          <td><?php echo $di; ?></td>
 		 <?php } ?>
-		  <td><?php echo $rowddp['sum(Amount)']; $amountpp=$amountpp+$rowddp['sum(Amount)'];?></td>
-		 <td><?php echo $rowd1p['sum(Amount)']; $amountcp=$amountcp+$rowd1p['sum(Amount)']; ?></td>
-		 <?php if($rowddp['sum(Amount)']==''){?><td> 0 </td><?php }else{ ?>
-		 <td> <?php $pp=((($rowd1p['sum(Amount)']/$rowddp['sum(Amount)'])-1));  $qp=sprintf('%0.2f', $pp);$mp=$qp*100; echo $paddedp = sprintf('%0.0f', $mp);?></td><?php }?>
+		 
          <td><?php echo $rowdd['sum(Amount)']; $amountp=$amountp+$rowdd['sum(Amount)'];?></td>
 		 <td><?php echo $rowd1['sum(Amount)']; $amountc=$amountc+$rowd1['sum(Amount)']; ?></td>
 		 <?php if($rowdd['sum(Amount)']==''){?><td> 0 </td><?php }else{ ?>
@@ -353,9 +348,7 @@
 			<?php if($state1!='ALL'){ ?>
 			<td></td>
 			<?php  } ?>
-			<td><?php echo $amountpp; ?></td>
-			<td><?php echo $amountcp; ?></td>
-			<td><?php  $p1p=((($amountcp/$amountpp)-1)*100); echo $padded1 = sprintf('%0.0f', $p1p); ?> </td>
+			
 			<td><?php echo $amountp; ?></td>
 			<td><?php echo $amountc; ?></td>
 			<td><?php  $p1=((($amountc/$amountp)-1)*100); echo $padded1 = sprintf('%0.0f', $p1); ?> </td>

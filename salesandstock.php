@@ -97,7 +97,7 @@
          $sql1 = "SELECT month,year from Stockmst ORDER BY month DESC ";
          $result1 = mysqli_query($conn,$sql1);
          $row1 = mysqli_fetch_array($result1);
-         $sql = "SELECT DISTINCT Product from Stockmst where SKU='X-Part' ";
+         $sql = "SELECT DISTINCT Product from Stockmst where SKU='X-Part' order by Product ASC ";
          $result = mysqli_query($conn,$sql);
          
          //include '/test/index.php';
@@ -161,7 +161,7 @@
                   <td><?php echo $row1["SKU"]; ?></td>
                   <td><?php echo $q1=$row1["Sum(QTY)"] ; ?></td>
                   <td><?php echo $row1["Sum(Amount)"]; $totalv=$totalv+$row1["Sum(Amount)"];?></td>
-                  <td><?php echo $v=round($row1["Sum(Amount)"]/$row1["Sum(QTY)"]); ?></td>
+                  <td><?php if($q1=='0' || $q1==''){ echo '0'; $v='0';}else{echo $v=round($row1["Sum(Amount)"]/$row1["Sum(QTY)"]);} ?></td>
                   <td><?php echo $row15["Sum(QTY)"]; ?></td>
                   <td><?php echo $row15["Sum(Amount)"]; ?></td>
                </tr>

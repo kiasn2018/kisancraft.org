@@ -90,6 +90,8 @@ if($_SESSION['role']==''){
 
 
     </script>
+    <script src="/kisancraft.org/pace/pace.js"></script>
+  <link href="/kisancraft.org/pace/themes/purple/pace-theme-loading-bar.css" rel="stylesheet" />
   </head>
   <body>
     <div class="wrap">
@@ -152,7 +154,8 @@ if($_SESSION['role']==''){
             <div class="sf-mega-section" style="background-color: #f2f2f2">              
               <ul>
                 <li class="current">
-                <a href="#">Projected</a></li><br>
+                  <a  href="/kisancraft.org/importtrans.php">Upload Bank Transaction</a>
+                </li><br>
                 <li><a href="#">Actual</a></li><br>
                 <li><a href="#">Both</a></li><br>
               </ul>

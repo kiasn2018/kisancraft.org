@@ -2,18 +2,18 @@
 <html>
 <head>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="/kisankraft.org/src/js/sorttable.js"></script>
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="/kisankraft.org/src/js/sorttable.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-	<style>
-	tr:nth-child(even) {
+  <style>
+  tr:nth-child(even) {
     background-color: #99ccb7;
                        }
-	
-	.sortable{border-top:#CCCCCC 4px solid; width:100%;font-size:15px;}
-	.sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
-	.sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
-	</style>
+  
+  .sortable{border-top:#CCCCCC 4px solid; width:100%;font-size:15px;}
+  .sortable th {padding:5px 20px; background: #F0F0F0;vertical-align:top;} 
+  .sortable td {padding:5px 20px; border-bottom: #F0F0F0 1px solid;vertical-align:top;} 
+  </style>
 <body bgcolor="">
 <?php 
 include 'header.php';
@@ -71,7 +71,7 @@ if(!isset($_POST["go"]) ){
 <table class="sortable">
           <thead>
         <tr class="d0">
-          <th width="10%"><span>ID</span></th>	
+          <th width="10%"><span>ID</span></th>  
           <th width="50%"><span> Dealer Name</span></th>
           <th width="20%"><span>Date</span></th>  
           <th width="20%"><span>Voucher Type</span></th>          
@@ -81,22 +81,22 @@ if(!isset($_POST["go"]) ){
           <th width="25%"><span>Executive</span></th>
           <th width="25%"><span>ASM</span></th>
           <th width="25%"><span>QTY</span></th>
-          <th width="25%"><span>Amount</span></th>	  
+          <th width="25%"><span>Amount</span></th>    
         </tr>
       </thead>
     <tbody>
-	<?php
-		while($row = mysqli_fetch_array($result)) {
-	?>
+  <?php
+    while($row = mysqli_fetch_array($result)) {
+  ?>
         <tr class="d1">
             <td><?php echo $row["ID"]; ?></td>
-			<td><?php echo  $data= str_replace("_", "'", $row["Dealer_name"]); ?></td>
-			<td><?php echo  $row["Date"]; ?></td>
-			<td><?php echo $row["Vorture_type"];  ?></td>
-			<td><?php echo $data1= str_replace("_", "'", $row["Item_name"]);$row["Item_name"]; ?></td>
-			<td><?php $d=$row["Dealer_name"];
-			$sqls = "SELECT * from Dealermst where D_name='$d' ";
-			//echo $sqls;
+      <td><?php echo  $data= str_replace("_", "'", $row["Dealer_name"]); ?></td>
+      <td><?php echo  $row["Date"]; ?></td>
+      <td><?php echo $row["Vorture_type"];  ?></td>
+      <td><?php echo $data1= str_replace("_", "'", $row["Item_name"]);$row["Item_name"]; ?></td>
+      <td><?php $d=$row["Dealer_name"];
+      $sqls = "SELECT * from Dealermst where D_name='$d' ";
+      //echo $sqls;
             $results = mysqli_query($conn,$sqls);
             while($rows = mysqli_fetch_array($results)) {
                 $district=$rows["D_distict"];
@@ -114,12 +114,12 @@ if(!isset($_POST["go"]) ){
             <td><?php echo $state;?></td>
             <td><?php echo $exec;?></td>
             <td><?php echo $ASM;?></td>
-			<td><?php echo $row["Quantity"]; ?></a> </td>
-			<td><?php echo $row["Amount"]; ?></a> </td>
+      <td><?php echo $row["Quantity"]; ?></a> </td>
+      <td><?php echo $row["Amount"]; ?></a> </td>
 
-		</tr>
+    </tr>
    <?php
-		}
+    }
    ?>
    <tbody>
   </table><?php }?>
